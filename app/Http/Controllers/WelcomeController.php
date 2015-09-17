@@ -9,9 +9,7 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		// TODO: Make a spiffy landing page and display it here instead of
-		// returning a basic string
-		return "Directory Web Service";
+		return view("pages.landing");
 	}
 
 }
