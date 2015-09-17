@@ -11,6 +11,17 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->welcome();
+$app->get('/', 'WelcomeController@index');
+
+// all API data routes are prefixed with /api
+$app->group(['prefix' => 'api', 'namespace' => 'App\Http\Controllers'], function($app) {
+
+	// academic department information
+	// Example: /api/departments/189/people
+	$app->get('departments/{dept_id}/people', 'DepartmentController@showPeople');
+
+	// committee information
+	// Example: /api/committees/atc/people
+	$app->get('committees/{committee_id}/people', 'CommitteeController@showPeople');
+
 });
