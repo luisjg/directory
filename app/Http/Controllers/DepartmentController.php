@@ -34,10 +34,10 @@ class DepartmentController extends Controller {
 
 		// convert the collection to an array for use in returning the
 		// desired response as JSON
-		$deptList = $persons->toArray();
+		$data = $persons->toArray();
 
 		// send the response
-		return $this->sendResponse($deptList);
+		return $this->sendResponse($data);
 	}
 
 }
