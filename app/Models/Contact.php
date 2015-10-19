@@ -6,6 +6,8 @@ class Contact extends Model {
 	protected $table='fresco.contacts';
     protected $primaryKey = 'contact_id';
 	protected $fillable = [];
+    protected $hidden = array('created_at', 'updated_at');
+
 
     /**
      * Relates this Contact to its associated Person model.

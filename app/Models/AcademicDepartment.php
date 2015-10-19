@@ -17,6 +17,7 @@ class AcademicDepartment extends Model
 	 * @var string
 	 */
 	protected $primaryKey = 'department_id';
+	protected $hidden = array('created_at', 'updated_at');
 
 	/**
 	 * Returns the academic group associated with this department.
