@@ -34,11 +34,7 @@ class AcademicDepartmentController extends Controller {
 	}
 	public function showAcademicDepartment($dept_id)
 	{//information pertaining to ONE department
-		// RETURN DEPARTM
-		$academicDepts = Contact::whereHas('contactDepartment', function($q) use ($dept_id) {
-			$q->where('entities_id', 'academic_departments:'.$dept_id);
-		})	
-			->orderBy("entities_id")
+		$academicDepts = Contact::where('entities_id', 'academic_departments:'.$dept_id)
 			->get();
 
 		// convert the collection to an array for use in returning the

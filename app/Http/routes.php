@@ -44,8 +44,8 @@ $app->group(['prefix' => 'academic_departments', 'namespace' => 'App\Http\Contro
 $app->get('/members/{email}','AcademicDepartmentController@showPerson');
 
 $app->group(['prefix' => 'administrative_departments', 'namespace' => 'App\Http\Controllers'], function($app){
-	$app->get('/',)
-})
+	$app->get('/{dept_id}','AdministrativeDepartmentController@showPeople');
+});
 
 	// committee information
 	// Example: /api/committees/atc/people

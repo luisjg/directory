@@ -10,18 +10,14 @@ class AdministrativeDepartment extends Model
 	 * @var string
 	 */
 	//protected $table = \DB::table('departments')->where('')
-	protected $table = \DB::table('administrativeDept')
-		->join('nemo.departments', 'administrativeDept.departments_id', '=', 'departments.departments_id')
-        ->join('nemo.academicDepartment_Department', 'administrativeDept.departments_id', '=', 'academicDepartment_Department.departments_id')
-        ->select('administrativeDept.*')
-            ->get();
+	protected $table = 'nemo.departments';
 
 	/**
 	 * Primary key in the table relationship.
 	 *
 	 * @var string
 	 */
-	protected $primaryKey = 'department_id';
+	protected $primaryKey = 'entities_id';
 	protected $hidden = array('created_at', 'updated_at');
 
 
