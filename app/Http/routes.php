@@ -32,13 +32,20 @@ $app->group(['prefix' => 'api', 'namespace' => 'App\Http\Controllers'], function
 
 	// academic department information
 	// Example: /academic_departments/
-$app->get('academic_departments/', 'AcademicDepartmentController@showAcademicDepartments');
-$app->get('academic_departments/{dept_id}', 'AcademicDepartmentController@showAcademicDepartment');
-$app->get('academic_departments/{dept_id}/members', 'AcademicDepartmentController@showPeople');
+$app->group(['prefix' => 'academic_departments', 'namespace' => 'App\Http\Controllers'], function($app){
+	$app->get('/', 'AcademicDepartmentController@showAcademicDepartments');
+	$app->get('/{dept_id}', 'AcademicDepartmentController@showAcademicDepartment');
+	$app->get('/{dept_id}/members', 'AcademicDepartmentController@showPeople');
 //access contact info by email addresses
-$app->get('academic_departments/{dept_id}/members/{email}','AcademicDepartmentController@showPerson');
-$app->get('academic_departments/members/{email}','AcademicDepartmentController@showPerson');
+	$app->get('/{dept_id}/members/{email}','AcademicDepartmentController@showPerson');
+	$app->get('/members/{email}','AcademicDepartmentController@showPerson');
+});
+
 $app->get('/members/{email}','AcademicDepartmentController@showPerson');
+
+$app->group(['prefix' => 'administrative_departments', 'namespace' => 'App\Http\Controllers'], function($app){
+	$app->get('/',)
+})
 
 	// committee information
 	// Example: /api/committees/atc/people
