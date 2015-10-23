@@ -78,7 +78,7 @@ class AcademicDepartmentController extends Controller {
 	public function showPerson($email)
 	{
 		$person = Person::where('email',$email)
-			->get();
+			->first();
 
 		// convert the collection to an array for use in returning the
 		// desired response as JSON
