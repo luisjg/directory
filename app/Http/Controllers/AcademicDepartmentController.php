@@ -34,13 +34,13 @@ class AcademicDepartmentController extends Controller {
 	public function showAcademicDepartment($dept_id)
 	{//return information pertaining to ONE department
 		$academicDepts = Contact::where('entities_id', 'academic_departments:'.$dept_id)
-			->get();
+			->first();
 
 		
 		//if an email is provided instead of a department id:	
-		if ($academicDepts->isEmpty()){
+		if (empty($academicDepts)){
 			$contact = Contact::where('email',$dept_id)
-				->get();
+				->first();
 			$data = $contact->toArray();
 		}
 		else
