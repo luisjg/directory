@@ -20,8 +20,7 @@ class AcademicDepartmentController extends Controller {
 	 */
 
 	public function showAcademicDepartments()
-	{//Information for ALL departments
-		// RETURN DEPARTM
+	{//return Information for ALL departments
 		$academicDepts = AcademicDepartment::where('entity_type', 'Academic Department')	
 			->get();
 		// convert the collection to an array for use in returning the
@@ -33,18 +32,20 @@ class AcademicDepartmentController extends Controller {
 
 	}
 	public function showAcademicDepartment($dept_id)
-	{//information pertaining to ONE department
+	{//return information pertaining to ONE department
 		$academicDepts = Contact::where('entities_id', 'academic_departments:'.$dept_id)
-			->get();
+			->first();
 
-		// convert the collection to an array for use in returning the
-		// desired response as JSON
-		if ($academicDepts->isEmpty()){
+		
+		//if an email is provided instead of a department id:	
+		if (empty($academicDepts)){
 			$contact = Contact::where('email',$dept_id)
-				->get();
+				->first();
 			$data = $contact->toArray();
 		}
 		else
+		// convert the collection to an array for use in returning the
+		// desired response as JSON
 			$data = $academicDepts->toArray();
 
 		// send the response
@@ -77,7 +78,7 @@ class AcademicDepartmentController extends Controller {
 	public function showPerson($email)
 	{
 		$person = Person::where('email',$email)
-			->get();
+			->first();
 
 		// convert the collection to an array for use in returning the
 		// desired response as JSON

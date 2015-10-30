@@ -19,6 +19,8 @@ class AdministrativeDepartment extends Model
 	 */
 	protected $primaryKey = 'entities_id';
 	protected $hidden = array('created_at', 'updated_at');
-
+	public function person(){
+		return $this->hasMany('App\Models\Person', 'parent_entities_id');
+	}
 
 }
