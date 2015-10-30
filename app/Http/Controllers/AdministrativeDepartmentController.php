@@ -16,22 +16,26 @@ class AdministrativeDepartmentController extends Controller {
 	 * @param string $committee_id The short ID of the committee
 	 * @return Response
 	 */
-	public function showPeople($dept_id) {
+	public function showPeople($dept_id) 
+	{
 		$persons = Person::with('contacts')->where('parent_entities_id', 'departments:'.$dept_id)
 			->orderBy('last_name')->orderBy('first_name')
 			->get();
 		// convert the collection to an array for use in returning the
 		// desired response as JSON
-		$data = $persons->toArray();
+		$data = $persons->toArray();	
+		// send the response
+		return $this->sendResponse($data);
+	}
+
+	public function showPersonByEmail($email)
+	{
 		//checking if an email id is provided instead of a department id
-		if (empty($data)){ //using data because for some reason, $person 
-						  //is not considered empty when using an email
-			$contact = Contact::where('email',$dept_id)
+			$contact = Contact::where('email',$email)
 				->first();
+		// convert the collection to an array for use in returning the
+		// desired response as JSON
 			$data = $contact->toArray();
-		}
-		
-		
 		// send the response
 		return $this->sendResponse($data);
 	}
