@@ -43,16 +43,16 @@ $app->group(['prefix' => 'academic_departments', 'namespace' => 'App\Http\Contro
 
 $app->get('/members/{email}','AcademicDepartmentController@showPerson');
 
-$app->group(['prefix' => 'administrative_departments', 'namespace' => 'App\Http\Controllers'], function($app){
-	//note: there is currently no generic information for a single department, so when
-	//a single department is specified, the API simply shows ALL members in the department
-	$app->get('/','AdministrativeDepartmentController@showAdministrativeDepartments');
-	$app->get('/{dept_id}','AdministrativeDepartmentController@showPeople');
-	$app->get('/{dept_id}/members','AdministrativeDepartmentController@showPeople');
+
+$app->group(['prefix' => 'committees', 'namespace' => 'App\Http\Controllers'], function($app){
+	// committee information
+	// Example: /committees/atc/people
+	$app->get('/', 'CommitteeController@showCommittees');
+	$app->get('/{committee_id}', 'CommitteeController@showCommitteeMembers');
+	$app->get('/{member_id}/list','CommitteeController@showCommitteesByPerson');
+
 });
 
-	// committee information
-	// Example: /api/committees/atc/people
-	//$app->get('committees/{committee_id}/people', 'CommitteeController@showPeople');
+
 
 
