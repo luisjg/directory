@@ -37,7 +37,7 @@ $app->group(['prefix' => 'academic_departments', 'namespace' => 'App\Http\Contro
 	$app->get('/{dept_id}', 'AcademicDepartmentController@showAcademicDepartment');
 	$app->get('/{dept_id}/members', 'AcademicDepartmentController@showPeople');
 //access contact info by email addresses
-	$app->get('/{dept_id}/members/{email}','AcademicDepartmentController@showPerson');
+	$app->get('/{dept_id}/members/{email}','AcademicDepartmentController@showDeptSpecificPerson');
 	$app->get('/members/{email}','AcademicDepartmentController@showPerson');
 });
 
@@ -48,7 +48,7 @@ $app->group(['prefix' => 'administrative_departments', 'namespace' => 'App\Http\
 	//a single department is specified, the API simply shows ALL members in the department
 	$app->get('/','AdministrativeDepartmentController@showAdministrativeDepartments');
 	$app->get('/{dept_id}','AdministrativeDepartmentController@showPeople');
-	$app->get('/members/{email}','AdministrativeDepartmentController@showPersonByEmail');
+	$app->get('/{dept_id}/members/{email}','AdministrativeDepartmentController@showDeptSpecificPerson');
 });
 
 	// committee information

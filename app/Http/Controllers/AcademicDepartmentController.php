@@ -88,5 +88,22 @@ class AcademicDepartmentController extends Controller {
 		return $this->sendResponse($data);
 
 	}
+	public function showDeptSpecificPerson($dept_id, $email)
+	{
+		//{dept_id}/members/{email}
+		$contact = Contact::with('person')->where(function($query) use($dept_id, $email){
+			$query->where('parent_entities_id','academic_departments:'.$dept_id)
+				  ->where('email', $email);
+		})->first();
+		// convert the collection to an array for use in returning the
+		// desired response as JSON
+		//dd($contact);
+	
+		$data = $contact->toArray();
+		
+		// send the response
+		return $this->sendResponse($data);
+		
+	}
 
 }
