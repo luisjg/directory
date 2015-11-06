@@ -49,7 +49,7 @@ $app->group(['prefix' => 'committees', 'namespace' => 'App\Http\Controllers'], f
 	// Example: /committees/atc/people
 	$app->get('/', 'CommitteeController@showCommittees');
 	$app->get('/{committee_id}', 'CommitteeController@showCommitteeMembers');
-	$app->get('/{member_id}/list','CommitteeController@showCommitteesByPerson');
+	$app->get('/mid/{member_id}','CommitteeController@showCommitteesByPerson');
 
 });
 
