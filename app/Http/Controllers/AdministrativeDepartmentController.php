@@ -53,5 +53,17 @@ class AdministrativeDepartmentController extends Controller {
 		return $this->sendResponse($data);
 		
 	}
+	public function showPersonByMID($member_id){
+		$contact = Contact::with('person')
+			->where('entities_id', 'members:'.$member_id)
+			->where('parent_entities_id','like','%departments:%')
+			->get();
+		// convert the collection to an array for use in returning the
+		// desired response as JSON
+		
+		$data = $contact->toArray();
+		// send the response back
+		return $this->sendResponse($data);
+	}
 
 }

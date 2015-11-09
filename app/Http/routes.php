@@ -49,6 +49,7 @@ $app->group(['prefix' => 'administrative_departments', 'namespace' => 'App\Http\
 	$app->get('/','AdministrativeDepartmentController@showAdministrativeDepartments');
 	$app->get('/{dept_id}','AdministrativeDepartmentController@showPeople');
 	$app->get('/{dept_id}/members/{email}','AdministrativeDepartmentController@showDeptSpecificPerson');
+	$app->get('/mid/{member_id}', 'AdministrativeDepartmentController@showPersonByMID');
 });
 
 	// committee information
