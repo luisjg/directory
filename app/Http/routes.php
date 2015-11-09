@@ -39,6 +39,7 @@ $app->group(['prefix' => 'academic_departments', 'namespace' => 'App\Http\Contro
 //access contact info by email addresses
 	$app->get('/{dept_id}/members/{email}','AcademicDepartmentController@showDeptSpecificPerson');
 	$app->get('/members/{email}','AcademicDepartmentController@showPerson');
+	$app->get('/mid/{member_id}', 'AcademicDepartmentController@showPersonByMID');
 });
 
 $app->get('/members/{email}','AcademicDepartmentController@showPerson');
