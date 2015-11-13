@@ -53,8 +53,15 @@ $app->group(['prefix' => 'administrative_departments', 'namespace' => 'App\Http\
 	$app->get('/mid/{member_id}', 'AdministrativeDepartmentController@showPersonByMID');
 });
 
+$app->group(['prefix' => 'committees', 'namespace' => 'App\Http\Controllers'], function($app){
 	// committee information
-	// Example: /api/committees/atc/people
-	//$app->get('committees/{committee_id}/people', 'CommitteeController@showPeople');
+	// Example: /committees/atc/people
+	$app->get('/', 'CommitteeController@showCommittees');
+	$app->get('/{committee_id}', 'CommitteeController@showCommitteeMembers');
+	$app->get('/mid/{member_id}','CommitteeController@showCommitteesByPerson');
+
+});
+
+
 
 

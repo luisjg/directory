@@ -29,4 +29,41 @@ class CommitteeController extends Controller {
 		return $this->sendResponse($data);
 	}
 
+	public function showCommittees(){
+		// /committees
+		//shows all current committees
+		$committee = Committee::where('entity_type',"Committee")->get();
+
+ 		// convert the collection to an array for use in returning the
+		// desired response as JSON
+		$data = $committee->toArray();
+
+		// send the response back
+		return $this->sendResponse($data);
+		
+	}
+
+	public function showCommitteeMembers($committee_id){
+		$contacts = Contact::with('person')->where('parent_entities_id','committees:'.$committee_id)
+			->get();
+		// convert the collection to an array for use in returning the
+		// desired response as JSON
+		$data = $contacts->toArray();
+		// send the response back
+		return $this->sendResponse($data);
+
+	}
+	public function showCommitteesByPerson($member_id){
+		$committees = Contact::with('person')
+			->where('entities_id', 'members:'.$member_id)
+			->where('parent_entities_id','like','%committees:%')
+			->get();
+		//dd($committees);
+		// convert the collection to an array for use in returning the
+		// desired response as JSON
+		$data = $committees->toArray();
+		// send the response back
+		return $this->sendResponse($data);
+
+	}
 }
