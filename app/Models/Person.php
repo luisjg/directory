@@ -12,6 +12,10 @@ class Person extends Model {
 		return $this->hasMany('App\Models\DepartmentUser', 'user_id');
 	}
 
+	public function contacts(){
+		return $this->hasMany('App\Models\Contact', 'entities_id');
+	}
+
 	public function image() {
 		return $this->hasOne('App\Models\Image', 'imageable_id');
 	}
