@@ -26,4 +26,7 @@ class AcademicGroup extends Model
 	public function departments() {
 		return $this->hasMany("App\Models\AcademicDepartment", "department_id", "college_id");
 	}
+	public function person(){
+		return $this->hasMany("App\Models\Person",'parent_entities_id');
+	}
 }
