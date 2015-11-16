@@ -65,7 +65,7 @@ $app->group(['prefix' => 'committees', 'namespace' => 'App\Http\Controllers'], f
 $app->group(['prefix' => 'colleges', 'namespace' => 'App\Http\Controllers'], function($app){
 	$app->get('/','AcademicGroupController@showColleges');
 	$app->get('/{college_id}','AcademicGroupController@showDepartments');
-	$app->get('/{college_id}/{$dept_id','AcademicGroupController@showDepartments');
+	$app->get('/{college_id}/members','AcademicGroupController@showPersons');
 });
 
 

@@ -28,9 +28,14 @@ class AcademicGroupController extends Controller {
 		
 		return $this->sendResponse($data);
 	}
-	function showPersons($college_id, $dept_id){
-		$persons = Person::with('contacts')->where('parent_entities_id', 'departments:'.$dept_id)
-			->orderBy('last_name')->orderBy('first_name')
+	function showPersons($college_id){
+		/*Post::with(array('user'=>function($query){
+        $query->select('id','username');
+    }))->get();*/
+
+		$persons = AcademicGroup::with('contacts')
+			//->where('college_id', 'academic_groups:'.$college_id)
+			//->where('parent_entities_id','entities_id')
 			->get();
 		// convert the collection to an array for use in returning the
 		// desired response as JSON

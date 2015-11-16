@@ -27,4 +27,11 @@ class AcademicDepartment extends Model
 	public function academicGroup() {
 		return $this->belongsTo("App\Models\AcademicGroup", "college_id", "department_id");
 	}
+
+	public function person(){
+		return $this->hasMany('App\Models\Person','parent_entities_id');
+	}
+	public function contacts(){
+		return $this->hasMany('App\Models\Contact','department');
+	}
 }
