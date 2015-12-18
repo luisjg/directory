@@ -33,12 +33,12 @@ $app->group(['prefix' => 'api', 'namespace' => 'App\Http\Controllers'], function
 	// academic department information
 	// Example: /academic_departments/
 $app->group(['prefix' => 'academic_departments', 'namespace' => 'App\Http\Controllers'], function($app){
-	$app->get('/', 'AcademicDepartmentController@showAcademicDepartments');
-	$app->get('/{dept_id}', 'AcademicDepartmentController@showAcademicDepartment');
-	$app->get('/{dept_id}/members', 'AcademicDepartmentController@showPeople');
+	$app->get('/', 'AcademicDepartmentController@showAcademicDepartments'); //shows all dept basic info
+	$app->get('/{dept_id}', 'AcademicDepartmentController@showAcademicDepartment');//show all people in a dept
+	$app->get('/{dept_id}/members/', 'AcademicDepartmentController@showAcademicDepartment');//same as just dept_id
 //access contact info by email addresses
-	$app->get('/{dept_id}/members/{email}','AcademicDepartmentController@showDeptSpecificPerson');
-	$app->get('/members/{email}','AcademicDepartmentController@showPerson');
+	$app->get('/{dept_id}/members/{id}','AcademicDepartmentController@showDeptSpecificPerson');
+	$app->get('/members/{id}','AcademicDepartmentController@showPerson');
 	$app->get('/mid/{member_id}', 'AcademicDepartmentController@showPersonByMID');
 });
 

@@ -4,10 +4,11 @@ use App\Handlers\HandlerUtilities;
 
 use App\Http\Controllers\Controller;
 use Request;
-
+use Validator;
 use App\Models\AcademicDepartment;
 use App\Models\Contact;
 use App\Models\Person;
+use DB;
 
 
 class AcademicDepartmentController extends Controller {
@@ -21,7 +22,9 @@ class AcademicDepartmentController extends Controller {
 
 	public function showAcademicDepartments()
 	{//return Information for ALL departments
+		
 		$academicDepts = AcademicDepartment::where('entity_type', 'Academic Department')	
+			//->orderBy('last_name')->orderBy('first_name')
 			->get();
 		// convert the collection to an array for use in returning the
 		// desired response as JSON
@@ -32,28 +35,23 @@ class AcademicDepartmentController extends Controller {
 
 	}
 	public function showAcademicDepartment($dept_id)
-	{//return information pertaining to ONE department
-		$academicDepts = Contact::where('entities_id', 'academic_departments:'.$dept_id)
-			->first();
-
+	{//return information for people belonging to a specified department 
+		$contact = DB::table('contacts')
+			->where('department', 'academic_departments:'.$dept_id)
+			->join('fresco.people', 'user_id', '=', 'fresco.people.individuals_id')
+			->orderBy('last_name')->orderBy('first_name')
+			->get();
 		
-		//if an email is provided instead of a department id:	
-		if (empty($academicDepts)){
-			$contact = Contact::where('email',$dept_id)
-				->first();
-			$data = $contact->toArray();
-		}
-		else
+		return $this->sendResponse($contact);
 		// convert the collection to an array for use in returning the
 		// desired response as JSON
-			$data = $academicDepts->toArray();
 
+		//$data = $contact->toArray();
 		// send the response
-		return $this->sendResponse($data);
-
+		//return $this->sendResponse($data);
 	}
 
-	public function showPeople($dept_id)
+	public function showPeople($id)//original api
 	{
 		// RETURN PEOPLE WHO HAVE DEPARTMENT
 		$persons = Person::whereHas('departmentUser', function($q) use ($dept_id) {
@@ -75,11 +73,18 @@ class AcademicDepartmentController extends Controller {
 		// send the response
 		return $this->sendResponse($data);
 	}
-	public function showPerson($email)
-	{
-		$person = Person::where('email',$email)
-			->first();
-
+	public function showPerson($id)
+	{ //shows all contact info pertaining to one person
+		//checking if id specified is email or member id.
+		if(filter_var($id, FILTER_VALIDATE_EMAIL)){
+			$person= Person::with('contacts')
+				->where('email', $id)
+				->get();
+		}
+		else{
+			$person = Person::with('contacts')->where('individuals_id','members:'.$id)
+				->get();
+		}
 		// convert the collection to an array for use in returning the
 		// desired response as JSON
 		$data = $person->toArray();
@@ -88,34 +93,36 @@ class AcademicDepartmentController extends Controller {
 		return $this->sendResponse($data);
 
 	}
-	public function showDeptSpecificPerson($dept_id, $email)
+	public function showDeptSpecificPerson($dept_id, $id)
 	{
 		//{dept_id}/members/{email}
-		$contact = Contact::with('person')->where(function($query) use($dept_id, $email){
-			$query->where('parent_entities_id','academic_departments:'.$dept_id)
-				  ->where('email', $email);
-		})->first();
+		if(filter_var($id, FILTER_VALIDATE_EMAIL)){
+			$contact = Contact::with('person')->where(function($query) use($dept_id, $id){
+				$query->where('department','academic_departments:'.$dept_id)
+					  ->where('email', $id);
+			})->first();
+		}
+		else{
+			$contact = Contact::with('person')->where(function($query) use($dept_id, $id){
+				$query->where('department','academic_departments:'.$dept_id)
+					  ->where('user_id', 'members:'.$id);
+			})->first();
+		}
 		// convert the collection to an array for use in returning the
 		// desired response as JSON
 		//dd($contact);
-	
-		$data = $contact->toArray();
+		if(!empty($contact)){
+			$data = $contact->toArray();
+			return $this->sendResponse($data);
+		}
+		else
+			echo 'The person with an id of '.$id.' does not exist in department '.$dept_id.'.';
+		
 		
 		// send the response
-		return $this->sendResponse($data);
-	}
-	public function showPersonByMID($member_id){
-		$contact = Contact::with('person')
-			->where('entities_id', 'members:'.$member_id)
-			->where('parent_entities_id','like','academic_departments:%')
-			->get();
-		// convert the collection to an array for use in returning the
-		// desired response as JSON
 		
-		$data = $contact->toArray();
-		// send the response back
-		return $this->sendResponse($data);
 	}
+	
 
 
 }

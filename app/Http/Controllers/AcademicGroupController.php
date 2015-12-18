@@ -5,6 +5,7 @@ use App\Handlers\HandlerUtilities;
 use App\Http\Controllers\Controller;
 
 use App\Models\AcademicGroup;
+use App\Models\Contact;
 
 
 class AcademicGroupController extends Controller {
@@ -33,10 +34,15 @@ class AcademicGroupController extends Controller {
         $query->select('id','username');
     }))->get();*/
 
-		$persons = AcademicGroup::with('contacts')
+		$persons= AcademicGroup::with('departments.contacts')
+			->where('college_id','academic_groups:'.$college_id)
+			//->where('parent_entities_id','department_id')
+			
 			//->where('college_id', 'academic_groups:'.$college_id)
 			//->where('parent_entities_id','entities_id')
 			->get();
+		//$persons = Contact::where('parent_entities_id','like',$depts)
+		//	->get();
 		// convert the collection to an array for use in returning the
 		// desired response as JSON
 		$data = $persons->toArray();	

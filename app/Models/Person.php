@@ -13,7 +13,7 @@ class Person extends Model {
 	}
 
 	public function contacts(){
-		return $this->hasMany('App\Models\Contact', 'entities_id');
+		return $this->hasMany('App\Models\Contact', 'user_id');
 	}
 
 	public function image() {

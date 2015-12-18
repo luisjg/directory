@@ -3,7 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model {
-	protected $table='fresco.contacts';
+	protected $table='faculty.contacts';//fresco.contacts';
     protected $primaryKey = 'contact_id';
 	protected $fillable = [];
     protected $hidden = array('created_at', 'updated_at');
@@ -15,7 +15,7 @@ class Contact extends Model {
      * @return Builder
      */
 	public function person() {
-        return $this->belongsTo('App\Models\Person', 'entities_id', 'individuals_id');
+        return $this->belongsTo('App\Models\Person', 'user_id', 'individuals_id');
     }
 
     /**
