@@ -36,34 +36,34 @@ class AdministrativeDepartmentController extends Controller {
 		return $this->sendResponse($data);
 	}
 
-	public function showDeptSpecificPerson($dept_id, $email)
+	public function showDeptSpecificPerson($dept_id, $id)
 	{
+		if(filter_var($id, FILTER_VALIDATE_EMAIL)){
 		//{dept_id}/members/{email}
-		$contact = Contact::with('person')->where(function($query) use($dept_id, $email){
-			$query->where('parent_entities_id','departments:'.$dept_id)
-				  ->where('email', $email);
-		})->first();
-		// convert the collection to an array for use in returning the
-		// desired response as JSON
+			$person = Person::with('contacts')->where(function($query) use($dept_id, $id){
+				$query->where('parent_entities_id','departments:'.$dept_id)
+					  ->where('email', $id);
+			})->first();
+		}
+		else{
+			$person = Person::with('contacts')->where(function($query) use($dept_id, $id){
+				$query->where('parent_entities_id','departments:'.$dept_id)
+					  ->where('individuals_id','members:'.$id);
+			})->first();
+		}
+		
 		//dd($contact);
+		if(!empty($person)){
+			// convert the collection to an array for use in returning the
+			// desired response as JSON
+			$data = $person->toArray();
+			return $this->sendResponse($data);
+		}
+		else
+			echo 'The person with an id of '.$id.' does not exist in department '.$dept_id.'.';
+		
+		
+	}
 	
-		$data = $contact->toArray();
-		
-		// send the response
-		return $this->sendResponse($data);
-		
-	}
-	public function showPersonByMID($member_id){
-		$contact = Contact::with('person')
-			->where('entities_id', 'members:'.$member_id)
-			->where('parent_entities_id','like','%departments:%')
-			->get();
-		// convert the collection to an array for use in returning the
-		// desired response as JSON
-		
-		$data = $contact->toArray();
-		// send the response back
-		return $this->sendResponse($data);
-	}
 
 }
