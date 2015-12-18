@@ -43,14 +43,29 @@ class CommitteeController extends Controller {
 		
 	}
 
-	public function showCommitteeMembers($committee_id){
-		$contacts = Contact::with('person')->where('parent_entities_id','committees:'.$committee_id)
-			->get();
-		// convert the collection to an array for use in returning the
-		// desired response as JSON
-		$data = $contacts->toArray();
-		// send the response back
-		return $this->sendResponse($data);
+	public function showCommitteeMembers($id){
+		if(strlen($id)==9){
+			$committees=Contact::where('user_id','members:'.$id)
+				->where('department','like','%committees:%')
+				->get();
+			$data = $committees->toArray();
+				// send the response back
+			return $this->sendResponse($data);
+		}
+		else{
+			$contact = Contact::with('person')->where('department','committees:'.$id)
+				->get();
+			if(count($contact)){
+				// convert the collection to an array for use in returning the
+				// desired response as JSON
+				$data = $contact->toArray();
+				// send the response back
+				return $this->sendResponse($data);
+			}
+			else{
+				echo 'There are currently no members in committee '.$id.'.';
+			}
+		}
 
 	}
 	public function showCommitteesByPerson($member_id){
