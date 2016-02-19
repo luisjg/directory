@@ -18,5 +18,4 @@ class Committee extends Model {
 			->withPivot('role_position', 'description', 'member_status')
 			->where('nemo.memberships.confidential', 0); // make sure "confidential" records are not included
 	}
-
 }

@@ -4,7 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class DepartmentUser extends Model {
 
-	protected $table = 'faculty.department_user';		
+	protected $table = 'faculty.department_user';	
+	protected $primaryKey = 'user_id';
 	protected $fillable = [];
 
 	public function Person(){
@@ -19,6 +20,7 @@ class DepartmentUser extends Model {
 	public function department() {
 		return $this->belongsTo('App\Models\AcademicDepartment', 'department_id');
 	}
+
 
 }
 

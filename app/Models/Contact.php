@@ -33,11 +33,12 @@ class Contact extends Model {
      *
      * @return string
      */
-    public function getTelephoneAttribute() {
-    	if (!property_exists($this, 'telephone')) {
-	        return 'Not Available';
-    	}
-    	return $this->telephone;
-    }
+    // public function getTelephoneAttribute() {
+    // 	if (!property_exists($this, 'telephone')) {
+	   //      return 'Not Available';
+    // 	}
+    // 	return $this->telephone;
+    // }
+
 
 }

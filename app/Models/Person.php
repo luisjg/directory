@@ -24,4 +24,21 @@ class Person extends Model {
 	    return strtok($this->email, '@');
 	}
 
+	public function scopeFindMembersByDepartment($query, $dept_id) {
+		return $query->whereHas('departmentUser', function($q) use ($dept_id) {
+			$q->where('department_id', 'academic_departments:'.$dept_id);
+		});
+	}
+		public function departments() {
+			return $this->belongsToMany('App\Models\Department', 'department_user', 'user_id','department_id');
+	}
+
+	// public function getRankAttribute($value) {
+	// 	if ($value == null) {
+	// 		return $value = 'Staff';
+	// 	}
+	// 	else {
+	// 		return $value;
+	// 	}
+	// }
 }

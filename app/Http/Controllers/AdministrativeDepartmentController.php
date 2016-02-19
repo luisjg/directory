@@ -66,4 +66,6 @@ class AdministrativeDepartmentController extends Controller {
 		return $this->sendResponse($data);
 	}
 
+
+
 }
