@@ -29,7 +29,7 @@ class AdministrativeDepartmentController extends Controller {
 	}
 
 
-	public function showAdministrativeDepartments()
+	public function showAllAdministrativeDepartments()
 	{
 		$administrativeDept = AdministrativeDepartment::all();
 		$data = $administrativeDept->toArray();
@@ -50,10 +50,9 @@ class AdministrativeDepartmentController extends Controller {
 		$data = $contact->toArray();
 		
 		// send the response
-		return $this->sendResponse($data);
-		
+		return $this->sendResponse($data);		
 	}
-	public function showPersonByMID($member_id){
+	public function showPersonByID($member_id){
 		$contact = Contact::with('person')
 			->where('entities_id', 'members:'.$member_id)
 			->where('parent_entities_id','like','%departments:%')
