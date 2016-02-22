@@ -30,7 +30,7 @@ class Person extends Model {
 		});
 	}
 		public function departments() {
-			return $this->belongsToMany('App\Models\Department', 'department_user', 'user_id','department_id');
+			return $this->belongsToMany('App\Models\AcademicDepartment', 'department_user', 'user_id','department_id');
 	}
 
 	// public function getRankAttribute($value) {

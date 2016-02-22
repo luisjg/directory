@@ -40,42 +40,60 @@ class DepartmentController extends Controller {
 		// return $this->sendResponse($data);
 		// return $persons;
 	}
-
-	public function showSingleDepartment($dept_id) {
-		$department = Department::select('name', 'description', 'entity_type')
-		->where('department_id', 'academic_departments:'.$dept_id)->first();
+	/**
+	 * [showAllDepartments returns all Departments]
+	 * url:  /departments
+	 * @return [JSON] [description]
+	 */
+	public function showAllDepartments() {
+		return $this->sendResponse(Department::all());
+	}
+	/**
+	 * [showSpecificDepartment returns a specific department passed in by the $dept_id]
+	 * @param  [int] $dept_id 
+	 * @return [JSON]          [description]
+	 */
+	public function showSpecificDepartment($dept_id) {
+		$department = Department::where('entities_id', 'departments:'.$dept_id)->with('contacts')->get();
 		return $this->sendResponse($department);
 	}
 
-	public function showMembersByDepartment1($dept_id) {
-			$members = Person::findMembersByDepartment($dept_id)->get();
-			return $members;
-	}
+	// public function showDepartmentMembers($dept_id) {
+	// 	$members = Department::with('person')
+	// 		->where('entities_id', 'departments:'.$dept_id)
+	// 		->get();
+	// 	return $this->sendResponse($members);
+	// }
 
-	public function showMembersByDepartment($dept_id, $length) {
+	// public function showSingleDepartment($dept_id) {
+	// 	$department = Department::select('name', 'description', 'entity_type')
+	// 	->where('department_id', 'academic_departments:'.$dept_id)->first();
+	// 	return $this->sendResponse($department);
+	// }
 
-		if ($length == "full") {
-			$members = Person::findMembersByDepartment($dept_id)->get();
-			return $members;
-		}
+	// public function showMembersByDepartment1($dept_id) {
+	// 		$members = Person::findMembersByDepartment($dept_id)->get();
+	// 		return $members;
+	// }
 
-		else if ($length == "brief") {
-			$members = Person::findMembersByDepartment($dept_id)
-			->select('first_name', 'last_name','display_name', 'email', 'rank')->get();
-			return $members;
-		}
-	}
+	// public function showMembersByDepartment($dept_id, $length) {
 
-	public function showPersonInDepartment() {
+	// 	if ($length == "full") {
+	// 		$members = Person::findMembersByDepartment($dept_id)->get();
+	// 		return $members;
+	// 	}
 
-	}
+	// 	else if ($length == "brief") {
+	// 		$members = Person::findMembersByDepartment($dept_id)
+	// 		->select('first_name', 'last_name','display_name', 'email', 'rank')->get();
+	// 		return $members;
+	// 	}
+	// }
 
-	public function showAllDepartmentChairs() {
-		$departmentChairs = Person::whereHas('departmentUser', function($q) {
-			$q->where('role_name', 'chair');
-		})->with('departments')->get();
-		return $departmentChairs;
+	// public function showPersonInDepartment($dept_id, $email) {
+	// 	$person = Person::
+	// }
 
-	 }	
+
 
 }

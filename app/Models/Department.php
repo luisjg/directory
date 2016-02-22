@@ -3,8 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model {
-	protected $table = 'faculty.departments';
+	protected $table = 'nemo.departments';
 	protected $primaryKey = 'department_id';
-
 
 }

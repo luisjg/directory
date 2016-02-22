@@ -15,11 +15,11 @@ class CommitteeController extends Controller {
 	 * @param string $committee_id The short ID of the committee
 	 * @return Response
 	 */
-	public function showPeople($committee_id) {
+	public function showMembers($committee_id) {
 		// grab the committee with its associated people (ordered by their names)
 		$committee = Committee::with(['people' => function($q) {
 			$q->orderBy('last_name')->orderBy('first_name');
-		}])->findOrFail("committees:{$committee_id}");
+		}])->findOrFail("committees:$committee_id");
 
 		// convert the collection to an array for use in returning the
 		// desired response as JSON
@@ -29,7 +29,7 @@ class CommitteeController extends Controller {
 		return $this->sendResponse($data);
 	}
 
-	public function showCommittees(){
+	public function showCommittees() {
 		// /committees
 		//shows all current committees
 		$committee = Committee::where('entity_type',"Committee")->get();
@@ -39,8 +39,7 @@ class CommitteeController extends Controller {
 		$data = $committee->toArray();
 
 		// send the response back
-		return $this->sendResponse($data);
-		
+		return $this->sendResponse($data);	
 	}
 
 	public function showCommitteeMembers($committee_id){

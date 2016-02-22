@@ -12,15 +12,73 @@
 */
 
 $app->get('/', 'WelcomeController@index');
-// $app->get('departments/{dept_id}/people', 'DepartmentController@showPeople');
-$app->get('members/id/{individuals_id}', 'PersonController@showPersonByMemberID');
-$app->get('members/email/{email}', 'PersonController@showPersonByEmail');
-$app->get('departments/{dept_id}/members', 'DepartmentController@showMembersByDepartment1');
-//length would either be full or brief
-$app->get('departments/{dept_id}/members/{length}', 'DepartmentController@showMembersByDepartment');
-//show the department chairs for every single department
-$app->get('departmentchairs/list', 'DepartmentController@showAllDepartmentChairs');
-$app->get('departments/{dept_id}/members/email/{email}');
+
+//Routes using the MemberController
+/**
+ * The URI will only be members/{individuals_id} or members/{email}
+ * Doing members/id/{individual} and members/email/{email} for Steve to have two options.
+ */
+$app->get('members/id/{individuals_id}', 'MemberController@showMemberById');
+$app->get('members/email/{email}', 'MemberController@showMemberByEmail');
+
+
+
+//Routes for Departments
+$app->get('departments', 'DepartmentController@showAllDepartments');
+$app->get('departments/{dept_id}', 'DepartmentController@showSpecificDepartment');
+// $app->get('departments/{dept_id}/members', 'DepartmentController@showDepartmentMembers');
+// $app->get('departments/{dept_id}/members', 'DepartmentController@showMembersByDepartment1');
+
+// //length would either be full or brief
+// $app->get('departments/{dept_id}/members/{length}', 'DepartmentController@showMembersByDepartment');
+// //show the department chairs for every single department
+// $app->get('departmentchairs/list', 'DepartmentController@showAllDepartmentChairs');
+// $app->get('departments/{dept_id}/members/email/{email}', 'DepartmentController@showPersonInDepartment');
+
+//Routes for AcademicDepartments
+$app->get('academic_departments', 'AcademicDepartmentController@showAllAcademicDepartments');
+$app->get('academic_departments/{dept_id}', 'AcademicDepartmentController@showSpecificAcademicDepartment');
+$app->get('academic_departments/{dept_id}/members/{length}', 'AcademicDepartmentController@showAllMembers');
+$app->get('academic_departments/{dept_id}/member/{email}', 'AcademicDepartmentController@showDeptSpecificPerson');
+$app->get('academic_departments/department_chairs/list', 'AcademicDepartmentController@showAllDepartmentChairs');
+
+//Routes for Committees'
+// $app->get('committees', 'CommitteeController@showCommittees');
+// $app->get('committees/{committee_id}/members', 'CommitteeController@showMembers');
+// $app->get('committees/{committee_id}', 'CommitteeController@showCommitteeMembers');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
