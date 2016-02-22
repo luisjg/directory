@@ -54,7 +54,7 @@ class DepartmentController extends Controller {
 	 * @return [JSON]          [description]
 	 */
 	public function showSpecificDepartment($dept_id) {
-		$department = Department::where('entities_id', 'departments:'.$dept_id)->with('contacts')->get();
+		$department = Department::where('entities_id', 'departments:'.$dept_id)->get();
 		return $this->sendResponse($department);
 	}
 
