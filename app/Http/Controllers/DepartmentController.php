@@ -93,6 +93,7 @@ class DepartmentController extends Controller {
 	// public function showPersonInDepartment($dept_id, $email) {
 	// 	$person = Person::
 	// }
+	
 
 
 

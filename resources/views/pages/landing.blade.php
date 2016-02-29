@@ -46,6 +46,13 @@
 
 			<dt>Get the Academic Technology Committee with its associated members</dt>
 			<dd><a href="{{ url('api/committees/atc/people') }}">{{ url('api/committees/atc/people') }}</a></dd>
+			<br/>			
+			For Nerces
+			<dt>Retrieves the list of all the colleges along with the departments associated with their college.</dt>
+			<dd><a href="{{ url('colleges') }}">{{ url('colleges') }}</a></dd>
+			<dt>Retrieves the list of all academic departments</dt>
+			<dd><a href="{{ url('academic_departments/189/members/brief') }}">{{ url('academic_departments/189/members/brief') }}</a></dd>
+			<dd><a href="{{ url('academic_departments/189/members/full') }}">{{ url('academic_departments/189/members/full') }}</a></dd>
 		</dl>
 	</div>
 </body>

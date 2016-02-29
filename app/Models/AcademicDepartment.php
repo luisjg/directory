@@ -31,4 +31,6 @@ class AcademicDepartment extends Model
 	public function contacts() {
 		return $this->hasMany('App\Models\Contact', 'entities_id');
 	}
+
+	
 }

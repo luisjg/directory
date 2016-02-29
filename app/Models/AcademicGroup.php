@@ -24,6 +24,7 @@ class AcademicGroup extends Model
 	 * @return Builder|Model
 	 */
 	public function departments() {
-		return $this->hasMany("App\Models\AcademicDepartment", "department_id", "college_id");
+		return $this->hasMany("App\Models\AcademicDepartment", 'college_id', 'department_id');
 	}
+	
 }
