@@ -50,6 +50,13 @@
 			<dt>Get the Academic Technology Committee with its associated members</dt>
 			<dd><a href="{{ url('api/committees/atc/people') }}">{{ url('api/committees/atc/people') }}</a></dd> -->
 
+			<h2>Single Entity</h2>
+			<dl>
+				<dt>Retrieves information of a single entity</dt>
+				<dd><a href="{{ url('members/email/steven.fitzgerald@csun.edu') }}">{{ url('members/email/steven.fitzgerald@csun.edu') }}</a></dd>	
+				<!-- <dd><a href="{{ url('members/id/100010526') }}">{{ url('members/id/100010526') }}</a></dd>			 -->
+			</dl>
+
 			<h2>Members</h2>
 			<dl>
 				<dt>Retrieves the list of all members in an  academic departments</dt>
@@ -69,7 +76,7 @@
 				<dt>Retrieves a specific person in a department by their email with their contact info</dt>
 				<dd><a href="{{ url('academic_departments/189/member/steve@csun.edu') }}">{{ url('academic_departments/189/member/steve@csun.edu') }}</a></dd>
 				<dt>Retrieves all of the academic department chairs</dt>
-				<dd><a href="{{ url('academic_departments/department_chairs') }}">{{ url('academic_departments/department_chairs') }}</a></dd>
+				<dd><a href="{{ url('academic_departments/department_chairs/list') }}">{{ url('academic_departments/department_chairs/list') }}</a></dd>
 			</dl>
 			<h2>Administrative Departments</h2>
 			<dl>
