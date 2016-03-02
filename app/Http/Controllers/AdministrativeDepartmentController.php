@@ -36,6 +36,12 @@ class AdministrativeDepartmentController extends Controller {
 		return $this->sendResponse($data);
 	}
 
+	public function showSpecificAdministrativeDepartment($dept_id) {
+		$administrativeDept = AdministrativeDepartment::where('entities_id', 'departments:'.$dept_id)->get();
+		$data = $administrativeDept->toArray();
+		return $this->sendResponse($data);
+	}
+
 	public function showDeptSpecificPerson($dept_id, $email)
 	{
 		//{dept_id}/members/{email}

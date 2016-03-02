@@ -33,9 +33,10 @@ $app->group(['prefix' => 'members', 'namespace' => 'App\Http\Controllers'], func
 //Routes for AdministrativeDepartments
 $app->group(['prefix' => 'administrative_departments', 'namespace' => 'App\Http\Controllers'], function($app){
 	$app->get('/','AdministrativeDepartmentController@showAllAdministrativeDepartments');
-	$app->get('/{dept_id}','AdministrativeDepartmentController@showPeople');
-	$app->get('/{dept_id}/members/{email}','AdministrativeDepartmentController@showDeptSpecificPerson');
-	$app->get('/id/{member_id}', 'AdministrativeDepartmentController@showPersonByID');
+	//must add this with its contact information
+	$app->get('{dept_id}', 'AdministrativeDepartmentController@showSpecificAdministrativeDepartment');
+	$app->get('/{dept_id}/members','AdministrativeDepartmentController@showPeople');
+	$app->get('/{dept_id}/member/{member_id}', 'AdministrativeDepartmentController@showPersonByID');
 });
 
 // $app->get('departments/{dept_id}/members', 'DepartmentController@showDepartmentMembers');
@@ -53,7 +54,8 @@ $app->group(['prefix' => 'academic_departments', 'namespace' => 'App\Http\Contro
 	$app->get('/{dept_id}', 'AcademicDepartmentController@showSpecificAcademicDepartment');
 	$app->get('/{dept_id}/members/{length}', 'AcademicDepartmentController@showAllMembers');
 	$app->get('/{dept_id}/member/{email}', 'AcademicDepartmentController@showDeptSpecificPerson');
-	$app->get('/department_chairs/list', 'AcademicDepartmentController@showAllDepartmentChairs');
+	// $app->get('/department_chairs', 'AcademicDepartmentController@showAllDepartmentChairs');
+	$app->get('department_chairs/list', 'AcademicDepartmentController@showAllDepartmentChairs');
 });
 
 
@@ -66,7 +68,6 @@ $app->group(['prefix' => 'academic_departments', 'namespace' => 'App\Http\Contro
 $app->group(['prefix' => 'colleges', 'namespace' => 'App\Http\Controllers'], function ($app) {
 	$app->get('/', 'AcademicGroupController@showAllAcademicGroups');
 	$app->get('/{dept_id}', 'AcademicGroupController@showDepartmentsInAcademicGroup');
-	$app->get('/{dept_id}/department_chairs/list', 'AcademicGroupController@showDepartmentChairsInAcademicGroups');
 });
 
 
