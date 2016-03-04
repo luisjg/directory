@@ -52,7 +52,8 @@ class CommitteeController extends Controller {
 		return $this->sendResponse($data);
 
 	}
-	public function showCommitteesByPerson($member_id){
+
+	public function showCommitteesByMemberId($member_id){
 		$committees = Contact::with('person')
 			->where('entities_id', 'members:'.$member_id)
 			->where('parent_entities_id','like','%committees:%')
