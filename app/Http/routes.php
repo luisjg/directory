@@ -49,13 +49,12 @@ $app->group(['prefix' => 'administrative_departments', 'namespace' => 'App\Http\
 // $app->get('departments/{dept_id}/members/email/{email}', 'DepartmentController@showPersonInDepartment');
 
 //Routes for AcademicDepartments
-$app->group(['prefix' => 'academic_departments', 'namespace' => 'App\Http\Controllers'], function($app) {
+$app->group(['prefix' => 'academic-departments', 'namespace' => 'App\Http\Controllers'], function($app) {
 	$app->get('/', 'AcademicDepartmentController@showAllAcademicDepartments');
+	$app->get('/chairs', 'AcademicDepartmentController@showAllDepartmentChairs');
 	$app->get('/{dept_id}', 'AcademicDepartmentController@showSpecificAcademicDepartment');
 	$app->get('/{dept_id}/members/{length}', 'AcademicDepartmentController@showAllMembers');
 	$app->get('/{dept_id}/member/{email}', 'AcademicDepartmentController@showDeptSpecificPerson');
-	// $app->get('/department_chairs', 'AcademicDepartmentController@showAllDepartmentChairs');
-	$app->get('department_chairs/list', 'AcademicDepartmentController@showAllDepartmentChairs');
 });
 
 
