@@ -110,8 +110,7 @@ class AcademicDepartmentController extends Controller {
 	public function showAllDepartmentChairs() {
 		$departmentChairs = Person::whereHas('departmentUser', function($q) {
 			$q->where('role_name', 'chair')->orderBy('last_name');
-		})->with('departments')
-		->get();
+		})->get();
 		return $departmentChairs;
  	}	
 
