@@ -100,8 +100,14 @@
 			</dl>
 			<h2>Committees</h2>
 			<dl>
-				<dt></dt>
-				<dd></dd>
+				<dt>Retrieves the list of all the committees</dt>
+				<dd><a href="{{ url('committees') }}">{{ url('committees') }}</a></dd>
+				<dt>Retrieves all members of a specific committee</dt>
+				<dd><a href="{{ url('committees/atc') }}">{{ url('committees/atc') }}</a></dd>
+				<dt>Retrieves all members in a committee</dt>
+				<dd><a href="{{ url('committees/aggab/members') }}">{{ url('committees/aggab/members') }}</a></dd>
+				<dt>Retrieves a specific member in a committee</dt>
+				<dd><a href="{{ url('committees/member/009630099') }}">{{ url('committees/member/009630099') }}</a></dd>
 			</dl>	
 	</div>
 </body>

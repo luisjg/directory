@@ -64,7 +64,7 @@ $app->group(['prefix' => 'committees', 'namespace' => 'App\Http\Controllers'], f
 	$app->get('/', 'CommitteeController@showCommittees');
 	$app->get('/{committee_id}/members', 'CommitteeController@showMembers');
 	$app->get('/{committee_id}', 'CommitteeController@showCommitteeMembers');
-	// $app->get('/member/{member_id}', 'CommitteeController@showCommitteesByMemberId');
+	$app->get('/member/{member_id}', 'CommitteeController@showCommitteesByMemberId');
 });
 
 //Routes for Colleges
