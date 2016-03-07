@@ -63,7 +63,7 @@ $app->group(['prefix' => 'academic_departments', 'namespace' => 'App\Http\Contro
 $app->group(['prefix' => 'committees', 'namespace' => 'App\Http\Controllers'], function($app) {
 	$app->get('/', 'CommitteeController@showCommittees');
 	$app->get('/{committee_id}/members', 'CommitteeController@showMembers');
-	$app->get('/{committee_id}', 'CommitteeController@showCommitteeMembers');
+	$app->get('/{committee_id}', 'CommitteeController@showCommittee');
 	$app->get('/member/{member_id}', 'CommitteeController@showCommitteesByMemberId');
 });
 
