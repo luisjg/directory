@@ -55,8 +55,8 @@ $app->group(['prefix' => 'academic-departments', 'namespace' => 'App\Http\Contro
 	$app->get('/{dept_id}', 'AcademicDepartmentController@showSpecificAcademicDepartment');
 	$app->get('/{dept_id}/members/{length}', 'AcademicDepartmentController@showAllMembers');
 	$app->get('/{dept_id}/member/{email}', 'AcademicDepartmentController@showDeptSpecificPerson');
-	$app->get('/department_chairs', 'AcademicDepartmentController@showAllDepartmentChairs');
-	$app->get('department_chairs/list', 'AcademicDepartmentController@showAllDepartmentChairs');
+	// $app->get('/department_chairs', 'AcademicDepartmentController@showAllDepartmentChairs');
+	$app->get('department-chairs/list', 'AcademicDepartmentController@showAllDepartmentChairs');
 });
 
 
