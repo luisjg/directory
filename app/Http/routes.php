@@ -66,8 +66,8 @@ $app->group(['prefix' => 'academic-departments', 'namespace' => 'App\Http\Contro
 $app->group(['prefix' => 'colleges', 'namespace' => 'App\Http\Controllers'], function ($app) {
 	$app->get('/', 'AcademicGroupController@showAllAcademicGroups');
 	$app->get('/chairs', 'AcademicGroupController@showAllAcademicGroupChairs');
-	$app->get('/{dept_id}', 'AcademicGroupController@showDepartmentsInAcademicGroup');
-	$app->get('/{dept_id}/chair', 'AcademicGroupController@showAcademicGroupChair');
+	$app->get('/{college_id}', 'AcademicGroupController@showDepartmentsInAcademicGroup');
+	$app->get('/{college_id}/chairs', 'AcademicGroupController@showAcademicGroupChairs');
 });
 
 

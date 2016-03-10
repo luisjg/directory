@@ -5,6 +5,8 @@ use App\Handlers\HandlerUtilities;
 use App\Http\Controllers\Controller;
 use App\Models\AcademicGroup;
 use App\Models\Person;
+use App\Models\DepartmentUser;
+use App\Models\Department;
 
 class AcademicGroupController extends Controller {
 
@@ -24,15 +26,27 @@ class AcademicGroupController extends Controller {
 		return $chairs;
 	}
 
-	public function showDepartmentsInAcademicGroup($dept_id) {
-		$college = AcademicGroup::where('department_id', 'academic_groups:'.$dept_id)
-		->with('departments')
+	/**
+	 * Pulls in the chairs of a specific college
+	 * @param  String $college_id the college id code
+	 * @return Response
+	 */
+	public function showAcademicGroupChairs($college_id) {
+		$college = AcademicGroup::where('department_id','academic_groups:'.$college_id)
+		->with('departments.chairs') 
 		->get();
 		return $college;
 	}
 
-	public function showDepartmentChairsInAcademicGroups($dept_id) {
-		$college = AcademicGroup::where('department_id', 'academic_groups:'.$dept_id)->get();
+	public function showDepartmentsInAcademicGroup($college_id) {
+		$college = AcademicGroup::where('department_id', 'academic_groups:'.$college_id)
+		->with('departments') 
+		->get();
+		return $college;
+	}
+
+	public function showDepartmentChairsInAcademicGroups($college_id) {
+		$college = AcademicGroup::where('department_id', 'academic_groups:'.$college_id)->get();
 		return $college->departments;
 	}
 

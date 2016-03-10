@@ -97,6 +97,8 @@
 				<dd><a href="{{ url('colleges/chairs') }}">{{ url('colleges/chairs') }}</a></dd>
 				<dt>Retrieves a specific college with all the departments affiliated with that college</dt>
 				<dd><a href="{{ url('colleges/52') }}">{{ url('colleges/52') }}</a></dd>
+				<dt>Retrieves all chairs of specific college</dt>
+				<dd><a href="{{ url('colleges/52/chairs') }}">{{ url('colleges/52/chairs') }}</a></dd>
 			</dl>
 			<h2>Committees</h2>
 			<dl>
