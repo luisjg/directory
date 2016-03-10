@@ -73,6 +73,20 @@ $app->group(['prefix' => 'colleges', 'namespace' => 'App\Http\Controllers'], fun
 	$app->get('/{dept_id}', 'AcademicGroupController@showDepartmentsInAcademicGroup');
 });
 
+//Route for Centers
+$app->group(['prefix' => 'centers', 'namespace' => 'App\Http\Controllers'], function($app) {
+	$app->get('/', 'CenterController@showAllCenters');
+	$app->get('/{center_id}', 'CenterController@showSpecificCenter');
+	$app->get('/{center_id}/members', 'CenterController@showMembers');
+});
+
+//Route for Institutes
+$app->group(['prefix' => 'institutes', 'namespace' => 'App\Http\Controllers'], function($app) {
+	$app->get('/', 'InstituteController@showAllInstitutes');
+	$app->get('/{institute_id}', 'InstituteController@showSpecificInstitute');
+	$app->get('/{institute_id}/members', 'InstituteController@showMembers');
+});
+
 
 
 

@@ -101,6 +101,26 @@
 				<dt>Retrieves a specific member in a committee</dt>
 				<dd><a href="{{ url('committees/member/009630099') }}">{{ url('committees/member/009630099') }}</a></dd>
 			</dl>	
+
+			<h2>Centers</h2>
+			<dl>
+				<dt>Retrieves the list of all the centers</dt>
+				<dd><a href="{{ url('centers') }}">{{ url('centers') }}</a></dd>
+				<dt>Retrieves a specific center</dt>
+				<dd><a href="{{ url('centers/viscom') }}">{{ url('centers/viscom') }}</a></dd>
+				<dt>Retrieves the list of all members in a center</dt>
+				<dd><a href="{{ url('centers/viscom/members') }}">{{ url('centers/viscom/members') }}</a></dd>
+			</dl>
+
+			<h2>Institutes</h2>
+			<dl>
+				<dt>Retrieves the list of all institutes</dt>
+				<dd><a href="{{ url('institutes') }}">{{ url('institutes') }}</a></dd>
+				<dt>Retrieves a specific institute</dt>
+				<dd><a href="{{ url('institutes/ichwb') }}">{{ url('institutes/ichwb') }}</a></dd>
+				<dt>Retrieves the list of members in an institute</dt>
+				<dd><a href="{{ url('/institutes/ichwb/members') }}">{{ url('/institutes/ichwb/members') }}</a></dd>
+			</dl>
 	</div>
 </body>
 </html>
