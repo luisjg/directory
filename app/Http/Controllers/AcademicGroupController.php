@@ -38,6 +38,11 @@ class AcademicGroupController extends Controller {
 		return $college;
 	}
 
+/**
+ * Shows all the Departments within a college
+ * @param  String $college_id the college
+ * @return Response 
+ */
 	public function showDepartmentsInAcademicGroup($college_id) {
 		$college = AcademicGroup::where('department_id', 'academic_groups:'.$college_id)
 		->with('departments') 
