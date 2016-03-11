@@ -58,9 +58,12 @@ $app->group(['prefix' => 'academic-departments', 'namespace' => 'App\Http\Contro
 
 
 //Routes for Committees
-// $app->get('committees', 'CommitteeController@showCommittees');
-// $app->get('committees/{committee_id}/members', 'CommitteeController@showMembers');
-// $app->get('committees/{committee_id}', 'CommitteeController@showCommitteeMembers');
+$app->group(['prefix' => 'committees', 'namespace' => 'App\Http\Controllers'], function($app) {
+	$app->get('/', 'CommitteeController@showCommittees');
+	$app->get('/{committee_id}/members', 'CommitteeController@showMembers');
+	$app->get('/{committee_id}', 'CommitteeController@showCommittee');
+	$app->get('/member/{member_id}', 'CommitteeController@showCommitteesByMemberId');
+});
 
 //Routes for Colleges
 $app->group(['prefix' => 'colleges', 'namespace' => 'App\Http\Controllers'], function ($app) {

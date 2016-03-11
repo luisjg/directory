@@ -42,7 +42,13 @@ class CommitteeController extends Controller {
 		return $this->sendResponse($data);	
 	}
 
-	public function showCommitteeMembers($committee_id){
+	/**
+	 * Retrieves the committee members of a committee with their role
+	 * and contact information
+	 * @param  string $committee_id the committee short string
+	 * @return Response
+	 */
+	public function showCommitteeMemberRolesWithContact($committee_id){
 		$contacts = Contact::with('person')->where('parent_entities_id','committees:'.$committee_id)
 			->get();
 		// convert the collection to an array for use in returning the
@@ -52,7 +58,19 @@ class CommitteeController extends Controller {
 		return $this->sendResponse($data);
 
 	}
-	public function showCommitteesByPerson($member_id){
+
+	/**
+	 * Returns specific inromation about a given committee
+	 * @param  string $committee_id the committee short string
+	 * @return Response
+	 */
+	public function showCommittee($committee_id){
+		$committee = Committee::where('entities_id', 'committees:'.$committee_id)->get();
+		$data = $committee->toArray();
+		return $this->sendResponse($data);
+	}
+
+	public function showCommitteesByMemberId($member_id){
 		$committees = Contact::with('person')
 			->where('entities_id', 'members:'.$member_id)
 			->where('parent_entities_id','like','%committees:%')

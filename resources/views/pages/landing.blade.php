@@ -40,15 +40,6 @@
 		<h1>Directory Web Service</h1>
 
 		<h1>EXAMPLES</h1>
-		
-<!-- 			<dt>Get a listing of all individuals in Art (academic department)</dt>
-			<dd><a href="{{ url('api/departments/136/people') }}">{{ url('api/departments/136/people') }}</a></dd>
-
-			<dt>Get a listing of all individuals in Computer Science (academic department)</dt>
-			<dd><a href="{{ url('api/departments/189/people') }}">{{ url('api/departments/189/people') }}</a></dd>
-
-			<dt>Get the Academic Technology Committee with its associated members</dt>
-			<dd><a href="{{ url('api/committees/atc/people') }}">{{ url('api/committees/atc/people') }}</a></dd> -->
 
 			<h2>Single Entity</h2>
 			<dl>
@@ -100,10 +91,17 @@
 				<dt>Retrieves all chairs of specific college</dt>
 				<dd><a href="{{ url('colleges/52/chairs') }}">{{ url('colleges/52/chairs') }}</a></dd>
 			</dl>
+			
 			<h2>Committees</h2>
 			<dl>
-				<dt></dt>
-				<dd></dd>
+				<dt>Retrieves the list of all the committees</dt>
+				<dd><a href="{{ url('committees') }}">{{ url('committees') }}</a></dd>
+				<dt>Retrieves information of a specific committee</dt>
+				<dd><a href="{{ url('committees/atc') }}">{{ url('committees/atc') }}</a></dd>
+				<dt>Retrieves all members in a committee</dt>
+				<dd><a href="{{ url('committees/aggab/members') }}">{{ url('committees/aggab/members') }}</a></dd>
+				<dt>Retrieves a specific member in a committee</dt>
+				<dd><a href="{{ url('committees/member/009630099') }}">{{ url('committees/member/009630099') }}</a></dd>
 			</dl>	
 	</div>
 </body>
