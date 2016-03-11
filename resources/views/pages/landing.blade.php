@@ -51,36 +51,36 @@
 			<h2>Members</h2>
 			<dl>
 				<dt>Retrieves the list of all members in an  academic departments</dt>
-				<dd><a href="{{ url('academic_departments/189/members/full') }}">{{ url('academic_departments/189/members/full') }}</a></dd>	
-				<dd><a href="{{ url('academic_departments/189/members/brief') }}">{{ url('academic_departments/189/members/brief') }}</a></dd>			
+				<dd><a href="{{ url('academic-departments/189/members/full') }}">{{ url('academic-departments/189/members/full') }}</a></dd>	
+				<dd><a href="{{ url('academic-departments/189/members/brief') }}">{{ url('academic-departments/189/members/brief') }}</a></dd>			
 			</dl>
 
 			<h2>Academic Departments</h2>
 			<dl>
 				<dt>Retrieves the list of all academic departments</dt>
-				<dd><a href="{{ url('academic_departments') }}">{{ url('academic_departments') }}</a></dd>
+				<dd><a href="{{ url('academic-departments') }}">{{ url('academic-departments') }}</a></dd>
 				<dt>Retrieves a specific academic department</dt>
-				<dd><a href="{{ url('academic_departments/189') }}">{{ url('academic_departments/189') }}</a></dd>
+				<dd><a href="{{ url('academic-departments/189') }}">{{ url('academic-departments/189') }}</a></dd>
 				<dt>Retrieves all the members of an academic department</dt>
-				<dd><a href="{{ url('academic_departments/189/members/full') }}">{{ url('academic_departments/189/members/full') }}</a></dd>				
-				<dd><a href="{{ url('academic_departments/189/members/brief') }}">{{ url('academic_departments/189/members/brief') }}</a></dd>
+				<dd><a href="{{ url('academic-departments/189/members/full') }}">{{ url('academic-departments/189/members/full') }}</a></dd>				
+				<dd><a href="{{ url('academic-departments/189/members/brief') }}">{{ url('academic-departments/189/members/brief') }}</a></dd>
 				<dt>Retrieves a specific person in a department by their email with their contact info</dt>
-				<dd><a href="{{ url('academic_departments/189/member/steve@csun.edu') }}">{{ url('academic_departments/189/member/steve@csun.edu') }}</a></dd>
+				<dd><a href="{{ url('academic-departments/189/member/steve@csun.edu') }}">{{ url('academic-departments/189/member/steve@csun.edu') }}</a></dd>
 				<dt>Retrieves all of the academic department chairs</dt>
-				<dd><a href="{{ url('academic_departments/department_chairs/list') }}">{{ url('academic_departments/department_chairs/list') }}</a></dd>
+				<dd><a href="{{ url('academic-departments/department-chairs/list') }}">{{ url('academic-departments/department-chairs/list') }}</a></dd>
 			</dl>
 			<h2>Administrative Departments</h2>
 			<dl>
 				<dt>Retrieves all of the administrative departments</dt>
-				<dd><a href="{{ url('administrative_departments') }}">{{ url('administrative_departments') }}</a></dd>
+				<dd><a href="{{ url('administrative-departments') }}">{{ url('administrative-departments') }}</a></dd>
 				<dt>Retrieves a specific administrative department</dt>
-				<dd><a href="{{ url('administrative_departments/10132') }}">{{ url('administrative_departments/10132') }}</a></dd>
+				<dd><a href="{{ url('administrative-departments/10132') }}">{{ url('administrative-departments/10132') }}</a></dd>
 				<dt>Retrieves all members of an administrative department</dt>
-				<dd><a href="{{ url('administrative_departments/10132/members') }}">{{ url('administrative_departments/10132/members') }}</a></dd>
-				<dd><a href="{{ url('administrative_departments/') }}"></a></dd>
+				<dd><a href="{{ url('administrative-departments/10132/members') }}">{{ url('administrative-departments/10132/members') }}</a></dd>
+				<dd><a href="{{ url('administrative-departments/') }}"></a></dd>
 
 				<dt>Retrieves a specific member in a administrative department by id</dt>
-				<dd><a href="{{ url('administrative_departments/10132/member/105957681') }}">{{ url('administrative_departments/10132/member/105957681') }}</a></dd>
+				<dd><a href="{{ url('administrative-departments/10132/member/105957681') }}">{{ url('administrative-departments/10132/member/105957681') }}</a></dd>
 			</dl>
 			<h2>Colleges</h2>
 			<dl>
