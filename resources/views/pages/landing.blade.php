@@ -66,11 +66,6 @@
 				<dd><a href="{{ url('academic-departments/189/members/brief') }}">{{ url('academic-departments/189/members/brief') }}</a></dd>
 				<dt>Retrieves a specific person in a department by their email with their contact info</dt>
 				<dd><a href="{{ url('academic-departments/189/member/steve@csun.edu') }}">{{ url('academic-departments/189/member/steve@csun.edu') }}</a></dd>
-<<<<<<< HEAD
-				<dt>Retrieves all of the academic department chairs</dt>
-				<dd><a href="{{ url('academic-departments/department-chairs/list') }}">{{ url('academic-departments/department-chairs/list') }}</a></dd>
-=======
->>>>>>> DIR-13
 			</dl>
 			<h2>Administrative Departments</h2>
 			<dl>
