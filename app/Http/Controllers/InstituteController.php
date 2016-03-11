@@ -14,7 +14,7 @@ class InstituteController extends Controller {
 
 	public function showAllInstitutes() {
 		$institutes = Institute::where('connectable_id', 'LIKE', 'institutes:%')
-			->first();
+			->get();
 		$data = $institutes->toArray();
 		return $this->sendResponse($data);
 	}

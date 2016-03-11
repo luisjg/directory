@@ -13,7 +13,7 @@ use App\Models\Center;
 class CenterController extends Controller {
 
 	public function showAllCenters() {
-		$centers = Center::where('connectable_id', 'LIKE', 'centers:%')->first();
+		$centers = Center::where('connectable_id', 'LIKE', 'centers:%')->get();
 		$data = $centers->toArray();
 		return $this->sendResponse($data);
 	}
