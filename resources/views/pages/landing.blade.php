@@ -55,7 +55,21 @@
 				<dd><a href="{{ url('academic-departments/189/members/brief') }}">{{ url('academic-departments/189/members/brief') }}</a></dd>			
 			</dl>
 
-			<h2>Academic Departments</h2>
+			<h2>Departments</h2>
+			<dl>
+				<dt>Retrieves the list of all departments</dt>
+				<dd><a href="{{ url('departments') }}">{{ url('departments') }}</a></dd>
+				<dt>Retrieves the list of all aadministrative departments</dt>
+				<dd><a href="{{ url('departments/administrative') }}">{{ url('departments/administrative') }}</a></dd>
+				<dt>Retrieves a specific department</dt>
+				<dd><a href="{{ url('departments/189') }}">{{ url('departments/189') }}</a></dd>
+				<dd><a href="{{ url('departments/10132') }}">{{ url('departments/10132') }}</a></dd>
+				<dt>Retrieves all members of a specific department</dt>
+				<dd><a href="{{ url('departments/189/members') }}">{{ url('departments/189/members') }}</a></dd>
+				<dd><a href="{{ url('departments/10132/members') }}"> {{ url('departmens/10132/members') }}</a></dd>
+			</dl>
+
+			<!-- <h2>Academic Departments</h2>
 			<dl>
 				<dt>Retrieves the list of all academic departments</dt>
 				<dd><a href="{{ url('academic-departments') }}">{{ url('academic-departments') }}</a></dd>
@@ -81,7 +95,7 @@
 
 				<dt>Retrieves a specific member in a administrative department by id</dt>
 				<dd><a href="{{ url('administrative-departments/10132/member/105957681') }}">{{ url('administrative-departments/10132/member/105957681') }}</a></dd>
-			</dl>
+			</dl> -->
 			<h2>Colleges</h2>
 			<dl>
 				<dt>Retrieves the list of all the colleges along with the departments associated with their college.</dt>
