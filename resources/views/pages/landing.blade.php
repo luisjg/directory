@@ -80,8 +80,6 @@
 				<dd><a href="{{ url('academic-departments/189/members/brief') }}">{{ url('academic-departments/189/members/brief') }}</a></dd>
 				<dt>Retrieves a specific person in a department by their email with their contact info</dt>
 				<dd><a href="{{ url('academic-departments/189/member/steve@csun.edu') }}">{{ url('academic-departments/189/member/steve@csun.edu') }}</a></dd>
-				<dt>Retrieves all of the academic department chairs</dt>
-				<dd><a href="{{ url('academic-departments/department-chairs/list') }}">{{ url('academic-departments/department-chairs/list') }}</a></dd>
 			</dl>
 			<h2>Administrative Departments</h2>
 			<dl>
@@ -100,8 +98,12 @@
 			<dl>
 				<dt>Retrieves the list of all the colleges along with the departments associated with their college.</dt>
 				<dd><a href="{{ url('colleges') }}">{{ url('colleges') }}</a></dd>
-				<dt>Retrieves a specific college with all the departments affiliated with that college </dt>
+				<dt>Retrieves the list of all the chairs of the colleges</dt>
+				<dd><a href="{{ url('colleges/chairs') }}">{{ url('colleges/chairs') }}</a></dd>
+				<dt>Retrieves a specific college with all the departments affiliated with that college</dt>
 				<dd><a href="{{ url('colleges/52') }}">{{ url('colleges/52') }}</a></dd>
+				<dt>Retrieves all chairs of specific college</dt>
+				<dd><a href="{{ url('colleges/52/chairs') }}">{{ url('colleges/52/chairs') }}</a></dd>
 			</dl>
 			
 			<h2>Committees</h2>

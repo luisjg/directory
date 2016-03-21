@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Person;
 
 class AcademicDepartment extends Model
 {
@@ -32,5 +33,9 @@ class AcademicDepartment extends Model
 		return $this->hasMany('App\Models\Contact', 'entities_id');
 	}
 
-	
+	public function chairs() {
+		// return $this->belongsToMany('App\Models\Person', 'department_user', 'department_id', 'user_id')->where('role_name', 'chair');
+		return $this->belongsToMany('App\Models\Person', 'department_user', 'department_id', 'user_id')->withPivot('role_name')->wherePivot('role_name', 'chair');
+	}
+
 }

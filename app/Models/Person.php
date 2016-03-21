@@ -34,8 +34,9 @@ class Person extends Model {
 			$q->where('department_id', 'academic_departments:'.$dept_id);
 		});
 	}
-		public function departments() {
-			return $this->belongsToMany('App\Models\AcademicDepartment', 'department_user', 'user_id','department_id');
+	
+	public function departments() {
+		return $this->belongsToMany('App\Models\AcademicDepartment', 'department_user', 'user_id', 'department_id');
 	}
 
 	// public function getRankAttribute($value) {
