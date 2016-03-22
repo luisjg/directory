@@ -33,6 +33,7 @@ class CommitteeController extends Controller {
 		$people = Person::whereHas('entityUser', function($q) use ($committee_id) {
 			$q->where('parent_entities_id', 'committees:'.$committee_id);
 		})->with('entityUser', 'contacts', 'image')
+		  ->orderBy('last_name', 'ASC')
 		  ->get();
 		 return $this->sendResponse($people);
 	}
@@ -94,6 +95,6 @@ class CommitteeController extends Controller {
 			$q->where('user_id', 'members:'.$member_id);
 		})->with('entityUser', 'contacts', 'image')
 		  ->first();
-		 return $person;
+		 return $this->sendResponse($person);
 	}
 }
