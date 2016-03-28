@@ -76,9 +76,12 @@ class DepartmentController extends Controller {
 	 * @return JSON Response
 	 */
 	public function showSpecificDepartment($dept_id) {
-		$department = AcademicDepartment::where('department_id', 'academic_departments:'.$dept_id)->with('contacts')->first();
-		if(is_null($department)) {
+		$department = AcademicDepartment::find('academic_departments:'.$dept_id);
+		if(is_null($department)){
+			$department = AdministrativeDepartment::findOrFail('departments:'.$dept_id);
 			$department = AdministrativeDepartment::where('entities_id', 'departments:'.$dept_id)->get();
+		} else {
+			$department = AcademicDepartment::where('department_id', 'academic_departments:'.$dept_id)->with('contacts')->first();
 		}
 		$data = $department->toArray();
 		return $this->sendResponse($data);
