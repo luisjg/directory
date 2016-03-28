@@ -9,7 +9,7 @@ class Person extends Model {
 	protected $fillable = [];
 
 	public function departmentUser() {
-		return $this->hasMany('App\Models\DepartmentUser', 'user_id');
+		return $this->hasMany('App\Models\DepartmentUser', 'user_id')->where('confidential', 0);
 	}
 
 	public function entityUser() {
