@@ -14,41 +14,19 @@ class CommitteeController extends Controller {
 	 *
 	 * @param string $committee_id The short ID of the committee
 	 * @return Response
-	 */
-	// public function showMembers($committee_id) {
-	// 	// grab the committee with its associated people (ordered by their names)
-	// 	$committee = Committee::with(['people' => function($q) {
-	// 		$q->orderBy('last_name')->orderBy('first_name');
-	// 	}])->findOrFail("committees:$committee_id");
-
-	// 	// convert the collection to an array for use in returning the
-	// 	// desired response as JSON
-	// 	$data = $committee->toArray();
-
-	// 	// send the response back
-	// 	return $this->sendResponse($data);
-	// }
-	// 
+	 */	
 	public function showMembers($committee_id) {
-		$people = Person::whereHas('entityUser', function($q) use ($committee_id) {
-			$q->where('parent_entities_id', 'committees:'.$committee_id);
-		})->with('entityUser', 'contacts', 'image')
-		  ->orderBy('last_name', 'ASC')
-		  ->get();
-		 return $this->sendResponse($people);
+		$committee = Committee::with(['people' => function($q) {
+			$q->orderBy('last_name', 'DESC');
+		}])->findOrFail('committees:'.$committee_id);
+
+		return $this->sendResponse($committee);
 	}
 
+	
 	public function showCommittees() {
-		// /committees
-		//shows all current committees
-		$committee = Committee::where('entity_type',"Committee")->get();
-
- 		// convert the collection to an array for use in returning the
-		// desired response as JSON
-		$data = $committee->toArray();
-
-		// send the response back
-		return $this->sendResponse($data);	
+		$committees = Committee::where('parent_entities_id', 'LIKE', 'committees:%')->get();
+		return $this->sendResponse($committees);
 	}
 
 	/**
@@ -72,10 +50,10 @@ class CommitteeController extends Controller {
 	 * @param  string $committee_id the committee short string
 	 * @return Response
 	 */
-	public function showCommittee($committee_id){
-		$committee = Committee::where('entities_id', 'committees:'.$committee_id)->get();
-		$data = $committee->toArray();
-		return $this->sendResponse($data);
+	public function showCommittee($committee_id) {
+		$committee = Committee::where('parent_entities_id', 'committees:'.$committee_id)
+					->first();
+		return $this->sendResponse($committee);
 	}
 
 	// public function showCommitteesByMemberId($member_id){
