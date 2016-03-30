@@ -45,17 +45,18 @@ class Handler extends ExceptionHandler
     {
         if ($e instanceof NotFoundHttpException) {
             return response()->json([
-                'status' => '200',
-                'success' => 'true',
-                'error' => 'errors'
+                'status' => '404',
+                'success' => 'false',
+                'error' => 'Invalid url.'
+
             ]);
         }
 
         if ($e instanceof ModelNotFoundException) {
             return response()->json([
                 'status' => '200',
-                'success' => 'true',
-                'error' => 'errors'
+                'success' => 'false',
+                'error' => 'Entity does not exist.'
             ]);
         }
 

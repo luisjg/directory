@@ -46,8 +46,12 @@ class AcademicGroupController extends Controller {
 	public function showDepartmentsInAcademicGroup($college_id) {
 		$college = AcademicGroup::where('department_id', 'academic_groups:'.$college_id)
 		->with('departments') 
-		->get();
-		return $college;
+		->firstOrFail();
+
+		// $college = AcademicGroup::with('departments')
+		// ->findOrFail('academic_groups:'.$college_id);
+		//return $college;
+		return $this->sendResponse($college, "college");
 	}
 
 	public function showDepartmentChairsInAcademicGroups($college_id) {
