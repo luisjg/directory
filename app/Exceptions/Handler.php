@@ -3,8 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
-use Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 
@@ -42,12 +43,21 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if ($e instanceof NotFoundHttpException) {
-            return '123';
+            return response()->json([
+                'status' => '404',
+                'success' => 'false',
+                'error' => 'Invalid url.'
+            ]);
         }
 
         if ($e instanceof ModelNotFoundException) {
-            return '123';
+            return response()->json([
+                'status' => '200',
+                'success' => 'false',
+                'error' => 'Entity does not exist.'
+            ]);
         }
+
         return parent::render($request, $e);
     }
 }
