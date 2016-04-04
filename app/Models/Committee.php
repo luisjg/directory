@@ -4,8 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Committee extends Model {
 
-	protected $table = 'nemo.entities';			
-	protected $primaryKey = 'entities_id';
+	protected $table = 'faculty.entity_user';			
+	protected $primaryKey = 'parent_entities_id';
 	protected $fillable = [];
 
 	/**
