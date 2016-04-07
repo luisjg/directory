@@ -48,7 +48,7 @@ class DepartmentController extends Controller {
 	 * Returns all academic departmentUser
 	 * @return JSON Response
 	 */
-	public function showAllDepartments() {
+	public function showAllAcademicDepartments() {
 		// return all the academic departments
 		$academicDepts = AcademicDepartment::where('entity_type', 'Academic Department')	
 			->get();
@@ -58,6 +58,15 @@ class DepartmentController extends Controller {
 
 		// send the response
 		return $this->sendResponse($data);
+	}
+
+	public function showAllDepartments() {
+		$academicDepts = AcademicDepartment::where('entity_type', 'Academic Department')
+			->get();
+		$financialDepts = AdministrativeDepartment::where('entity_type', 'Department')
+			->get();
+		$departments = $academicDepts->merge($financialDepts);
+		return $this->sendResponse($departments);
 	}
 
 	/**

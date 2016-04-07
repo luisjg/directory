@@ -26,6 +26,7 @@ $app->group(['prefix' => 'members', 'namespace' => 'App\Http\Controllers'], func
 //Routes for Departments
 $app->group(['prefix' => 'departments', 'namespace' => 'App\Http\Controllers'], function($app) {
 	$app->get('/', 'DepartmentController@showAllDepartments');
+	$app->get('/academic', 'DepartmentController@showAllAcademicDepartments');
 	$app->get('/administrative', 'DepartmentController@showAllAdministrativeDepartments');
 	$app->get('/{dept_id}', 'DepartmentController@showSpecificDepartment');
 	$app->get('/{dept_id}/members', 'DepartmentController@showAllMembersInDepartment');
