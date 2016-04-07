@@ -15,13 +15,13 @@ class CenterController extends Controller {
 	public function showAllCenters() {
 		$centers = Center::where('connectable_id', 'LIKE', 'centers:%')->get();
 		$data = $centers->toArray();
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "center");
 	}
 
 	public function showSpecificCenter($center_id) {
 		$centers = Center::where('connectable_id', 'LIKE', 'centers:'.$center_id)->get();
 		$data = $centers->toArray();
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "center");
 	}
 
 	public function showMembers($center_id) {
@@ -31,6 +31,6 @@ class CenterController extends Controller {
 		->get();
 
 		$data = $people->toArray();
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "people");
 	}
 }

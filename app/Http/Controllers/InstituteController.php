@@ -16,14 +16,14 @@ class InstituteController extends Controller {
 		$institutes = Institute::where('connectable_id', 'LIKE', 'institutes:%')
 			->get();
 		$data = $institutes->toArray();
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "institute");
 	}
 
 	public function showSpecificInstitute($institute_id) {
 		$institute = Institute::where('connectable_id', 'institutes:'.$institute_id)
 			->first();
 		$data = $institute->toArray();
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "institute");
 	}
 
 	public function showMembers($institute_id) {
@@ -31,7 +31,7 @@ class InstituteController extends Controller {
 			$q->where('parent_entities_id', 'institutes:'. $institute_id);
 		})->get();
 		$data = $institute->toArray();
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "people");
 	}
 
 
