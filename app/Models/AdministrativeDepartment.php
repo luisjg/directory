@@ -9,7 +9,6 @@ class AdministrativeDepartment extends Model
 	 *
 	 * @var string
 	 */
-	//protected $table = \DB::table('departments')->where('')
 	protected $table = 'nemo.departments';
 
 	/**
