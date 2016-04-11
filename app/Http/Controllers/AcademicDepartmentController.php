@@ -93,10 +93,6 @@ class AcademicDepartmentController extends Controller {
 			$query->where('parent_entities_id','academic_departments:'.$dept_id)
 				  ->where('email', $email);
 		})->first();
-		// convert the collection to an array for use in returning the
-		// desired response as JSON
-		//dd($contact);
-	
 		$data = $contact->toArray();
 		
 		// send the response

@@ -18,6 +18,11 @@ class AcademicDepartment extends Model
 	 * @var string
 	 */
 	protected $primaryKey = 'department_id';
+
+	/**
+	 * The hidden attributes we do not want to see
+	 * @var array
+	 */
 	protected $hidden = array('created_at', 'updated_at');
 
 	/**
@@ -25,16 +30,26 @@ class AcademicDepartment extends Model
 	 *
 	 * @return Builder|Model
 	 */
-	public function academicGroup() {
+	public function academicGroup()
+	{
 		return $this->belongsTo("App\Models\AcademicGroup", "college_id", "department_id");
 	}
 
-	public function contacts() {
+	/**
+	 * Retrieves the contacts that this academic group has
+	 * @return Builder|Model
+	 */
+	public function contacts()
+	{
 		return $this->hasMany('App\Models\Contact', 'entities_id');
 	}
 
-	public function chairs() {
-		// return $this->belongsToMany('App\Models\Person', 'department_user', 'department_id', 'user_id')->where('role_name', 'chair');
+	/**
+	 * Retrieves the chairs that the academic group has
+	 * @return Builder|Model
+	 */
+	public function chairs()
+	{
 		return $this->belongsToMany('App\Models\Person', 'department_user', 'department_id', 'user_id')->withPivot('role_name')->wherePivot('role_name', 'chair');
 	}
 

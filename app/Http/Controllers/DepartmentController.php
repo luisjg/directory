@@ -76,8 +76,10 @@ class DepartmentController extends Controller {
 	 * @return JSON Response
 	 */
 	public function showSpecificDepartment($dept_id) {
+		// we try to get academic department first
 		$department = AcademicDepartment::where('department_id', 'academic_departments:'.$dept_id)->with('contacts')->first();
 		if(is_null($department)){
+			// if it's null we do a find or fail here to trigger the global event handler if we fail
 			$department = AdministrativeDepartment::findOrFail('departments:'.$dept_id);
 			$department = AdministrativeDepartment::where('entities_id', 'departments:'.$dept_id)->get();
 		}

@@ -45,11 +45,11 @@ class AcademicGroupController extends Controller {
 		return $college;
 	}
 
-/**
- * Retrieves all the Departments within a given college
- * @param  String $college_id the college id we're interested in
- * @return Response The JSON Response
- */
+	/**
+	 * Retrieves all the Departments within a given college
+	 * @param  String $college_id the college id we're interested in
+	 * @return Response The JSON Response
+	 */
 	public function showDepartmentsInAcademicGroup($college_id)
 	{
 		$college = AcademicGroup::where('department_id', 'academic_groups:'.$college_id)
@@ -68,7 +68,5 @@ class AcademicGroupController extends Controller {
 		$college = AcademicGroup::where('department_id', 'academic_groups:'.$college_id)->get();
 		return $college->departments;
 	}
-
-
 }
 

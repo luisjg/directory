@@ -4,7 +4,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Committee extends Model {
 
-	protected $table = 'faculty.entity_user';			
+	/**
+	 * The name of the table in the database
+	 * @var string
+	 */
+	protected $table = 'faculty.entity_user';
+	/**
+	 * The primary key in the table
+	 * @var string
+	 */
 	protected $primaryKey = 'parent_entities_id';
 	protected $fillable = [];
 
@@ -13,7 +21,8 @@ class Committee extends Model {
 	 *
 	 * @return Builder|Model
 	 */
-	public function people() {
+	public function people()
+	{
 		return $this->belongsToMany('App\Models\Person', 'nemo.memberships', 'parent_entities_id', 'individuals_id')
 			->withPivot('role_position', 'description', 'member_status')
 			->where('nemo.memberships.confidential', 0); // make sure "confidential" records are not included
