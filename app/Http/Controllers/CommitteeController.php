@@ -26,7 +26,7 @@ class CommitteeController extends Controller {
 	
 	public function showCommittees() {
 		$committees = Committee::where('parent_entities_id', 'LIKE', 'committees:%')->get();
-		return $this->sendResponse($committees);
+		return $this->sendResponse($committees, "committees");
 	}
 
 	/**

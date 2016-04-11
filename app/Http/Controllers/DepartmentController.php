@@ -57,7 +57,7 @@ class DepartmentController extends Controller {
 		$data = $academicDepts->toArray();
 
 		// send the response
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "departments");
 	}
 
 	/**
@@ -67,7 +67,7 @@ class DepartmentController extends Controller {
 	public function showAllAdministrativeDepartments() {
 		$administrativeDept = AdministrativeDepartment::all();
 		$data = $administrativeDept->toArray();
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "departments");
 	}
 
 	/**
@@ -79,7 +79,7 @@ class DepartmentController extends Controller {
 		$department = AcademicDepartment::where('department_id', 'academic_departments:'.$dept_id)->with('contacts')->first();
 		if(is_null($department)){
 			$department = AdministrativeDepartment::findOrFail('departments:'.$dept_id);
-			$department = AdministrativeDepartment::where('entities_id', 'departments:'.$dept_id)->get();
+			$department = AdministrativeDepartment::where('entities_id', 'departments:'.$dept_id)->first();
 		}
 		$data = $department->toArray();
 		return $this->sendResponse($data);

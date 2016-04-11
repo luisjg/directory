@@ -12,7 +12,7 @@ class AcademicGroupController extends Controller {
 
 	public function showAllAcademicGroups() {
 		$colleges = AcademicGroup::where('department_id', 'LIKE', 'academic\_groups:%')->with('departments')->get();
-		return $colleges;	
+		return $this->sendResponse($colleges, "colleges");	
 	}
 
 	/**
@@ -34,8 +34,8 @@ class AcademicGroupController extends Controller {
 	public function showAcademicGroupChairs($college_id) {
 		$college = AcademicGroup::where('department_id','academic_groups:'.$college_id)
 		->with('departments.chairs') 
-		->get();
-		return $college;
+		->first();
+		return $this->sendResponse($college, "college");
 	}
 
 /**

@@ -15,11 +15,11 @@ class CenterController extends Controller {
 	public function showAllCenters() {
 		$centers = Center::where('connectable_id', 'LIKE', 'centers:%')->get();
 		$data = $centers->toArray();
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "centers");
 	}
 
 	public function showSpecificCenter($center_id) {
-		$centers = Center::where('connectable_id', 'LIKE', 'centers:'.$center_id)->get();
+		$centers = Center::where('connectable_id', 'LIKE', 'centers:'.$center_id)->first();
 		$data = $centers->toArray();
 		return $this->sendResponse($data);
 	}
