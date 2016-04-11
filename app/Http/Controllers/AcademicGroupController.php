@@ -17,7 +17,7 @@ class AcademicGroupController extends Controller {
 	public function showAllAcademicGroups()
 	{
 		$colleges = AcademicGroup::where('department_id', 'LIKE', 'academic\_groups:%')->with('departments')->get();
-		return $colleges;	
+		return $this->sendResponse($colleges, "college");	
 	}
 
 	/**
@@ -29,7 +29,7 @@ class AcademicGroupController extends Controller {
 		$chairs = Person::whereHas('departmentUser', function($q) {
 			$q->where('role_name', 'chair')->orderBy('last_name');
 		})->get();
-		return $chairs;
+		return $this->sendResponse($chairs, "people");
 	}
 
 	/**
@@ -42,7 +42,7 @@ class AcademicGroupController extends Controller {
 		$college = AcademicGroup::where('department_id','academic_groups:'.$college_id)
 		->with('departments.chairs') 
 		->get();
-		return $college;
+		return $this->sendResponse($college, "college & people");
 	}
 
 	/**
@@ -55,7 +55,7 @@ class AcademicGroupController extends Controller {
 		$college = AcademicGroup::where('department_id', 'academic_groups:'.$college_id)
 		->with('departments') 
 		->get();
-		return $college;
+		return $this->sendResponse($college, "department");
 	}
 
 	/**

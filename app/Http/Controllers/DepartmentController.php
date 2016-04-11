@@ -42,7 +42,7 @@ class DepartmentController extends Controller {
 		// desired response as JSON
 		$data = $persons->toArray();
 		// send the response
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "people");
 	}
 	/**
 	 * Returns all academic departmentUser
@@ -57,7 +57,7 @@ class DepartmentController extends Controller {
 		$data = $academicDepts->toArray();
 
 		// send the response
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "department");
 	}
 
 	/**
@@ -67,7 +67,7 @@ class DepartmentController extends Controller {
 	public function showAllAdministrativeDepartments() {
 		$administrativeDept = AdministrativeDepartment::all();
 		$data = $administrativeDept->toArray();
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "department");
 	}
 
 	/**
@@ -84,6 +84,6 @@ class DepartmentController extends Controller {
 			$department = AdministrativeDepartment::where('entities_id', 'departments:'.$dept_id)->get();
 		}
 		$data = $department->toArray();
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "department");
 	}
 }

@@ -19,7 +19,7 @@ class CommitteeController extends Controller {
 			$q->orderBy('last_name', 'DESC');
 		}])->findOrFail('committees:'.$committee_id);
 
-		return $this->sendResponse($committee);
+		return $this->sendResponse($committee, "people");
 	}
 
 	/**
@@ -28,7 +28,7 @@ class CommitteeController extends Controller {
 	 */
 	public function showCommittees() {
 		$committees = Committee::where('parent_entities_id', 'LIKE', 'committees:%')->get();
-		return $this->sendResponse($committees);
+		return $this->sendResponse($committees, "committee");
 	}
 
 	/**
@@ -39,7 +39,7 @@ class CommitteeController extends Controller {
 	public function showCommittee($committee_id) {
 		$committee = Committee::where('parent_entities_id', 'committees:'.$committee_id)
 					->first();
-		return $this->sendResponse($committee);
+		return $this->sendResponse($committee, "committee");
 	}
 
 	/**
@@ -52,6 +52,6 @@ class CommitteeController extends Controller {
 			$q->where('user_id', 'members:'.$member_id);
 		})->with('entityUser', 'contacts', 'image')
 		  ->first();
-		 return $this->sendResponse($person);
+		 return $this->sendResponse($person, "people");
 	}
 }
