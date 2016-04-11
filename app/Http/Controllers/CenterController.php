@@ -33,6 +33,7 @@ class CenterController extends Controller {
 	 */
 	public function showSpecificCenter($center_id) {
 		$centers = Center::where('connectable_id', 'LIKE', 'centers:'.$center_id)->first();
+		$data = $centers->toArray();
 		return $this->sendResponse($data, "center");
 	}
 

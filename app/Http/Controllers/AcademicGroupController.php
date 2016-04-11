@@ -41,7 +41,7 @@ class AcademicGroupController extends Controller {
 	{
 		$college = AcademicGroup::where('department_id','academic_groups:'.$college_id)
 		->with('departments.chairs') 
-		
+		->first();
 		return $this->sendResponse($college, "college");
 	}
 
@@ -56,17 +56,6 @@ class AcademicGroupController extends Controller {
 		->with('departments') 
 		->get();
 		return $this->sendResponse($college, "department");
-	}
-
-	/**
-	 * Retrives the chair in a given AcademicGroup
-	 * @param  String $college_id the given college we're interested in
-	 * @return Response The JSON Response
-	 */
-	public function showDepartmentChairsInAcademicGroups($college_id)
-	{
-		$college = AcademicGroup::where('department_id', 'academic_groups:'.$college_id)->get();
-		return $college->departments;
 	}
 }
 
