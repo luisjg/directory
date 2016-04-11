@@ -3,9 +3,21 @@
 use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model {
+    /**
+     * The name of the table in the database
+     * @var string
+     */
 	protected $table='fresco.contacts';
+    /**
+     * The name of the primary key in the table
+     * @var string
+     */
     protected $primaryKey = 'contact_id';
 	protected $fillable = [];
+    /**
+     * The hidden attributes we do not want to see
+     * @var array
+     */
     protected $hidden = array('created_at', 'updated_at');
 
 
@@ -14,7 +26,8 @@ class Contact extends Model {
      *
      * @return Builder
      */
-	public function person() {
+	public function person()
+    {
         return $this->belongsTo('App\Models\Person', 'entities_id', 'individuals_id');
     }
 
@@ -23,22 +36,8 @@ class Contact extends Model {
      *
      * @return Builder
      */
-    public function contactDepartment() {
+    public function contactDepartment()
+    {
         return $this->belongsTo('App\Models\ConnectableEntity','parent_entities_id','connectable_id');
     }
-
-    /**
-     * Returns the associated telephone number or the string 'Not Available' if
-     * it could not be resolved.
-     *
-     * @return string
-     */
-    // public function getTelephoneAttribute() {
-    // 	if (!property_exists($this, 'telephone')) {
-	   //      return 'Not Available';
-    // 	}
-    // 	return $this->telephone;
-    // }
-
-
 }

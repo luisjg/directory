@@ -3,7 +3,15 @@
 use Illuminate\Database\Eloquent\Model;
 
 class ConnectableEntity extends Model {
-    protected $table='faculty.connectable';     // Overrides convention of table name being departments
-    protected $primaryKey = 'connectable_id';   // Override convention of PK being 'id'
+	/**
+	 * The name of the table in the database
+	 * @var string
+	 */
+    protected $table='faculty.connectable';
+    /**
+     * The name of the primary key in the table
+     * @var string
+     */
+    protected $primaryKey = 'connectable_id';
     protected $fillable = [];
 }

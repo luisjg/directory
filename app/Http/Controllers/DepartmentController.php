@@ -42,7 +42,7 @@ class DepartmentController extends Controller {
 		// desired response as JSON
 		$data = $persons->toArray();
 		// send the response
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "people");
 	}
 	/**
 	 * Returns all academic departmentUser
@@ -76,12 +76,14 @@ class DepartmentController extends Controller {
 	 * @return JSON Response
 	 */
 	public function showSpecificDepartment($dept_id) {
+		// we try to get academic department first
 		$department = AcademicDepartment::where('department_id', 'academic_departments:'.$dept_id)->with('contacts')->first();
 		if(is_null($department)){
+			// if it's null we do a find or fail here to trigger the global event handler if we fail
 			$department = AdministrativeDepartment::findOrFail('departments:'.$dept_id);
 			$department = AdministrativeDepartment::where('entities_id', 'departments:'.$dept_id)->first();
 		}
 		$data = $department->toArray();
-		return $this->sendResponse($data);
+		return $this->sendResponse($data, "department");
 	}
 }

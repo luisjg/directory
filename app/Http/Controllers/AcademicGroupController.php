@@ -10,51 +10,63 @@ use App\Models\Department;
 
 class AcademicGroupController extends Controller {
 
-	public function showAllAcademicGroups() {
+	/**
+	 * Retrieves all the AcademicGroups
+	 * @return Response the JSON response
+	 */
+	public function showAllAcademicGroups()
+	{
 		$colleges = AcademicGroup::where('department_id', 'LIKE', 'academic\_groups:%')->with('departments')->get();
 		return $this->sendResponse($colleges, "colleges");	
 	}
 
 	/**
-	 * Shows all the college chairs
-	 * @return Response
+	 * Retrieves all the Academic Group chairs
+	 * @return Response The JSON Response
 	 */
-	public function showAllAcademicGroupChairs() {
+	public function showAllAcademicGroupChairs()
+	{
 		$chairs = Person::whereHas('departmentUser', function($q) {
 			$q->where('role_name', 'chair')->orderBy('last_name');
 		})->get();
-		return $chairs;
+		return $this->sendResponse($chairs, "people");
 	}
 
 	/**
-	 * Pulls in the chairs of a specific college
-	 * @param  String $college_id the college id code
-	 * @return Response
+	 * Retrieves the chairs of a specific college
+	 * @param  String $college_id the given college id
+	 * @return Response The JSON Response
 	 */
-	public function showAcademicGroupChairs($college_id) {
+	public function showAcademicGroupChairs($college_id)
+	{
 		$college = AcademicGroup::where('department_id','academic_groups:'.$college_id)
 		->with('departments.chairs') 
-		->first();
+		
 		return $this->sendResponse($college, "college");
 	}
 
-/**
- * Shows all the Departments within a college
- * @param  String $college_id the college
- * @return Response 
- */
-	public function showDepartmentsInAcademicGroup($college_id) {
+	/**
+	 * Retrieves all the Departments within a given college
+	 * @param  String $college_id the college id we're interested in
+	 * @return Response The JSON Response
+	 */
+	public function showDepartmentsInAcademicGroup($college_id)
+	{
 		$college = AcademicGroup::where('department_id', 'academic_groups:'.$college_id)
 		->with('departments') 
 		->get();
-		return $college;
+		return $this->sendResponse($college, "department");
 	}
 
-	public function showDepartmentChairsInAcademicGroups($college_id) {
+	/**
+	 * Retrives the chair in a given AcademicGroup
+	 * @param  String $college_id the given college we're interested in
+	 * @return Response The JSON Response
+	 */
+	public function showDepartmentChairsInAcademicGroups($college_id)
+	{
 		$college = AcademicGroup::where('department_id', 'academic_groups:'.$college_id)->get();
 		return $college->departments;
 	}
-
-
 }
 
