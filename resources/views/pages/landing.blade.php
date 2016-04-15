@@ -102,11 +102,21 @@
 	</div>
 
 
-
-		<div>
+<div id="sidebar" class="col-md-2 col-sm-12">
+	<div class="side-menu">
+		<ul>
+		    <li><a href="#faculty" class="h5 item item-1">Faculty Members</a></li>
+		    <li><a href="#departments" class="h5 item item-2">Departments</a></li>
+		    <li><a href="#colleges" class="h5 item item-3">Colleges</a></li>
+		    <li><a href="#committees" class="h5 item item-4">Committees</a></li>
+		    <li><a href="#institutes" class="h5 item item-5">Institutes</a></li>
+		</ul>
+	</div>
+</div>
+		<div class="docs-content col-md-10 col-sm-12">
 			<h2>Example URI's for each entity.</h2>
 					<div>
-						<h2 class="page-header" id="secHeading">Faculty</h2>
+						<h2 class="page-header" id="faculty">Faculty</h2>
 							<dt>Retrieves information of a single faculty member.</dt>
 							<dd><a href="{{ url('members/email/nr_steven.fitzgerald@csun.edu') }}">{{ url('members/email/nr_steven.fitzgerald@csun.edu') }}</a></dd>	
 							<!-- <dd><a href="{{ url('members/id/100010526') }}">{{ url('members/id/100010526') }}</a></dd>			 -->
@@ -115,7 +125,7 @@
 					</div>
 
 					<div>
-						<h2 class="page-header" id="secHeading">Departments</h2>
+						<h2 class="page-header" id="departments">Departments</h2>
 						<dl>
 							<dt>Retrieves the list of all academic and administrative departments</dt>
 							<dd><a href="{{ url('departments') }}">{{ url('departments') }}</a></dd>
