@@ -15,10 +15,10 @@ class CommitteeController extends Controller {
 	 * @return Response JSON response
 	 */	
 	public function showMembers($committee_id) {
-		$people = Person::whereHas('entityUser', function($q) use ($committee_id) {
-			$q->where('parent_entities_id', 'committees:'.$committee_id);
-		})->with('contacts')
-		->get();
+		$people = Person::with('contacts')
+				->whereHas('entityUser', function($q) use ($committee_id) {
+					$q->where('parent_entities_id', 'committees:'.$committee_id);
+				})->get();
 
 		$data = $people->toArray();
 		return $this->sendResponse($data, "people");
@@ -40,20 +40,8 @@ class CommitteeController extends Controller {
 	 */
 	public function showCommittee($committee_id) {
 		$committee = Committee::where('connectable_id', 'committees:'.$committee_id)
-					->first();
+					->firstOrFail();
 		return $this->sendResponse($committee, "committee");
 	}
 
-	/**
-	 * Retrieves the committee information that a person belongs to
-	 * @param  String $member_id the person id
-	 * @return Response JSON response
-	 */
-	public function showCommitteesByMemberId($member_id) {
-		$person = Person::whereHas('entityUser', function($q) use ($member_id) {
-			$q->where('user_id', 'members:'.$member_id);
-		})->with('entityUser', 'contacts', 'image')
-		  ->first();
-		 return $this->sendResponse($person, "people");
-	}
 }

@@ -80,10 +80,8 @@
 				<dd><a href="{{ url('committees') }}">{{ url('committees') }}</a></dd>
 				<dt>Retrieves information of a specific committee</dt>
 				<dd><a href="{{ url('committees/atc') }}">{{ url('committees/atc') }}</a></dd>
-				<dt>Retrieves all members in a committee</dt>
+				<dt>Retrieves all members iwn a committee</dt>
 				<dd><a href="{{ url('committees/aggab/members') }}">{{ url('committees/aggab/members') }}</a></dd>
-				<dt>Retrieves a specific member in a committee</dt>
-				<dd><a href="{{ url('committees/member/009630099') }}">{{ url('committees/member/009630099') }}</a></dd>
 			</dl>	
 
 			<h2>Centers</h2>

@@ -32,7 +32,7 @@ class InstituteController extends Controller {
 	public function showSpecificInstitute($institute_id)
 	{
 		$institute = Institute::where('connectable_id', 'institutes:'.$institute_id)
-			->first();
+			->firstOrFail();
 		$data = $institute->toArray();
 		return $this->sendResponse($data, "institute");
 	}

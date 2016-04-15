@@ -19,28 +19,25 @@ class DepartmentController extends Controller {
 	 */
 	public function showAllMembersInDepartment($dept_id) {
 
-		$persons = Person::with('contacts')->where('parent_entities_id', 'departments:'.$dept_id)
+		$people = Person::with('contacts')->where('parent_entities_id', 'departments:'.$dept_id)
 			->orderBy('last_name')->orderBy('first_name')
 			->get();
-		// check for a null $persons
-		if($persons->isEmpty()) {
-			// RETURN PEOPLE WHO HAVE DEPARTMENT
-			$persons = Person::whereHas('departmentUser', function($q) use ($dept_id) {
-				$q->where('department_id', 'academic_departments:'.$dept_id);
-			})
-			// GRAB THE IMAGE
-			->with('image')
-			// ONLY LOAD THE DEPARTMENT REQUESTED (makes using first() ok below)
-			->with(['departmentUser' => function($q) use ($dept_id) {
-				$q->where('department_id', 'academic_departments:'.$dept_id);
-			}])
-			->orderBy('last_name')->orderBy('first_name')
-			->get();
+		
+		if ($people->isEmpty()) {
+			$people = Person::with('image')
+					->with(['departmentUser' => function($q) use ($dept_id) {
+						$q->where('department_id', 'academic_departments:'.$dept_id);
+					}])
+					->whereHas('departmentUser', function($q) use ($dept_id) {
+						$q->where('department_id', 'academic_departments:'.$dept_id);
+					})
+					->orderBy('last_name')
+					->orderBy('first_name')
+					->get();
 		}
-
 		// convert the collection to an array for use in returning the
 		// desired response as JSON
-		$data = $persons->toArray();
+		$data = $people->toArray();
 		// send the response
 		return $this->sendResponse($data, "people");
 	}
@@ -77,13 +74,17 @@ class DepartmentController extends Controller {
 	 */
 	public function showSpecificDepartment($dept_id) {
 		// we try to get academic department first
-		$department = AcademicDepartment::where('department_id', 'academic_departments:'.$dept_id)->with('contacts')->first();
-		if(is_null($department)){
-			// if it's null we do a find or fail here to trigger the global event handler if we fail
+		// first() instead of firstOrFail() because if it doesn't find anything, then it will fail on AdministrativeDepartment
+		$department = AcademicDepartment::with('contacts')
+						->where('department_id', 'academic_departments:'.$dept_id)->first();
+		if(empty($department)) {
 			$department = AdministrativeDepartment::findOrFail('departments:'.$dept_id);
-			$department = AdministrativeDepartment::where('entities_id', 'departments:'.$dept_id)->first();
+			$department = AdministrativeDepartment::where('entities_id', 'departments:'.$dept_id)
+						->firstOrFail();
 		}
 		$data = $department->toArray();
 		return $this->sendResponse($data, "department");
 	}
+
+
 }

@@ -20,7 +20,6 @@ class CenterController extends Controller {
 	{
 		$centers = Center::where('connectable_id', 'LIKE', 'centers:%')->get();
 		$data = $centers->toArray();
-
 		return $this->sendResponse($data, "centers");
 	}
 
@@ -32,7 +31,7 @@ class CenterController extends Controller {
 	 * @return Response JSON response
 	 */
 	public function showSpecificCenter($center_id) {
-		$centers = Center::where('connectable_id', 'LIKE', 'centers:'.$center_id)->first();
+		$centers = Center::where('connectable_id', 'LIKE', 'centers:'.$center_id)->firstOrFail();
 		$data = $centers->toArray();
 		return $this->sendResponse($data, "center");
 	}
@@ -45,10 +44,10 @@ class CenterController extends Controller {
 	 */
 	public function showMembers($center_id)
 	{
-		$people = Person::whereHas('entityUser', function($q) use ($center_id) {
-			$q->where('parent_entities_id', 'centers:'.$center_id);
-		})->with('contacts')
-		->get();
+		$people = Person::with('contacts')
+				->whereHas('entityUser', function($q) use ($center_id) {
+					$q->where('parent_entities_id', 'centers:'.$center_id);
+				})->get();
 
 		$data = $people->toArray();
 		return $this->sendResponse($data, "people");

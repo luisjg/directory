@@ -16,7 +16,10 @@ class AcademicGroupController extends Controller {
 	 */
 	public function showAllAcademicGroups()
 	{
-		$colleges = AcademicGroup::where('department_id', 'LIKE', 'academic\_groups:%')->with('departments')->get();
+		// $colleges = AcademicGroup::where('department_id', 'LIKE', 'academic\_groups:%')->with('departments')->get();
+		$colleges = AcademicGroup::with('departments')
+					->where('department_id', 'LIKE', 'academic\_groups:%')
+					->get();
 		return $this->sendResponse($colleges, "colleges");	
 	}
 
@@ -39,9 +42,9 @@ class AcademicGroupController extends Controller {
 	 */
 	public function showAcademicGroupChairs($college_id)
 	{
-		$college = AcademicGroup::where('department_id','academic_groups:'.$college_id)
-		->with('departments.chairs') 
-		->first();
+		$college = AcademicGroup::with('departments.chairs')
+				   ->where('department_id', 'academic_groups:'.$college_id)
+				   ->firstOrFail();
 		return $this->sendResponse($college, "college");
 	}
 
@@ -52,9 +55,9 @@ class AcademicGroupController extends Controller {
 	 */
 	public function showDepartmentsInAcademicGroup($college_id)
 	{
-		$college = AcademicGroup::where('department_id', 'academic_groups:'.$college_id)
-		->with('departments') 
-		->get();
+		$college = AcademicGroup::with('departments')
+				   ->where('department_id', 'academic_groups:'.$college_id)
+				   ->firstOrFail();
 		return $this->sendResponse($college, "department");
 	}
 }
