@@ -26,7 +26,11 @@ class MemberController extends Controller {
 	 * @return [JSON]        
 	 */
 	public function showMemberByEmail($email) {
-		$person = Person::where('email', $email)->with('contacts')->firstOrFail();
+		if(env('APP_DEBUG') === true) {
+			$person = Person::where('email', 'nr_'.$email)->with('contacts')->firstOrFail();
+		} else {
+			$person = Person::where('email', $email)->with('contacts')->firstOrFail();
+		}
 		return $this->sendResponse($person);
 	}
 
