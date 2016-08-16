@@ -44,8 +44,8 @@
 			<h2>Single Entity</h2>
 			<dl>
 				<dt>Retrieves information of a single entity</dt>
-				<dd><a href="{{ url('members/email/nr_steven.fitzgerald@csun.edu') }}">{{ url('members/email/steven.fitzgerald@csun.edu') }}</a></dd>	
-				<!-- <dd><a href="{{ url('members/id/100010526') }}">{{ url('members/id/100010526') }}</a></dd>			 -->
+				<dd><a href="{{ url('members/email/steven.fitzgerald@csun.edu') }}">{{ url('members/email/steven.fitzgerald@csun.edu') }}</a></dd>	
+				<dd><a href="{{ url('members/id/100010526') }}">{{ url('members/id/100010526') }}</a></dd>			
 			</dl>
 
 			<h2>Departments</h2>

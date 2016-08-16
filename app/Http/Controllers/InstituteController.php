@@ -44,7 +44,7 @@ class InstituteController extends Controller {
 	 */
 	public function showMembers($institute_id)
 	{
-		$institute = Person::whereHas('entityUser', function($q) use ($institute_id) {
+		$institute = Person::with('image')->whereHas('entityUser', function($q) use ($institute_id) {
 			$q->where('parent_entities_id', 'institutes:'. $institute_id);
 		})->get();
 		$data = $institute->toArray();

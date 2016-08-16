@@ -29,7 +29,7 @@ class AcademicGroupController extends Controller {
 	 */
 	public function showAllAcademicGroupChairs()
 	{
-		$chairs = Person::whereHas('departmentUser', function($q) {
+		$chairs = Person::with('image')->whereHas('departmentUser', function($q) {
 			$q->where('role_name', 'chair')->orderBy('last_name');
 		})->get();
 		return $this->sendResponse($chairs, "people");
@@ -42,7 +42,7 @@ class AcademicGroupController extends Controller {
 	 */
 	public function showAcademicGroupChairs($college_id)
 	{
-		$college = AcademicGroup::with('departments.chairs')
+		$college = AcademicGroup::with('departments.chairs', 'departments.chairs.image')
 				   ->where('department_id', 'academic_groups:'.$college_id)
 				   ->firstOrFail();
 		return $this->sendResponse($college, "college");

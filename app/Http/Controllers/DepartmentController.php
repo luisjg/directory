@@ -19,7 +19,7 @@ class DepartmentController extends Controller {
 	 */
 	public function showAllMembersInDepartment($dept_id) {
 
-		$people = Person::with('contacts')->where('parent_entities_id', 'departments:'.$dept_id)
+		$people = Person::with('contacts','image')->where('parent_entities_id', 'departments:'.$dept_id)
 			->orderBy('last_name')->orderBy('first_name')
 			->get();
 		

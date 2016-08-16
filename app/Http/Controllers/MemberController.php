@@ -16,7 +16,7 @@ class MemberController extends Controller {
 	 * Only returns attributes: first_name, last_name, telephone, website, location, email
 	 */
 	public function showMemberById($individuals_id) {
-		$person = Person::where('individuals_id', 'members:'.$individuals_id)->with('contacts')->firstOrFail();
+		$person = Person::with('image')->where('individuals_id', 'members:'.$individuals_id)->with('contacts')->firstOrFail();
 		return $this->sendResponse($person);
 	}
 	
@@ -26,7 +26,11 @@ class MemberController extends Controller {
 	 * @return [JSON]        
 	 */
 	public function showMemberByEmail($email) {
-		$person = Person::where('email', $email)->with('contacts')->firstOrFail();
+		if(env('APP_DEV_MODE')){
+			$person = Person::with('image')->where('email', 'nr_'.$email)->with('contacts')->firstOrFail();
+		} else {
+			$person = Person::with('image')->where('email', $email)->with('contacts')->firstOrFail();
+		}
 		return $this->sendResponse($person);
 	}
 

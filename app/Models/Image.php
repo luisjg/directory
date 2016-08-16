@@ -15,4 +15,11 @@ class Image extends Model {
 	 * @var [type]
 	 */
 	protected $fillable = ['imageable_id', 'imageable_type', 'src'];
+
+	protected $appends = ['image_url'];
+
+	public function getImageUrlAttribute()
+	{
+		return 'http://www.csun.edu/faculty/uploads/imgs/'.$this->src;
+	}
 }
