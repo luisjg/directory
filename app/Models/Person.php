@@ -33,7 +33,7 @@ class Person extends Model {
 	 */
 	public function entityUser()
 	{
-		return $this->hasMany('App\Models\EntityUser', 'user_id');
+		return $this->hasMany('App\Models\EntityUser', 'user_id')->where('confidential', 0);
 	}
 
 
@@ -43,7 +43,7 @@ class Person extends Model {
 	 */
 	public function contacts()
 	{
-		return $this->hasMany('App\Models\Contact', 'entities_id');
+		return $this->hasMany('App\Models\Contact', 'entities_id')->where('is_displayed', 1);
 	}
 
 	/**

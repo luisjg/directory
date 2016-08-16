@@ -31,6 +31,7 @@ class AcademicGroupController extends Controller {
 	{
 		$chairs = Person::with('image')->whereHas('departmentUser', function($q) {
 			$q->where('role_name', 'chair')->orderBy('last_name');
+			$q->where('confidential', 0);
 		})->get();
 		return $this->sendResponse($chairs, "people");
 	}

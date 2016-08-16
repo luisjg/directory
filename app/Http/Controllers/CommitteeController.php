@@ -18,6 +18,7 @@ class CommitteeController extends Controller {
 		$people = Person::with('contacts', 'image')
 				->whereHas('entityUser', function($q) use ($committee_id) {
 					$q->where('parent_entities_id', 'committees:'.$committee_id);
+					$q->where('confidential', 0);
 				})->get();
 
 		$data = $people->toArray();

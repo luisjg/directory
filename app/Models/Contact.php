@@ -28,7 +28,7 @@ class Contact extends Model {
      */
 	public function person()
     {
-        return $this->belongsTo('App\Models\Person', 'entities_id', 'individuals_id');
+        return $this->belongsTo('App\Models\Person', 'entities_id', 'individuals_id')->where('confidential', 0);
     }
 
     /**
