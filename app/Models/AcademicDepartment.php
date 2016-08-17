@@ -32,7 +32,7 @@ class AcademicDepartment extends Model
 	 */
 	public function academicGroup()
 	{
-		return $this->belongsTo("App\Models\AcademicGroup", "college_id", "department_id");
+		return $this->belongsTo('App\Models\AcademicGroup', 'college_id', 'department_id');
 	}
 
 	/**
@@ -41,7 +41,7 @@ class AcademicDepartment extends Model
 	 */
 	public function contacts()
 	{
-		return $this->hasMany('App\Models\Contact', 'entities_id')->where('is_diplalyed', 1);
+		return $this->hasMany('App\Models\Contact', 'entities_id')->where('is_displayed', 1);
 	}
 
 	/**
@@ -50,7 +50,7 @@ class AcademicDepartment extends Model
 	 */
 	public function chairs()
 	{
-		return $this->belongsToMany('App\Models\Person', 'department_user', 'department_id', 'user_id')->where('confidential', 0)->withPivot('role_name')->wherePivot('role_name', 'chair');
+		return $this->belongsToMany('App\Models\Person', 'department_user', 'department_id', 'user_id')->withPivot('role_name')->wherePivot('role_name', 'chair');
 	}
 
 }
