@@ -20,6 +20,6 @@ class Image extends Model {
 
 	public function getImageUrlAttribute()
 	{
-		return 'https://www.csun.edu/faculty/uploads/imgs/'.$this->src;
+		return 'https://cdn.metalab.csun.edu/photos/'.$this->src;
 	}
 }
