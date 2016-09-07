@@ -20,6 +20,13 @@ class Controller extends BaseController
 			'type' => $type,
 			"$type" => $data, // change the name of the element based on type
 		];
+		if($data === 'error'){
+			$arr = [
+				'status' => 404,
+				'success' => 'false',
+				'error' => 'Invalid url.'
+			];
+		}
 
 		// return the response as JSON
 		return response()->json($arr);

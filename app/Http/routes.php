@@ -33,7 +33,6 @@ $app->group(['prefix' => 'api/committees', 'namespace' => 'App\Http\Controllers'
 	$app->get('/', 'CommitteeController@showCommittees');
 	$app->get('/{committee_id}/members', 'CommitteeController@showMembers');
 	$app->get('/{committee_id}', 'CommitteeController@showCommittee');
-	$app->get('member/{member_id}', 'CommitteeController@showCommitteesByMemberId');
 });
 
 //Routes for Departments
@@ -53,6 +52,6 @@ $app->group(['prefix' => 'api/institutes', 'namespace' => 'App\Http\Controllers'
 
 // Routes for Members
 $app->group(['prefix' => 'api/members', 'namespace' => 'App\Http\Controllers'], function($app) {
-	$app->get('/id/{individuals_id}', 'MemberController@showMemberById');
-	$app->get('/email/{email}', 'MemberController@showMemberByEmail');
+	// $app->get('/id/{individuals_id}', 'MemberController@showMemberById');
+	$app->get('/', 'MemberController@showMember');
 });
