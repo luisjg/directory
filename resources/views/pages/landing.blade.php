@@ -3,21 +3,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Directory Web Service</title>
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="icon" type="image/x-icon" href="favicon.ico" type="image/x-icon">
 	<!-- FONT LIBS -->
 	<script type="text/javascript" src="https://use.typekit.net/gfb2mjm.js"></script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic">
 	<link rel="stylesheet" href="https://cdn.metalab.csun.edu/metaphor/css/metaphor.css">
 </head>
 <body>
-<div class="section" style="background-color: #252525;">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <h1 class="type--white type--thin type--marginless">Directory Web Service</h1>
-          <small class="type--white typw--thin type--marginless">by META+Lab</small>
-        </div>
-      </div>
-    </div>
+<div class="section section--sm">
+  <div class="container type--center">
+    <h1 class="giga type--thin">Directory Web Service</h1>
+    <h3 class="h1 type--thin type--gray">Delivering contact information about CSUN entities</h3>
+  </div>
 </div>
 <div class="section" id="menu">
 	<div class="container">
@@ -36,7 +34,7 @@
 
 	      <div class="col-sm-9">
 	      	<h2 id="introduction" class="type--header type--thin">Introduction</h2>
-	      	The Directory web service provides information about CSUN entities. The web service provides a gateway to access the information via a REST-ful API. The information is retrieved by creating a specific URI and giving values to filter the data. The information that is returned is a JSON object that contains detailed information about a particular member, center, college, department, etc; the format of the JSON object is as follows:</p>
+	      	The Directory web service provides contact information about CSUN entities. The web service provides a gateway to access the information via a REST-ful API. The information is retrieved by creating a specific URI and giving values to filter the data. The data is provided by CSUN Central IT. The information that is returned is a JSON object that contains contact information about a particular person, center, college, department, etc; the format of the JSON object is as follows:</p>
 	      	<pre><code>
 {
   "status": "200",
@@ -78,6 +76,10 @@
 			</ol>
 	      	<h2 id="collections" class="type--header type--thin">Collections</h2>
 			<h3 class="type--thin">Examples</h3>
+			<strong>Retrieves information of a single entity</strong>
+			<ul class="list">
+				<li class="list__item"><a href="{{ url('api/members/steven.fitzgerald@csun.edu') }}">{{ url('api/members/steven.fitzgerald@csun.edu') }}</a></li>
+			</ul>
 			<strong>Retrieves information of departments</strong>
 			<ul class="list">
 				<li class="list__item"><a href="{{ url('api/departments') }}">{{ url('api/departments') }}</a></li>
@@ -125,10 +127,31 @@
 	      </div>
 		</div>
 	</div>
-</div>		
+</div>
+
+<div class="metalab-footer">
+    <div class="metalab-wrapper">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="metalab-branding">
+              <img src="http://www.csun.edu/faculty/imgs/meta-logo-horz.png" alt="CSUN META Lab Logo">
+              <ul class="list--unstyled">
+                <li><a href="http://metalab.csun.edu">metalab.csun.edu</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <ul class="list--unstyled metalab-tagline">
+              <li>Explore. Learn. Go Beyond.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>		
 </body>
 <script type="text/javascript">
 	try{Typekit.load({ async: true });}catch(e){}
-	// try{Typekit.load();}catch(e){}
 </script>
 </html>
