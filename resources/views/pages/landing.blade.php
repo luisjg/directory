@@ -1,34 +1,17 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Directory Web Service</title>
-	<link rel="icon" type="image/png" href="favicon.png">
-	<link rel="icon" type="image/x-icon" href="favicon.ico" type="image/x-icon">
-	<!-- FONT LIBS -->
-	<script type="text/javascript" src="https://use.typekit.net/gfb2mjm.js"></script>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic">
-	<link rel="stylesheet" href="https://cdn.metalab.csun.edu/metaphor/css/metaphor.css">
-</head>
-<body>
-<div class="section section--sm">
-  <div class="container type--center">
-    <h1 class="giga type--thin">Directory Web Service</h1>
-    <h3 class="h1 type--thin type--gray">Delivering contact information about CSUN entities</h3>
-  </div>
-</div>
+@extends('layouts.master')
+@section('content')
 <div class="section" id="menu">
 	<div class="container">
 		<div class="row">
 	      <div class="col-sm-3">
-	          <p><strong>Documentation</strong></p>
-	          <ul class="list list--arrows list--hover">
-	            <li class="list__item"><a href="#introduction">Introduction</a></li>
-	            <li class="list__item"><a href="#getting-started">Getting Started</a></li>
-	            <li class="list__item"><a href="#collections">Collections</a></li>
-	            <li class="list__item"><a href="#subcollections">Subcollections</a></li>
-	            <li class="list__item"><a href="#instances">Instances</a></li>
-	            <li class="list__item"><a href="#query">Query</a></li>
+	          <p class="header--sm"><strong>DOCUMENTATION</strong></p>
+	          <ul class="nav">
+	            <li class="nav__item"><a class="nav__link" href="#introduction">Introduction</a></li>
+	            <li class="nav__item"><a class="nav__link" href="#getting-started">Getting Started</a></li>
+	            <li class="nav__item"><a class="nav__link" href="#collections">Collections</a></li>
+	            <li class="nav__item"><a class="nav__link" href="#subcollections">Subcollections</a></li>
+	            <li class="nav__item"><a class="nav__link" href="#instances">Instances</a></li>
+	            <li class="nav__item"><a class="nav__link" href="#query">Query</a></li>
 	          </ul>
 	      </div>
 
@@ -128,30 +111,4 @@
 		</div>
 	</div>
 </div>
-
-<div class="metalab-footer">
-    <div class="metalab-wrapper">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="metalab-branding">
-              <img src="http://www.csun.edu/faculty/imgs/meta-logo-horz.png" alt="CSUN META Lab Logo">
-              <ul class="list--unstyled">
-                <li><a href="http://metalab.csun.edu">metalab.csun.edu</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <ul class="list--unstyled metalab-tagline">
-              <li>Explore. Learn. Go Beyond.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>		
-</body>
-<script type="text/javascript">
-	try{Typekit.load({ async: true });}catch(e){}
-</script>
-</html>
+@stop
