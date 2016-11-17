@@ -1,21 +1,5 @@
 @extends('layouts.master')
 @section('content')
-<div class="section" id="menu">
-	<div class="container">
-		<div class="row">
-	      <div class="col-sm-3">
-	          <p class="header--sm"><strong>DOCUMENTATION</strong></p>
-	          <ul class="nav">
-	            <li class="nav__item"><a class="nav__link" href="#introduction">Introduction</a></li>
-	            <li class="nav__item"><a class="nav__link" href="#getting-started">Getting Started</a></li>
-	            <li class="nav__item"><a class="nav__link" href="#collections">Collections</a></li>
-	            <li class="nav__item"><a class="nav__link" href="#subcollections">Subcollections</a></li>
-	            <li class="nav__item"><a class="nav__link" href="#instances">Instances</a></li>
-	            <li class="nav__item"><a class="nav__link" href="#query">Query</a></li>
-	          </ul>
-	      </div>
-
-	      <div class="col-sm-9">
 	      	<h2 id="introduction" class="type--header type--thin">Introduction</h2>
 	      	The Directory web service provides contact information about CSUN entities. The web service provides a gateway to access the information via a REST-ful API. The information is retrieved by creating a specific URI and giving values to filter the data. The data is provided by CSUN Central IT. The information that is returned is a JSON object that contains contact information about a particular person, center, college, department, etc; the format of the JSON object is as follows:</p>
 	      	<pre><code>
@@ -107,8 +91,4 @@
 			</ul>
 	      	<h2 id="instances" class="type--header type--thin">Instances</h2>
 	      	<h2 id="query" class="type--header type--thin">Query</h2>
-	      </div>
-		</div>
-	</div>
-</div>
 @stop
