@@ -3,7 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use App\Models\Person;
-use Request;
+use Illuminate\Http\Request;
 
 class MemberController extends Controller {
 	/**
@@ -15,23 +15,37 @@ class MemberController extends Controller {
 	 * entities_id is the foreign key on the faculty.contacts table 
 	 * Only returns attributes: first_name, last_name, telephone, website, location, email
 	 */
-	public function showMemberById($individuals_id) {
+	private function showMemberById($individuals_id) {
 		$person = Person::where('confidential', 0)->where('individuals_id', 'members:'.$individuals_id)->with('contacts', 'image')->firstOrFail();
 		return $this->sendResponse($person);
 	}
 	
 	/**
-	 * [showMemberByEmail description]
-	 * @param  [String] $email [email to be looked up in the database. Person model.]
-	 * @return [JSON]        
+	 * Query the members by email
+	 * @param Request the HTTP POST request
+	 * @return JSON the JSON response        
 	 */
-	public function showMemberByEmail($email) {
-		if(env('APP_DEV_MODE')){
+	private function showMemberByEmail($email) {
+		if(env('APP_ENV') === 'local') {
 			$person = Person::where('confidential', 0)->where('email', 'nr_'.$email)->with('contacts', 'image')->firstOrFail();
 		} else {
 			$person = Person::where('confidential', 0)->where('email', $email)->with('contacts', 'image')->firstOrFail();
 		}
 		return $this->sendResponse($person);
+	}
+
+	/**
+	 * Handles the showing of members
+	 * @param  Request the HTTP POST request
+	 * @return JSON the JSON response
+	 */
+	public function showMember(Request $request)
+	{
+		if($request->has('email')) {
+			return $this->showMemberByEmail($request['email']);
+		} else {
+			return $this->sendResponse('error');
+		}
 	}
 
 }
