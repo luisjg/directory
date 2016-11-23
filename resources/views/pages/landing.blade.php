@@ -9,7 +9,7 @@
   "success": "true",
   "type": "department",
   "department": {
-    "department_id": "academic_departments:189",catalog and SOLAR. The web service provides a gateway to access the information via a REST-ful API. The information is retrieved by creating a specific URI and giving values to filter the data. The information that is returned is a JSON object that contains a set of courses or classes; the format of the JSON object is as follows:
+    "department_id": "academic_departments:189",
     "college_id": "academic_groups:52",
     "entity_type": "Academic Department",
     "name": "Computer Science",
@@ -46,11 +46,11 @@
 	      	<h2 id="collections" class="type--header type--thin">Collections</h2>
 			<h3 class="type--thin">Examples</h3>
 			<strong>Retrieves information of a single entity</strong>
-			<ul class="list">
+			<ul class="list--underlined">
 				<li class="list__item"><a href="{{ url('api/members/steven.fitzgerald@csun.edu') }}">{!! url('api/members/steven.fitzgerald@csun.edu') !!}</a></li>
 			</ul>
 			<strong>Retrieves information of departments</strong>
-			<ul class="list">
+			<ul class="list--underlined">
 				<li class="list__item"><a href="{{ url('api/departments') }}">{!! url('api/departments') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/administrative') }}">{!! url('api/departments/administrative') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/189') }}">{!! url('api/departments/189') !!}</a></li>
@@ -59,26 +59,26 @@
 				<li class="list__item"><a href="{{ url('api/departments/10132/members') }}"> {!! url('api/departmens/10132/members') !!}</a></li>
 			</ul>
 			<strong>Retrieves information of Colleges</strong>
-			<ul class="list">
+			<ul class="list--underlined">
 				<li class="list__item"><a href="{{ url('api/colleges') }}">{!! url('api/colleges') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/colleges/chairs') }}">{!! url('api/colleges/chairs') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/colleges/52') }}">{!! url('api/colleges/52') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/colleges/52/chairs') }}">{!! url('api/colleges/52/chairs') !!}</a></li>
 			</ul>
 			<strong>Retrieves information about Committees</strong>
-			<ul class="list">
+			<ul class="list--underlined">
 				<li class="list__item"><a href="{{ url('api/committees') }}">{!! url('api/committees') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/committees/atc') }}">{!! url('api/committees/atc') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/committees/aggab/members') }}">{!! url('api/committees/aggab/members') !!}</a></li>
 			</ul>
 			<strong>Retrieves information about Centers</strong>
-			<ul class="list">
+			<ul class="list--underlined">
 				<li class="list__item"><a href="{{ url('api/centers') }}">{!! url('api/centers') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/centers/viscom') }}">{!! url('api/centers/viscom') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/centers/viscom/members') }}">{!! url('api/centers/viscom/members') !!}</a></li>
 			</ul>
 			<strong>Retrieves information about Institutes</strong>
-			<ul class="list">
+			<ul class="list--underlined">
 				<li class="list__item"><a href="{{ url('api/institutes') }}">{!! url('api/institutes') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/institutes/ichwb') }}">{!! url('api/institutes/ichwb') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/institutes/ichwb/members') }}">{!! url('api/institutes/ichwb/members') !!}</a></li>
@@ -86,7 +86,7 @@
 	      	<h2 id="subcollections" class="type--header type--thin">Subcollections</h2>
 			<h3 class="type--thin">Examples</h3>
 			<strong>Retrieves information of a single entity</strong><br />
-			<ul class="list">
+			<ul class="list--underlined">
 				<li class="list__item">
 					<a href="{{ url('api/members?email=steven.fitzgerald@csun.edu') }}">{!! url('api/members?email=steven.fitzgerald@csun.edu') !!}</a>
 				</li>
@@ -98,21 +98,21 @@
 	    	<pre>
 	    	<code class="prettyprint lang-js">
 // this example assumes jQuery integration for ease of use
-// and a &lt;div&gt; element with the ID of "course-results"
+// and a &lt;div&gt; element with the ID of "directory-results"
 
-// query all CompSci courses
+// query the information for computer science
 var url = '{!! url('api/departments/189') !!}';
 $(document).ready(function() {
 
 	// perform a shorthand AJAX call to grab the information
 	$.get(url, function(data) {
 
-		// iterate over the returned courses
-		var courses = data.courses;
-		$(courses).each(function(index, course) {
+		// get the department information
+		var department = data.department;
+		$(department).each(function(index, info) {
 
 			// append each course to the content of the element
-			$('#course-results').append('&lt;p&gt;' + course.subject + ' ' + course.catalog_number + '&lt;/p&gt;');
+			$('#directory-results').append('&lt;p&gt;' + info.name + ' ' + info.description + '&lt;/p&gt;');
 
 		});
 		
@@ -136,12 +136,12 @@ $data = file_get_contents($url);
 $data = json_decode($data, true);
 
 // setup a blank array
-$course_list = [];
+$directory_list = [];
 
-// loop through results and add each courses's subject
+// loop through results and add department name and description
 // and catalog number to course_list array (i.e. COMP 100)
-foreach($data['courses'] as $course){
-	$course_list[] = $course['subject'].' '.$course['catalog_number'];
+foreach($data['department'] as $info){
+	$directory_list[] = $info['name'].' '.$info['description'];
 }
 
 print_r($course_list);
@@ -170,12 +170,12 @@ except Exception as e:
 data = json.loads(data)
 
 #setup a blank array
-course_list = []
+directory_list = []
 
-#loop through results and add each course's subject
-#and catalog number to course_list array (i.e COMP 100)
-for course in data['courses']:
-	course_list.append(course['subject'] + ' ' + course['catalog_number'])
+#loop through results and add department name
+#and description subject to direcotyr_list
+for info in data['department']:
+	directory_list.append(info['name'] + ' ' + info['description'])
 
 print course_list
 			</code>
