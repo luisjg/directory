@@ -45,9 +45,9 @@
 			</ol>
 	      	<h2 id="collections" class="type--header type--thin">Collections</h2>
 			<h3 class="type--thin">Examples</h3>
-			<strong>Retrieves information of a single entity</strong>
+			<strong>Retrieves information of a single entity</strong> (phasing out soon)
 			<ul class="list--underlined">
-				<li class="list__item"><a href="{{ url('api/members/steven.fitzgerald@csun.edu') }}">{!! url('api/members/steven.fitzgerald@csun.edu') !!}</a></li>
+				<li class="list__item"><a href="{{ url('api/members/email/steven.fitzgerald@csun.edu') }}">{!! url('api/members/email/steven.fitzgerald@csun.edu') !!}</a></li>
 			</ul>
 			<strong>Retrieves information of departments</strong>
 			<ul class="list--underlined">
@@ -177,7 +177,7 @@ directory_list = []
 for info in data['department']:
 	directory_list.append(info['name'] + ' ' + info['description'])
 
-print course_list
+print directory_list
 			</code>
 			</pre>
 		</dd>

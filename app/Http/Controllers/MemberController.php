@@ -25,7 +25,7 @@ class MemberController extends Controller {
 	 * @param Request the HTTP POST request
 	 * @return JSON the JSON response        
 	 */
-	private function showMemberByEmail($email) {
+	public function showMemberByEmail($email) {
 		if(env('APP_ENV') === 'local') {
 			$person = Person::where('confidential', 0)->where('email', 'nr_'.$email)->with('contacts', 'image')->firstOrFail();
 		} else {
@@ -42,7 +42,13 @@ class MemberController extends Controller {
 	public function showMember(Request $request)
 	{
 		if($request->has('email')) {
-			return $this->showMemberByEmail($request['email']);
+			if(env('APP_ENV') === 'local') {
+				$person = Person::where('confidential', 0)->where('email', 'nr_'.$request['email'])->with('contacts', 'image')->firstOrFail();
+				return $this->sendResponse($person);
+			} else {
+				$person = Person::where('confidential', 0)->where('email', $request['email'])->with('contacts', 'image')->firstOrFail();
+				return $this->sendResponse($person);
+			}
 		} else {
 			return $this->sendResponse('error');
 		}
