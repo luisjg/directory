@@ -46,11 +46,11 @@
 	      	<h2 id="collections" class="type--header type--thin">Collections</h2>
 			<h3 class="type--thin">Examples</h3>
 			<strong>Retrieves information of a single entity</strong> (phasing out soon)
-			<ul class="list--underlined">
+			<ul class="list--unstyled">
 				<li class="list__item"><a href="{{ url('api/members/email/steven.fitzgerald@csun.edu') }}">{!! url('api/members/email/steven.fitzgerald@csun.edu') !!}</a></li>
 			</ul>
 			<strong>Retrieves information of departments</strong>
-			<ul class="list--underlined">
+			<ul class="list--unstyled">
 				<li class="list__item"><a href="{{ url('api/departments') }}">{!! url('api/departments') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/administrative') }}">{!! url('api/departments/administrative') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/189') }}">{!! url('api/departments/189') !!}</a></li>
@@ -59,26 +59,26 @@
 				<li class="list__item"><a href="{{ url('api/departments/10132/members') }}"> {!! url('api/departmens/10132/members') !!}</a></li>
 			</ul>
 			<strong>Retrieves information of Colleges</strong>
-			<ul class="list--underlined">
+			<ul class="list--unstyled">
 				<li class="list__item"><a href="{{ url('api/colleges') }}">{!! url('api/colleges') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/colleges/chairs') }}">{!! url('api/colleges/chairs') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/colleges/52') }}">{!! url('api/colleges/52') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/colleges/52/chairs') }}">{!! url('api/colleges/52/chairs') !!}</a></li>
 			</ul>
 			<strong>Retrieves information about Committees</strong>
-			<ul class="list--underlined">
+			<ul class="list--unstyled">
 				<li class="list__item"><a href="{{ url('api/committees') }}">{!! url('api/committees') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/committees/atc') }}">{!! url('api/committees/atc') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/committees/aggab/members') }}">{!! url('api/committees/aggab/members') !!}</a></li>
 			</ul>
 			<strong>Retrieves information about Centers</strong>
-			<ul class="list--underlined">
+			<ul class="list--unstyled">
 				<li class="list__item"><a href="{{ url('api/centers') }}">{!! url('api/centers') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/centers/viscom') }}">{!! url('api/centers/viscom') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/centers/viscom/members') }}">{!! url('api/centers/viscom/members') !!}</a></li>
 			</ul>
 			<strong>Retrieves information about Institutes</strong>
-			<ul class="list--underlined">
+			<ul class="list--unstyled">
 				<li class="list__item"><a href="{{ url('api/institutes') }}">{!! url('api/institutes') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/institutes/ichwb') }}">{!! url('api/institutes/ichwb') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/institutes/ichwb/members') }}">{!! url('api/institutes/ichwb/members') !!}</a></li>
@@ -86,7 +86,7 @@
 	      	<h2 id="subcollections" class="type--header type--thin">Subcollections</h2>
 			<h3 class="type--thin">Examples</h3>
 			<strong>Retrieves information of a single entity</strong><br />
-			<ul class="list--underlined">
+			<ul class="list--unstyled">
 				<li class="list__item">
 					<a href="{{ url('api/members?email=steven.fitzgerald@csun.edu') }}">{!! url('api/members?email=steven.fitzgerald@csun.edu') !!}</a>
 				</li>
@@ -127,7 +127,7 @@ $(document).ready(function() {
     	<pre>
     	<code class="prettyprint lang-php">
 // query all the information for Computer Science
-$url = '{{ url('api/departments/189') }}';
+$url = '{!! url('api/departments/189') !!}';
 
 // call url, you can also use CURL or guzzle -> https://github.com/guzzle/guzzle
 $data = file_get_contents($url);
@@ -157,7 +157,7 @@ import urllib2
 import json
 
 #query all the information for Computer Science
-url = u'{{ url('api/departments/189') }}'
+url = u'{!! url('api/departments/189') !!}'
 
 #try to read the data	
 try:
