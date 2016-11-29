@@ -3,7 +3,7 @@
 	      	<h2 id="introduction" class="type--header type--thin">Introduction</h2>
 	      	The Directory web service provides contact information about CSUN entities. The web service provides a gateway to access the information via a REST-ful API. The information is retrieved by creating a specific URI and giving values to filter the data. The data is provided by CSUN Central IT. The information that is returned is a JSON object that contains contact information about a particular person, center, college, department, etc; the format of the JSON object is as follows:</p>
 	      	<pre>
-		      	<code class="prettyprint lang-json">
+		      	<code>
 {
   "status": "200",
   "success": "true",
