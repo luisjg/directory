@@ -62,7 +62,7 @@ class DepartmentController extends Controller {
 		// desired response as JSON
 		$data = $people->toArray();
 		// send the response
-		return $this->sendResponse($data, "coordinator");
+		return $this->sendResponse($data, "person");
 	}
 
 	/**
