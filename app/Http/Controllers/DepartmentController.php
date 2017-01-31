@@ -42,6 +42,29 @@ class DepartmentController extends Controller {
 		// send the response
 		return $this->sendResponse($data, "people");
 	}
+
+	/**
+	 * Display a listing of the graduate coordinator in the given department.
+	 *
+	 * @param integer $dept_id The ID of the academic department
+	 * @return JSON Response
+	 */
+	public function showGradCoordinatorInDepartment($dept_id) {
+
+		$people = Person::with('image')->where('confidential', 0)
+					->whereHas('departmentUser', function($q) use ($dept_id) {
+						$q->where('department_id', 'academic_departments:'.$dept_id)
+							->where('role_name', 'grad_coordinator');
+					})
+					->first();
+
+		// convert the collection to an array for use in returning the
+		// desired response as JSON
+		$data = $people->toArray();
+		// send the response
+		return $this->sendResponse($data, "coordinator");
+	}
+
 	/**
 	 * Returns all academic departmentUser
 	 * @return JSON Response
