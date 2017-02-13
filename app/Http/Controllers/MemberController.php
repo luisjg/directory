@@ -49,6 +49,8 @@ class MemberController extends Controller {
 				$person = Person::where('confidential', 0)->where('email', $request['email'])->with('contacts', 'image')->firstOrFail();
 				return $this->sendResponse($person);
 			}
+		} else if ($request->has('members_id')) {
+			return $this->showMemberById($request['members_id']);
 		} else {
 			return $this->sendResponse('error');
 		}

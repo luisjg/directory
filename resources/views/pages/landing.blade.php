@@ -91,6 +91,9 @@
 				<li class="list__item">
 					<a href="{{ url('api/members?email=steven.fitzgerald@csun.edu') }}">{!! url('api/members?email=steven.fitzgerald@csun.edu') !!}</a>
 				</li>
+				<li class="list__item">
+					<a href="{{ url('api/members?members_id=103166750') }}">{!! url('api/members?members_id=103166750') !!}</a>
+				</li>
 			</ul>
 	      	<h2 id="usage-example" class="type--header type--thin">Usage Example</h2>
 	      		<dl class="accordion">
