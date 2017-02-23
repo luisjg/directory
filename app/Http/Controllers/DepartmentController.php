@@ -76,7 +76,7 @@ class DepartmentController extends Controller {
 		$people = Person::with('image')->where('confidential', 0)
 					->whereHas('departmentUser', function($q) use ($dept_id) {
 						$q->where('department_id', 'academic_departments:'.$dept_id)
-							->where('role_name', 'faculty');
+							->whereIn('role_name', ['faculty', 'librarian', 'counselor', 'coach']);
 					})
 					->orderBy('last_name')
 					->orderBy('first_name')
