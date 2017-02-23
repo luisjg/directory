@@ -41,6 +41,7 @@ $app->group(['prefix' => 'api/departments', 'namespace' => 'App\Http\Controllers
 	$app->get('/administrative', 'DepartmentController@showAllAdministrativeDepartments');
 	$app->get('/{dept_id}', 'DepartmentController@showSpecificDepartment');
 	$app->get('/{dept_id}/members', 'DepartmentController@showAllMembersInDepartment');
+	$app->get('/{dept_id}/faculty', 'DepartmentController@showFacultyInDepartment');
 	$app->get('/{dept_id}/coordinator', 'DepartmentController@showGradCoordinatorInDepartment');
 });
 

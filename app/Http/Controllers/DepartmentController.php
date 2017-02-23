@@ -66,6 +66,28 @@ class DepartmentController extends Controller {
 	}
 
 	/**
+	 * Display a listing of the faculty members in the given department.
+	 *
+	 * @param integer $dept_id The ID of the academic department
+	 * @return JSON Response
+	 */
+	public function showFacultyInDepartment($dept_id) {
+
+		$people = Person::with('image')->where('confidential', 0)
+					->whereHas('departmentUser', function($q) use ($dept_id) {
+						$q->where('department_id', 'academic_departments:'.$dept_id)
+							->where('role_name', 'faculty');
+					})
+					->get();
+
+		// convert the collection to an array for use in returning the
+		// desired response as JSON
+		$data = $people->toArray();
+		// send the response
+		return $this->sendResponse($data, "people");
+	}
+
+	/**
 	 * Returns all academic departmentUser
 	 * @return JSON Response
 	 */
