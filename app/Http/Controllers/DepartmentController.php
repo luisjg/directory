@@ -78,6 +78,8 @@ class DepartmentController extends Controller {
 						$q->where('department_id', 'academic_departments:'.$dept_id)
 							->where('role_name', 'faculty');
 					})
+					->orderBy('last_name')
+					->orderBy('first_name')
 					->get();
 
 		// convert the collection to an array for use in returning the
