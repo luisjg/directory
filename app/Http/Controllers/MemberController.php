@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use App\Models\Person;
+use App\Models\Degree;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller {
@@ -30,6 +31,20 @@ class MemberController extends Controller {
 			$person = Person::where('confidential', 0)->where('email', 'nr_'.$email)->with('contacts', 'image')->firstOrFail();
 		} else {
 			$person = Person::where('confidential', 0)->where('email', $email)->with('contacts', 'image')->firstOrFail();
+		}
+		return $this->sendResponse($person);
+	}
+
+	/**
+	 * Query the members by email with degree information
+	 * @param Request the HTTP POST request
+	 * @return JSON the JSON response        
+	 */
+	public function showMemberByEmailWithDegrees($email) {
+		if(env('APP_ENV') === 'local') {
+			$person = Person::where('confidential', 0)->where('email', 'nr_'.$email)->with('contacts', 'image', 'degrees')->firstOrFail();
+		} else {
+			$person = Person::where('confidential', 0)->where('email', $email)->with('contacts', 'image', 'degrees')->firstOrFail();
 		}
 		return $this->sendResponse($person);
 	}

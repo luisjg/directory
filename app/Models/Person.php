@@ -56,6 +56,16 @@ class Person extends Model {
 	}
 
 	/**
+	 *Returns the degrees this person has
+	 *@return Builder/Model
+	 */
+
+	public function degrees()
+	{
+		return $this->hasMany('App\Models\Degree', 'individuals_id');
+	}
+
+	/**
 	 * Returns the email address up until the 2 symbol of this person
 	 * @return Builder|Model
 	 */

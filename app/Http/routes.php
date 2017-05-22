@@ -56,6 +56,7 @@ $app->group(['prefix' => 'api/institutes', 'namespace' => 'App\Http\Controllers'
 $app->group(['prefix' => 'api/members', 'namespace' => 'App\Http\Controllers'], function($app) {
 	// These are temporary
 	$app->get('/email/{email}', 'MemberController@showMemberByEmail');
+	$app->get('/email/{email}/degrees', 'MemberController@showMemberByEmailWithDegrees');
 	// $app->get('/id/{individuals_id}', 'MemberController@showMemberById');
 	// In the future this will be the only route here
 	$app->get('/', 'MemberController@showMember');
