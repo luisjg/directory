@@ -59,4 +59,8 @@ $app->group(['prefix' => 'api/members', 'namespace' => 'App\Http\Controllers'], 
 	// $app->get('/id/{individuals_id}', 'MemberController@showMemberById');
 	// In the future this will be the only route here
 	$app->get('/', 'MemberController@showMember');
+	$app->get('/faculty', 'MemberController@showAllFaculty');
+	$app->get('/faculty/tenure-track', 'MemberController@showAllTenureTracks');
+	$app->get('/faculty/emeriti', 'MemberController@showAllEmeriti');
+	$app->get('/faculty/lecturer', 'MemberController@showAllLecturers');
 });

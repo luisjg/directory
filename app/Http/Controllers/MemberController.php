@@ -56,4 +56,69 @@ class MemberController extends Controller {
 		}
 	}
 
+	/**
+	 * Handles the showing of all CSUN Faculty
+	 * @param  Request the HTTP POST request
+	 * @return JSON the JSON response
+	 */
+	public function showAllFaculty(Request $request)
+	{
+		$people = Person::where('affiliation','faculty')
+			->whereNotIn('rank', ['Chancellor'])
+			->orderBy('last_name')
+			->orderBy('first_name')
+			->get();
+
+		return $this->sendResponse($people);
+	}
+
+	/**
+	 * Handles the showing of all CSUN Tenure-Track Faculty (non-lecturer, non-emeriti)
+	 * @param  Request the HTTP POST request
+	 * @return JSON the JSON response
+	 */
+	public function showAllTenureTracks(Request $request)
+	{
+		$people = Person::where('affiliation','faculty')
+			->whereNotIn('rank', ['Lecturer', 'Chancellor'])
+			->orderBy('last_name')
+			->orderBy('first_name')
+			->get();
+
+		return $this->sendResponse($people);
+	}
+
+	/**
+	 * Handles the showing of all CSUN Faculty Emeriti (non-lecturer)
+	 * @param  Request the HTTP POST request
+	 * @return JSON the JSON response
+	 */
+	public function showAllEmeriti(Request $request)
+	{
+		$people = Person::where('affiliation','emeritus')
+			->whereNotIn('rank', ['Lecturer', 'Chancellor'])
+			->orderBy('last_name')
+			->orderBy('first_name')
+			->get();
+
+		return $this->sendResponse($people);
+	}
+
+	/**
+	 * Handles the showing of all CSUN Lecturers
+	 * @param  Request the HTTP POST request
+	 * @return JSON the JSON response
+	 */
+	public function showAllLecturers(Request $request)
+	{
+		$people = Person::where('affiliation','faculty')
+			->whereIn('rank', ['Lecturer'])
+			->orderBy('last_name')
+			->orderBy('first_name')
+			->get();
+
+		return $this->sendResponse($people);
+
+	}
+
 }
