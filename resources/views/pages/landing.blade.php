@@ -49,7 +49,7 @@
 			<ul class="list--unstyled">
 				<li class="list__item"><a href="{{ url('api/members/email/steven.fitzgerald@csun.edu') }}">{!! url('api/members/email/steven.fitzgerald@csun.edu') !!}</a></li>
 			</ul>
-			<strong>Retrieves information of departments</strong>
+			<strong>Retrieves information of Departments</strong>
 			<ul class="list--unstyled">
 				<li class="list__item"><a href="{{ url('api/departments') }}">{!! url('api/departments') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/administrative') }}">{!! url('api/departments/administrative') !!}</a></li>
@@ -84,6 +84,13 @@
 				<li class="list__item"><a href="{{ url('api/institutes') }}">{!! url('api/institutes') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/institutes/ichwb') }}">{!! url('api/institutes/ichwb') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/institutes/ichwb/members') }}">{!! url('api/institutes/ichwb/members') !!}</a></li>
+			</ul>
+			<strong>Retrieves Faculty Listings</strong>
+			<ul class="list--unstyled">
+				<li class="list__item"><a href="{{ url('api/members/faculty') }}">{!! url('api/members/faculty') !!}</a></li>
+				<li class="list__item"><a href="{{ url('api/members/faculty/tenure-track') }}">{!! url('api/members/faculty/tenure-track') !!}</a></li>
+				<li class="list__item"><a href="{{ url('api/members/faculty/emeriti') }}">{!! url('api/members/faculty/emeriti') !!}</a></li>
+				<li class="list__item"><a href="{{ url('api/members/faculty/lecturer') }}">{!! url('api/members/faculty/lecturer') !!}</a></li>
 			</ul>
 	      	<h2 id="subcollections" class="type--header type--thin">Subcollections</h2>
 			<h3 class="type--thin">Examples</h3>
