@@ -62,7 +62,7 @@ class Person extends Model {
 
 	public function degrees()
 	{
-		return $this->hasMany('App\Models\Degree', 'individuals_id');
+		return $this->hasMany('App\Models\Degree', 'individuals_id')->orderBy('year', 'asc');
 	}
 
 	/**
