@@ -16,10 +16,4 @@ class Image extends Model {
 	 */
 	protected $fillable = ['imageable_id', 'imageable_type', 'src'];
 
-	protected $appends = ['image_url'];
-
-	public function getImageUrlAttribute()
-	{
-		return 'https://cdn.metalab.csun.edu/photos/'.$this->src;
-	}
 }

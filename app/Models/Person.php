@@ -17,6 +17,10 @@ class Person extends Model {
 	protected $primaryKey = 'individuals_id';
 	protected $fillable = [];
 
+	protected $appends = [
+	    'profile_image'
+    ];
+
 	/**
 	 * Returns the departments this user belongs to along with the
 	 * confidential flag
@@ -95,4 +99,18 @@ class Person extends Model {
 	{
 		return $this->belongsToMany('App\Models\AcademicDepartment', 'department_user', 'user_id', 'department_id');
 	}
+
+    /**
+     * Retrieve the image url for the given person
+     *
+     * @return string
+     */
+	public function getProfileImageAttribute()
+    {
+        $image = Image::where('imageable_id', $this->individuals_id)->first();
+        if(!empty($image))
+        {
+            return env('IMAGE_VIEW_LOCATION').$this->getEmailURIAttribute().'/'.$image->src;
+        }
+    }
 }
