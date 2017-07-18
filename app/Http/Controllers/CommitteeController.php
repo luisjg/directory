@@ -15,7 +15,7 @@ class CommitteeController extends Controller {
 	 * @return Response JSON response
 	 */	
 	public function showMembers($committee_id) {
-		$people = Person::with('contacts', 'image')
+		$people = Person::with('contacts')
 				->whereHas('entityUser', function($q) use ($committee_id) {
 					$q->where('parent_entities_id', 'committees:'.$committee_id);
 					$q->where('confidential', 0);

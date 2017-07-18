@@ -28,9 +28,9 @@ class MemberController extends Controller {
 	 */
 	public function showMemberByEmail($email) {
 		if(env('APP_ENV') === 'local') {
-			$person = Person::where('confidential', 0)->where('email', 'nr_'.$email)->with('contacts', 'image')->firstOrFail();
+			$person = Person::where('confidential', 0)->where('email', 'nr_'.$email)->with('contacts')->firstOrFail();
 		} else {
-			$person = Person::where('confidential', 0)->where('email', $email)->with('contacts', 'image')->firstOrFail();
+			$person = Person::where('confidential', 0)->where('email', $email)->with('contacts')->firstOrFail();
 		}
 		return $this->sendResponse($person);
 	}
@@ -42,9 +42,9 @@ class MemberController extends Controller {
 	 */
 	public function showMemberByEmailWithDegrees($email) {
 		if(env('APP_ENV') === 'local') {
-			$person = Person::where('confidential', 0)->where('email', 'nr_'.$email)->with('contacts', 'image', 'degrees')->firstOrFail();
+			$person = Person::where('confidential', 0)->where('email', 'nr_'.$email)->with('contacts', 'degrees')->firstOrFail();
 		} else {
-			$person = Person::where('confidential', 0)->where('email', $email)->with('contacts', 'image', 'degrees')->firstOrFail();
+			$person = Person::where('confidential', 0)->where('email', $email)->with('contacts', 'degrees')->firstOrFail();
 		}
 		return $this->sendResponse($person);
 	}
@@ -58,10 +58,10 @@ class MemberController extends Controller {
 	{
 		if($request->has('email')) {
 			if(env('APP_ENV') === 'local') {
-				$person = Person::where('confidential', 0)->where('email', 'nr_'.$request['email'])->with('contacts', 'image')->firstOrFail();
+				$person = Person::where('confidential', 0)->where('email', 'nr_'.$request['email'])->with('contacts')->firstOrFail();
 				return $this->sendResponse($person);
 			} else {
-				$person = Person::where('confidential', 0)->where('email', $request['email'])->with('contacts', 'image')->firstOrFail();
+				$person = Person::where('confidential', 0)->where('email', $request['email'])->with('contacts')->firstOrFail();
 				return $this->sendResponse($person);
 			}
 		} else if ($request->has('members_id')) {

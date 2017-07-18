@@ -29,7 +29,7 @@ class AcademicGroupController extends Controller {
 	 */
 	public function showAllAcademicGroupChairs()
 	{
-		$chairs = Person::with('image')->whereHas('departmentUser', function($q) {
+		$chairs = Person::whereHas('departmentUser', function($q) {
 			$q->where('role_name', 'chair')->orderBy('last_name');
 			$q->where('confidential', 0);
 		})->get();

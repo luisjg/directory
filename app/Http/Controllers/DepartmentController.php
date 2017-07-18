@@ -19,7 +19,7 @@ class DepartmentController extends Controller {
 	 */
 	public function showAllMembersInDepartment($dept_id) {
 
-		$people = Person::with('contacts','image')->where('parent_entities_id', 'departments:'.$dept_id)
+		$people = Person::with('contacts')->where('parent_entities_id', 'departments:'.$dept_id)
 			->where('confidential', 0)
 			->orderBy('last_name')->orderBy('first_name')
 			->get();
@@ -51,7 +51,7 @@ class DepartmentController extends Controller {
 	 */
 	public function showGradCoordinatorInDepartment($dept_id) {
 
-		$people = Person::with('image')->where('confidential', 0)
+		$people = Person::where('confidential', 0)
 					->whereHas('departmentUser', function($q) use ($dept_id) {
 						$q->where('department_id', 'academic_departments:'.$dept_id)
 							->where('role_name', 'grad_coordinator');
@@ -73,7 +73,7 @@ class DepartmentController extends Controller {
 	 */
 	public function showFacultyInDepartment($dept_id) {
 
-		$people = Person::with('image')->where('confidential', 0)
+		$people = Person::where('confidential', 0)
 					->whereHas('departmentUser', function($q) use ($dept_id) {
 						$q->where('department_id', 'academic_departments:'.$dept_id)
 							->whereIn('role_name', ['faculty', 'librarian', 'counselor', 'coach']);

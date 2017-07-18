@@ -44,7 +44,7 @@ class CenterController extends Controller {
 	 */
 	public function showMembers($center_id)
 	{
-		$people = Person::with('contacts', 'image')
+		$people = Person::with('contacts')
 				->whereHas('entityUser', function($q) use ($center_id) {
 					$q->where('parent_entities_id', 'centers:'.$center_id);
 					$q->where('confidential', 0);
