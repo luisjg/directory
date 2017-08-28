@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "csun-metalab/lumen-proxypass",
-            "version": "1.0.2",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/csun-metalab/lumen-proxypass.git",
-                "reference": "db8e2ad6761fb83ab840f2e1e081ee5d61bb94db"
+                "reference": "b1b7c4a9b365f3cd41b8622bb94b5255e9cbef7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/csun-metalab/lumen-proxypass/zipball/db8e2ad6761fb83ab840f2e1e081ee5d61bb94db",
-                "reference": "db8e2ad6761fb83ab840f2e1e081ee5d61bb94db",
+                "url": "https://api.github.com/repos/csun-metalab/lumen-proxypass/zipball/b1b7c4a9b365f3cd41b8622bb94b5255e9cbef7c",
+                "reference": "b1b7c4a9b365f3cd41b8622bb94b5255e9cbef7c",
                 "shasum": ""
             },
             "require": {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "Composer package for Lumen that resolves the correct absolute URLs when behind a proxy",
-            "time": "2017-04-12T23:20:06+00:00"
+            "time": "2017-08-17T19:31:32+00:00"
         },
         {
             "name": "danielstjules/stringy",
