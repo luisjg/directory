@@ -9,9 +9,8 @@
 	<script type="text/javascript" src="//use.typekit.net/gfb2mjm.js"></script>
 	<script>try{Typekit.load();}catch(e){}</script>
 	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic">
-	<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="//cdn.metalab.csun.edu/metaphor/css/metaphor.css">
-	<link rel="stylesheet" type="text/css" href="{!! url('css/tomorrow.min.css') !!}">
+	<link rel="stylesheet" type="text/css" href="{!! url('css/metaphor.css') !!}">
+	<link rel="stylesheet" type="text/css" href="{!! url('css/tomorrow.css.min') !!}">
 </head>
 <body>
 	<div class="section section--sm">
@@ -34,6 +33,6 @@
         </div>
 		{{-- @include('partials.csun-footer') --}}
 		@include('partials.metalab-footer')
-		<script type="text/javascript" src="//cdn.metalab.csun.edu/metaphor/js/metaphor.js"></script>
-		<script type="text/javascript" src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+		<script type="text/javascript" src="{!! url('js/metaphor.js') !!}"></script>
+		<script type="text/javascript" src="{!! url('js/run_prettify.js') !!}"></script>
 </body>
