@@ -1,0 +1,25 @@
+language: php
+php:
+  - '5.6'
+
+stages:
+  - name: test
+  - name: package
+    if: branch IN (dev, master, demo) AND NOT (type = pull_request)
+
+jobs:
+  include:
+    - stage: test
+      before_install:
+        - cp .env.example .env
+
+      install:
+        - composer install
+
+    - stage: package
+      if: branch IN (dev, master, demo)
+      script:
+        - rm .env
+        - export build_date="$(date '+%y%m%d%H%M%S')"
+        - tar -czf /tmp/${build_date}.tgz --exclude=.git* .
+        - ls -ail /tmp
