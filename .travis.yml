@@ -23,3 +23,4 @@ jobs:
         - export build_date="$(date '+%y%m%d%H%M%S')"
         - tar -czf /tmp/${build_date}.tgz --exclude=.git* .
         - ls -ail /tmp
+        - echo "hello"
