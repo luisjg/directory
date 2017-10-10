@@ -19,7 +19,7 @@ jobs:
     - stage: package
 #      if: branch IN (dev, master, demo)
       script:
-        - rm .env
+        - rm -f .env
         - export build_date="$(date '+%y%m%d%H%M%S')"
         - tar -czf /tmp/${build_date}.tgz --exclude=.git* .
         - ls -ail /tmp
