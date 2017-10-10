@@ -5,7 +5,7 @@ php:
 stages:
   - name: test
   - name: package
-    if: branch IN (dev, master, demo) AND NOT (type = pull_request)
+#    if: branch IN (dev, master, demo) AND NOT (type = pull_request)
 
 jobs:
   include:
@@ -17,7 +17,7 @@ jobs:
         - composer install
 
     - stage: package
-      if: branch IN (dev, master, demo)
+#      if: branch IN (dev, master, demo)
       script:
         - rm .env
         - export build_date="$(date '+%y%m%d%H%M%S')"
