@@ -2,7 +2,7 @@
 @section('content')
 	      	<h2 id="introduction" class="type--header type--thin">Introduction</h2>
 	      	The Directory web service provides contact information about CSUN entities. The web service provides a gateway to access the information via a REST-ful API. The information is retrieved by creating a specific URI and giving values to filter the data. The data is provided by CSUN Central IT. The information that is returned is a JSON object that contains contact information about a particular person, center, college, department, etc; the format of the JSON object is as follows:</p>
-	      	<pre>
+	      	<pre class="prettyprint">
 		      	<code>
 {
   "status": "200",
@@ -47,7 +47,7 @@
 			<h3 class="type--thin">Examples</h3>
 			<strong>Retrieves information of a single entity</strong> (phasing out soon)
 			<ul class="list--unstyled">
-				<li class="list__item"><a href="{{ url('api/members/email/steven.fitzgerald@csun.edu') }}">{!! url('api/members/email/steven.fitzgerald@csun.edu') !!}</a></li>
+				<li class="list__item"><a href="{{ url('api/members/email/'.$email) }}">{!! url('api/members/email/'.$email) !!}</a></li>
 			</ul>
 			<strong>Retrieves information of Departments</strong>
 			<ul class="list--unstyled">
@@ -97,7 +97,7 @@
 			<strong>Retrieves information of a single entity</strong><br />
 			<ul class="list--unstyled">
 				<li class="list__item">
-					<a href="{{ url('api/members?email=steven.fitzgerald@csun.edu') }}">{!! url('api/members?email=steven.fitzgerald@csun.edu') !!}</a>
+					<a href="{{ url('api/members?email='.$email) }}">{!! url('api/members?email='.$email) !!}</a>
 				</li>
 				<li class="list__item">
 					<a href="{{ url('api/members?members_id=103166750') }}">{!! url('api/members?members_id=103166750') !!}</a>
