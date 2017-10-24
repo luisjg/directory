@@ -13,6 +13,9 @@
 
 $app->get('/', 'WelcomeController@index');
 
+//Post routes
+$app->post('/people/update', 'PersonController@updateFirstLastNameById');
+
 //Route for Centers
 $app->group(['prefix' => 'api/centers', 'namespace' => 'App\Http\Controllers'], function($app) {
 	$app->get('/', 'CenterController@showAllCenters');
