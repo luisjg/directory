@@ -39,6 +39,11 @@ class PersonController extends Controller {
 	}
 
 	public function updateFirstLastNameById(Request $request){
+        $this->validate($request, [
+            'first' => 'required',
+            'last' => 'required',
+            'id' => 'required'
+        ]);
       Individual::where('individuals_id','LIKE','%'. $request->input('id') .'%')
                 ->update([
                     'first_name' => $request->input('first'),
