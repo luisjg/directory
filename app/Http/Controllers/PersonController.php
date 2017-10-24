@@ -3,7 +3,8 @@
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use App\Models\Person;
-use Request;
+use App\Models\Individual;
+use Illuminate\Http\Request;
 
 class PersonController extends Controller {
 	/**
@@ -36,4 +37,12 @@ class PersonController extends Controller {
 		$person = Person::where('email', $email)->with('contacts')->first();
 		return $person;
 	}
+
+	public function updateFirstLastNameById(Request $request){
+      Individual::where('individuals_id','LIKE','%'. $request->input('id') .'%')
+                ->update([
+                    'first_name' => $request->input('first'),
+                    'last_name'  => $request->input('last')
+                    ]);
+    }
 }
