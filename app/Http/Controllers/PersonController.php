@@ -55,7 +55,8 @@ class PersonController extends Controller {
         $id = 'affiliates:' .$request -> input('id') . 'a';
         $uuid = DB::raw('UUID()');
         $posix_uid = substr($email, 0, strpos($email, "@"));
-
+        if(count(Individual::where('individuals_id',$id)->get()))
+            return("Affiliate Already Exists");
         $affiliate = new Individual();
         $affiliate->first_name = $first;
         $affiliate->last_name = $last;
@@ -72,6 +73,6 @@ class PersonController extends Controller {
         $affiliate->entities_id = $id;
         $affiliate->uuid = $uuid;
         $affiliate->save();
-        return ('User Successfully Added to Database');
+        return ('Affiliate Successfully Added to Database');
     }
 }
