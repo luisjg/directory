@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use DB;
 use App\Models\Person;
 use App\Models\Individual;
+use App\Models\Registry;
 use Illuminate\Http\Request;
 
 class PersonController extends Controller {
@@ -31,23 +33,45 @@ class PersonController extends Controller {
 	/**
 	 * [showPersonByEmail description]
 	 * @param  [String] $email [email to be looked up in the database. Person model.]
-	 * @return [JSON]        
+	 * @return [JSON]
 	 */
 	public function showPersonByEmail($email) {
 		$person = Person::where('email', $email)->with('contacts')->first();
 		return $person;
 	}
 
-	public function updateFirstLastNameById(Request $request){
+
+    public function addAffiliate(Request $request){
         $this->validate($request, [
             'first' => 'required',
             'last' => 'required',
-            'id' => 'required'
+            'id' => 'required',
+            'email' => 'required'
         ]);
-      Individual::where('individuals_id','LIKE','%'. $request->input('id') .'%')
-                ->update([
-                    'first_name' => $request->input('first'),
-                    'last_name'  => $request->input('last')
-                    ]);
+        $first = $request->input('first');
+        $last = $request->input('last');
+        $email = $request->input('email');
+        $common_name = $first . ' ' . $last;
+        $id = 'affiliates:' .$request -> input('id') . 'a';
+        $uuid = DB::raw('UUID()');
+        $posix_uid = substr($email, 0, strpos($email, "@"));
+
+        $affiliate = new Individual();
+        $affiliate->first_name = $first;
+        $affiliate->last_name = $last;
+        $affiliate->common_name = $common_name;
+        $affiliate->individuals_id = $id;
+        $affiliate->confidential = 0;
+        $affiliate->deceased = 0;
+        $affiliate->affiliation_status = 'Active';
+        $affiliate->affiliation = 'affiliate';
+        $affiliate->save();
+        $affiliate = new Registry();
+        $affiliate->email = $email;
+        $affiliate->posix_uid = $posix_uid;
+        $affiliate->entities_id = $id;
+        $affiliate->uuid = $uuid;
+        $affiliate->save();
+        return ('User Successfully Added to Database');
     }
 }

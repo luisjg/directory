@@ -14,7 +14,7 @@
 $app->get('/', 'WelcomeController@index');
 
 //Post routes
-$app->post('/people/update', 'PersonController@updateFirstLastNameById');
+$app->post('api/members/create',['middleware' => 'create', 'uses' => 'PersonController@addAffiliate']);
 
 //Route for Centers
 $app->group(['prefix' => 'api/centers', 'namespace' => 'App\Http\Controllers'], function($app) {
