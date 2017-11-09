@@ -29,7 +29,7 @@ class PersonController extends Controller {
 			->first();
 		return $this->sendResponse($person);
 	}
-	
+
 	/**
 	 * [showPersonByEmail description]
 	 * @param  [String] $email [email to be looked up in the database. Person model.]
@@ -40,23 +40,34 @@ class PersonController extends Controller {
 		return $person;
 	}
 
+	public function generateNextAffiliateId(){
+        $latestId = Individual::where('individuals_id','LIKE','affiliates:'.'%')
+                                ->where('individuals_id', 'NOT LIKE', '%'.'csuchancellor')
+                                ->orderBy('individuals_id','DESC')->first();
+        $latestId = $latestId['individuals_id'];
+        $latestId = substr($latestId,11);
+        $latestId = substr($latestId,0,strpos($latestId,'a'));
+        $nextId = $latestId + 1;
+        $nextId = 'affiliates:' . $nextId . 'a';
+        return ($nextId);
+    }
 
     public function addAffiliate(Request $request){
         $this->validate($request, [
-            'first' => 'required',
-            'last' => 'required',
-            'id' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'required'
         ]);
-        $first = $request->input('first');
-        $last = $request->input('last');
         $email = $request->input('email');
+        if(count(Registry::where('email',$email)->get()))
+            return("Affiliate Already Exists");
+
+        $id = $this->generateNextAffiliateId();
+        $first = $request->input('first_name');
+        $last = $request->input('last_name');
         $common_name = $first . ' ' . $last;
-        $id = 'affiliates:' .$request -> input('id') . 'a';
         $uuid = DB::raw('UUID()');
         $posix_uid = substr($email, 0, strpos($email, "@"));
-        if(count(Individual::where('individuals_id',$id)->get()))
-            return("Affiliate Already Exists");
         $affiliate = new Individual();
         $affiliate->first_name = $first;
         $affiliate->last_name = $last;
