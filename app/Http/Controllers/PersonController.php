@@ -44,12 +44,18 @@ class PersonController extends Controller {
         $latestId = Individual::where('individuals_id','LIKE','affiliates:'.'%')
                                 ->where('individuals_id', 'NOT LIKE', '%'.'csuchancellor')
                                 ->orderBy('individuals_id','DESC')->first();
-        $latestId = $latestId['individuals_id'];
-        $latestId = substr($latestId,11);
-        $latestId = substr($latestId,0,strpos($latestId,'a'));
-        $nextId = $latestId + 1;
-        $nextId = 'affiliates:' . $nextId . 'a';
+        if (!count($latestId)) {
+            $nextId='affiliates:1a';
+        }
+        else {
+            $latestId = $latestId['individuals_id'];
+            $latestId = substr($latestId, 11);
+            $latestId = substr($latestId, 0, strpos($latestId, 'a'));
+            $nextId = $latestId + 1;
+            $nextId = 'affiliates:' . $nextId . 'a';
+        }
         return ($nextId);
+
     }
 
     public function addAffiliate(Request $request){
