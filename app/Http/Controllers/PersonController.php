@@ -45,14 +45,14 @@ class PersonController extends Controller {
                                 ->where('individuals_id', 'NOT LIKE', '%'.'csuchancellor')
                                 ->orderBy('individuals_id','DESC')->first();
         if (!count($latestId)) {
-            $nextId='affiliates:1a';
+            $nextId='affiliates:1:a';
         }
         else {
             $latestId = $latestId['individuals_id'];
             $latestId = substr($latestId, 11);
-            $latestId = substr($latestId, 0, strpos($latestId, 'a'));
+            $latestId = substr($latestId, 0, strpos($latestId, ':'));
             $nextId = $latestId + 1;
-            $nextId = 'affiliates:' . $nextId . 'a';
+            $nextId = 'affiliates:' . $nextId . ':a';
         }
         return ($nextId);
 
