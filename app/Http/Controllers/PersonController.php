@@ -66,8 +66,7 @@ class PersonController extends Controller {
         ]);
         $email = $request->input('email');
         if(count(Registry::where('email',$email)->get()))
-            return("Affiliate Already Exists");
-
+            return ['message'=>"Affiliate Already Exists"];
         $id = $this->generateNextAffiliateId();
         $first = $request->input('first_name');
         $last = $request->input('last_name');
@@ -90,6 +89,9 @@ class PersonController extends Controller {
         $affiliate->entities_id = $id;
         $affiliate->uuid = $uuid;
         $affiliate->save();
-        return ('Affiliate Successfully Added to Database');
+        return [
+            'message' => 'Affiliate Successfully Added to Database',
+            'user' => ['id'=>$id, 'email'=> $email]
+        ];
     }
 }
