@@ -15,6 +15,8 @@ $app->get('/', 'WelcomeController@index');
 
 //Post routes
 $app->post('api/members/create',['middleware' => 'create', 'uses' => 'PersonController@addAffiliate']);
+$app->post('api/members/delete',['middleware' => 'create', 'uses' => 'PersonController@removeAffiliate']);
+
 
 //Route for Centers
 $app->group(['prefix' => 'api/centers', 'namespace' => 'App\Http\Controllers'], function($app) {
