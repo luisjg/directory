@@ -100,8 +100,9 @@ class PersonController extends Controller {
             'email' => 'required'
         ]);
         $email = $request->input('email');
-        if(!count(Registry::where('email',$email)->get()))
+        if(!count(Registry::where('email',$email)->get())){
             return ['message'=>"User With That Email Does Not Exist"];
+        }
         $affiliate_Registry = Registry::where('email',$email)->first();
         $id = $affiliate_Registry -> entities_id;
         Registry::where('email',$email)->delete();
