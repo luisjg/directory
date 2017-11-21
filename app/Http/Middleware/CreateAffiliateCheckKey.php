@@ -16,7 +16,7 @@ class CreateAffiliateCheckKey
      */
     public function handle($request, Closure $next)
     {
-        if(env('APP_CREATE_KEY')!= $request->token)
+        if(env('APP_MIDDLEWARE_KEY')!= $request->token)
         {
             throw new AccessDeniedException();
         }

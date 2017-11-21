@@ -12,10 +12,10 @@ class PersonController extends Controller {
 	/**
 	 * [showPersonByMemberID description]
 	 * @param  [Integer] $individuals_id [individuals_id to be looked up into the database. Person model.]
-	 * @return [JSON] 
+	 * @return [JSON]
 	 * individuals_id is the primary key on the faculty.person table
 	 * contact_id is the primary key on the faculty.contacts table
-	 * entities_id is the foreign key on the faculty.contacts table 
+	 * entities_id is the foreign key on the faculty.contacts table
 	 * Only returns attributes: first_name, last_name, telephone, website, location, email
 	 */
 	public function showPersonByMemberID($individuals_id) {
@@ -93,5 +93,20 @@ class PersonController extends Controller {
             'message' => 'Affiliate Successfully Added to Database',
             'user' => ['id'=>$id, 'email'=> $email]
         ];
+    }
+
+    public function removeAffiliate(Request $request){
+        $this->validate($request, [
+            'email' => 'required'
+        ]);
+        $email = $request->input('email');
+        if(!count(Registry::where('email',$email)->get())){
+            return ['message'=>"User With That Email Does Not Exist"];
+        }
+        $affiliate_Registry = Registry::where('email',$email)->first();
+        $id = $affiliate_Registry -> entities_id;
+        Registry::where('email',$email)->delete();
+        Individual::where('individuals_id',$id)->delete();
+        return ['message' => 'Affiliate Successfully Deleted from Database'];
     }
 }
