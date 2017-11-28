@@ -36,7 +36,7 @@ class PersonController extends Controller {
 	 * @return [JSON]
 	 */
 	public function showPersonByEmail($email) {
-		$person = Person::where('email', $email)->with('contacts')->first();
+		$person = Person::whereEmail($email)->with('contacts')->first();
 		return $person;
 	}
 
@@ -58,6 +58,14 @@ class PersonController extends Controller {
 
     }
 
+    public function generatePosixUid($first,$last,$id){
+        $posix_uid = strtolower(substr($first, 0, 1))
+                    .strtolower(substr($last,0,1))
+                    .trim($id,'affiliates:')
+                    .'a';
+        return $posix_uid;
+    }
+
     public function addAffiliate(Request $request){
         $this->validate($request, [
             'first_name' => 'required',
@@ -65,14 +73,14 @@ class PersonController extends Controller {
             'email' => 'required'
         ]);
         $email = $request->input('email');
-        if(count(Registry::where('email',$email)->get()))
+        if(count(Registry::whereEmail($email)->get()))
             return ['message'=>"Affiliate Already Exists"];
         $id = $this->generateNextAffiliateId();
         $first = $request->input('first_name');
         $last = $request->input('last_name');
         $common_name = $first . ' ' . $last;
         $uuid = DB::raw('UUID()');
-        $posix_uid = substr($email, 0, strpos($email, "@"));
+        $posix_uid = $this->generatePosixUid($first,$last,$id);
         $affiliate = new Individual();
         $affiliate->first_name = $first;
         $affiliate->last_name = $last;
@@ -91,7 +99,7 @@ class PersonController extends Controller {
         $affiliate->save();
         return [
             'message' => 'Affiliate Successfully Added to Database',
-            'user' => ['id'=>$id, 'email'=> $email]
+            'user' => ['id'=>$id, 'email'=> $email, 'posix_uid'=>$posix_uid]
         ];
     }
 
