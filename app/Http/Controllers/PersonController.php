@@ -9,6 +9,8 @@ use App\Models\Registry;
 use Illuminate\Http\Request;
 
 class PersonController extends Controller {
+
+    private $idPrependString = 'members:';
 	/**
 	 * [showPersonByMemberID description]
 	 * @param  [Integer] $individuals_id [individuals_id to be looked up into the database. Person model.]
@@ -56,17 +58,17 @@ class PersonController extends Controller {
      * @return [int]
      */
     private function generateNextAffiliateId() {
-        $latestId = Individual::where('individuals_id','LIKE','affiliates:'.'%')
+        $latestId = Individual::where('individuals_id','LIKE','%affiliates:%')
                                 ->where('individuals_id', 'NOT LIKE', '%'.'csuchancellor')
                                 ->orderBy('individuals_id','DESC')->first();
         if (!count($latestId)) {
-            $nextId='affiliates:1';
+            $nextId = $this->idPrependString.'affiliates:1';
         } else {
             $latestId = $latestId['individuals_id'];
             $latestId = substr($latestId, 11);
             $latestId = substr($latestId, 0, strpos($latestId, ':'));
             $nextId = $latestId + 1;
-            $nextId = 'affiliates:' . $nextId;
+            $nextId = $this->idPrependString.'affiliates:'.$nextId;
         }
 
         return ($nextId);
@@ -83,7 +85,7 @@ class PersonController extends Controller {
     private function generatePosixUid($first_name, $last_name, $user_id) {
         $posix_uid = strtolower(substr($first_name, 0, 1))
                     .strtolower(substr($last_name,0,1))
-                    .trim($user_id,'affiliates:')
+                    .trim($user_id, $this->idPrependString.'affiliates:')
                     .'a';
         return $posix_uid;
     }
