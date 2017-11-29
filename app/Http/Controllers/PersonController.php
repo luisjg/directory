@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\NemoEntity;
 use DB;
 use App\Models\Person;
 use App\Models\Individual;
@@ -10,7 +11,21 @@ use Illuminate\Http\Request;
 
 class PersonController extends Controller {
 
-    private $idPrependString = 'members:';
+    
+    /**
+     * The string to prepend to id
+     *
+     * @var [string]
+     */
+    private $idPrependString;
+
+    
+    /**
+     * Class Constructor to initialize any values we need.
+     */
+    public function __construct() {
+        $this->idPrependString = env('LDAP_DB_USER_ID_PREFIX');
+    }
 	/**
 	 * [showPersonByMemberID description]
 	 * @param  [Integer] $individuals_id [individuals_id to be looked up into the database. Person model.]
@@ -97,15 +112,12 @@ class PersonController extends Controller {
      * @return [boolean]
      */
     private function writeToIndividual($values) {
-        $affiliate = new Individual();
-        $affiliate->individuals_id     = $values['user_id'];
-        $affiliate->first_name         = $values['first_name'];
-        $affiliate->last_name          = $values['last_name'];
-        $affiliate->common_name        = $values['common_name'];
-        $affiliate->confidential       = 0;
-        $affiliate->deceased           = 0;
-        $affiliate->affiliation_status = 'Active';
-        $affiliate->affiliation        = 'affiliate';
+        $affiliate                  = new Individual();
+        $affiliate->individuals_id  = $values['user_id'];
+        $affiliate->first_name      = $values['first_name'];
+        $affiliate->last_name       = $values['last_name'];
+        $affiliate->common_name     = $values['common_name'];
+        $affiliate->affiliation     = $values['affiliation'];
         $status = $affiliate->save();
         if($status)
             return true;
@@ -120,11 +132,28 @@ class PersonController extends Controller {
      * @return [boolean]
      */
     private function writeToRegistry($values) {
-        $affiliate = new Registry();
+        $affiliate              = new Registry();
         $affiliate->uuid        = $values['uuid'];
         $affiliate->entities_id = $values['user_id'];
         $affiliate->posix_uid   = $values['posix_uid'];
         $affiliate->email       = $values['email'];
+        $status = $affiliate->save();
+        if($status)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Performs the writes to the entity table
+     *
+     * @param array $values
+     * @return [boolean]
+     */
+    private function writeToEntity($values) {
+        $affiliate               = new NemoEntity();
+        $affiliate->entities_id  = $values['user_id'];
+        $affiliate->display_name = $values['common_name'];
         $status = $affiliate->save();
         if($status)
             return true;
@@ -160,6 +189,7 @@ class PersonController extends Controller {
         $uuid        = DB::raw('UUID()');
 
         $values = [
+            'affiliation' => 'affiliate',
             'common_name' => $common_name,
             'email'       => $email,
             'first_name'  => $first_name,
@@ -169,16 +199,18 @@ class PersonController extends Controller {
             'uuid'        => $uuid
         ];
 
-        if($this->writeToRegistry($values)) {
-            if($this->writeToIndividual($values)) {
-                return [
-                    'message' => 'User successfully added to database.',
-                    'user'    => [
-                        'user_id'   => $values['user_id'],
-                        'email'     => $values['email'],
-                        'posix_uid' => $values['posix_uid']
-                    ]
-                ];
+        if ($this->writeToRegistry($values)) {
+            if ($this->writeToIndividual($values)) {
+                if ($this->writeToEntity($values)) {
+                    return [
+                        'message' => 'User successfully added to database.',
+                        'user'    => [
+                            'user_id'   => $values['user_id'],
+                            'email'     => $values['email'],
+                            'posix_uid' => $values['posix_uid']
+                        ]
+                    ];
+                }
             }
         }
 
@@ -205,13 +237,22 @@ class PersonController extends Controller {
             ];
         }
 
-        $affiliate_Registry = Registry::whereEmail($email)->first();
-        $id = $affiliate_Registry->entities_id;
-        Registry::whereEmail($email)->delete();
-        Individual::where('individuals_id',$id)->delete();
+        // yes two calls but we need to get the user id from an email...
+        $affiliate = Registry::whereEmail($email)->first();
+        $user_id = $affiliate->entities_id;
+        if (Registry::where('entities_id', $user_id)->delete()) {
+            if (Individual::find($user_id)->delete()) {
+                if (NemoEntity::find($user_id)->delete()) {
+                    return [
+                        'message' => 'User with email ' . $email . ' successfully deleted from database.'
+                    ];
+                }
+            }
+        }
 
         return [
-            'message' => 'User with email '.$email.' successfully deleted from eatabase.'
+            'message' => 'Oops, something went wrong.'
         ];
+
     }
 }
