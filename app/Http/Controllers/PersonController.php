@@ -41,7 +41,7 @@ class PersonController extends Controller {
     }
     
     /**
-     * CHeck to see if the user exists in Registry
+     * Check to see if the user exists in Registry
      *
      * @param [string] $email
      * @return [int]
@@ -75,9 +75,9 @@ class PersonController extends Controller {
     /**
      * Generates the user's POSIX UID
      *
-     * @param [string] $first
-     * @param [string] $last
-     * @param [int] $id
+     * @param [string] $first_name
+     * @param [string] $last_name
+     * @param [int] $user_id
      * @return [string]
      */
     private function generatePosixUid($first_name, $last_name, $user_id) {
@@ -115,7 +115,7 @@ class PersonController extends Controller {
      * Preforms the writes to the registry table
      *
      * @param [array] $values
-     * @return [boolean]]
+     * @return [boolean]
      */
     private function writeToRegistry($values) {
         $affiliate = new Registry();
