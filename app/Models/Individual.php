@@ -10,4 +10,16 @@ class Individual extends Model {
 	 */
 	protected $table = 'nemo.individuals';
 
+    /**
+     * Change the primary key
+     * @var string
+     */
+	protected $primaryKey = 'individuals_id';
+
+    /**
+     * Turn off the auto-incrementing feature
+     * @var bool
+     */
+	public $incrementing = false;
+
 }
