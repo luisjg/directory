@@ -1,12 +1,10 @@
 <?php namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Contact;
-use App\Models\NemoEntity;
-use DB;
-use App\Models\Person;
 use App\Models\Individual;
+use App\Models\NemoEntity;
+use App\Models\Person;
 use App\Models\Registry;
+use DB;
 use Illuminate\Http\Request;
 
 class PersonController extends Controller {
@@ -24,7 +22,7 @@ class PersonController extends Controller {
      * Class Constructor to initialize any values we need.
      */
     public function __construct() {
-        $this->idPrependString = env('LDAP_DB_USER_ID_PREFIX');
+        $this->idPrependString = env('USER_ID_PREFIX');
     }
 	/**
 	 * [showPersonByMemberID description]
@@ -73,17 +71,16 @@ class PersonController extends Controller {
      * @return [int]
      */
     private function generateNextAffiliateId() {
-        $latestId = Individual::where('individuals_id','LIKE','%affiliates:%')
-                                ->where('individuals_id', 'NOT LIKE', '%'.'csuchancellor')
+        $latestId = Individual::where('individuals_id','LIKE', $this->idPrependString.'%')
+                                ->where('individuals_id', 'NOT LIKE', '%csuchancellor')
                                 ->orderBy('individuals_id','DESC')->first();
-        if (!count($latestId)) {
-            $nextId = $this->idPrependString.'affiliates:1';
+        if (is_null($latestId)) {
+            $nextId = $this->idPrependString.'1';
         } else {
             $latestId = $latestId['individuals_id'];
-            $latestId = substr($latestId, 11);
-            $latestId = substr($latestId, 0, strpos($latestId, ':'));
+            $latestId = str_replace($this->idPrependString, '', $latestId);
             $nextId = $latestId + 1;
-            $nextId = $this->idPrependString.'affiliates:'.$nextId;
+            $nextId = $this->idPrependString.$nextId;
         }
 
         return ($nextId);
@@ -100,7 +97,7 @@ class PersonController extends Controller {
     private function generatePosixUid($first_name, $last_name, $user_id) {
         $posix_uid = strtolower(substr($first_name, 0, 1))
                     .strtolower(substr($last_name,0,1))
-                    .trim($user_id, $this->idPrependString.'affiliates:')
+                    .trim($user_id, $this->idPrependString)
                     .'a';
         return $posix_uid;
     }
@@ -118,11 +115,7 @@ class PersonController extends Controller {
         $affiliate->last_name       = $values['last_name'];
         $affiliate->common_name     = $values['common_name'];
         $affiliate->affiliation     = $values['affiliation'];
-        $status = $affiliate->save();
-        if($status)
-            return true;
-
-        return false;
+        $affiliate->save();
     }
 
     /**
@@ -137,11 +130,7 @@ class PersonController extends Controller {
         $affiliate->entities_id = $values['user_id'];
         $affiliate->posix_uid   = $values['posix_uid'];
         $affiliate->email       = $values['email'];
-        $status = $affiliate->save();
-        if($status)
-            return true;
-
-        return false;
+        $affiliate->save();
     }
 
     /**
@@ -154,11 +143,7 @@ class PersonController extends Controller {
         $affiliate               = new NemoEntity();
         $affiliate->entities_id  = $values['user_id'];
         $affiliate->display_name = $values['common_name'];
-        $status = $affiliate->save();
-        if($status)
-            return true;
-
-        return false;
+        $affiliate->save();
     }
 
     /**
@@ -177,6 +162,8 @@ class PersonController extends Controller {
         $count = $this->checkUserInRegistry($email);
         if ($count) {
             return [
+                'status'  => '404',
+                'success' => 'false',
                 'message' => 'User with email '.$email.' already exists.'
             ];
         }
@@ -199,23 +186,28 @@ class PersonController extends Controller {
             'uuid'        => $uuid
         ];
 
-        if ($this->writeToRegistry($values)) {
-            if ($this->writeToIndividual($values)) {
-                if ($this->writeToEntity($values)) {
-                    return [
-                        'message' => 'User successfully added to database.',
-                        'user'    => [
-                            'user_id'   => $values['user_id'],
-                            'email'     => $values['email'],
-                            'posix_uid' => $values['posix_uid']
-                        ]
-                    ];
-                }
-            }
+        try {
+            DB::transaction(function () use ($values){
+                $this->writeToEntity($values);
+                $this->writeToIndividual($values);
+                $this->writeToRegistry($values);
+            });
+        } catch (\PDOException $e) {
+            return [
+                'status'  => '500',
+                'success' => 'false',
+                'message' => 'Oops, something went wrong.'
+            ];
         }
 
         return [
-            'message' => 'Oops, something went wrong.'
+            'status'  => '200',
+            'success' => 'true',
+            'user' => [
+                'id'        => $values['user_id'],
+                'posix_uid' => $values['posix_uid'],
+                'email'     => $values['email']
+            ]
         ];
     }
 
@@ -233,26 +225,32 @@ class PersonController extends Controller {
         $count = $this->checkUserInRegistry($email);
         if (!$count) {
             return [
+                'status'  => '404',
+                'success' => 'false',
                 'message' => 'User with email '.$email.' does not exist.'
             ];
         }
 
-        // yes two calls but we need to get the user id from an email...
-        $affiliate = Registry::whereEmail($email)->first();
-        $user_id = $affiliate->entities_id;
-        if (Registry::where('entities_id', $user_id)->delete()) {
-            if (Individual::find($user_id)->delete()) {
-                if (NemoEntity::find($user_id)->delete()) {
-                    return [
-                        'message' => 'User with email ' . $email . ' successfully deleted from database.'
-                    ];
-                }
-            }
+        try {
+            DB::transaction(function () use ($email) {
+                $affiliate = Registry::whereEmail($email)->first();
+                $user_id = $affiliate->entities_id;
+                Registry::where('entities_id', $user_id)->delete();
+                Individual::find($user_id)->delete();
+                NemoEntity::find($user_id)->delete();
+            });
+        } catch (\PDOException $e) {
+            return [
+                'status'  => '500',
+                'success' => 'false',
+                'message' => 'Oops, something went wrong.'
+            ];
         }
 
         return [
-            'message' => 'Oops, something went wrong.'
+            'status'  => '200',
+            'success' => 'true',
+            'message' => 'User with email '.$email.' has been deleted from the database.'
         ];
-
     }
 }
