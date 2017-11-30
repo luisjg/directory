@@ -16,10 +16,4 @@ class Registry extends Model {
      */
 	protected $primaryKey = 'registry_id';
 
-    /**
-     * Turn of the auto-incrementing feature
-     * @var bool
-     */
-	public $incrementing = false;
-
 }
