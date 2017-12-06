@@ -13,9 +13,6 @@
 
 $app->get('/', 'WelcomeController@index');
 
-//Post routes
-$app->post('api/members/create',['middleware' => 'create', 'uses' => 'PersonController@addAffiliate']);
-$app->post('api/members/delete',['middleware' => 'create', 'uses' => 'PersonController@removeAffiliate']);
 
 
 //Route for Centers
@@ -69,4 +66,8 @@ $app->group(['prefix' => 'api/members', 'namespace' => 'App\Http\Controllers'], 
 	$app->get('/faculty/tenure-track', 'MemberController@showAllTenureTracks');
 	$app->get('/faculty/emeriti', 'MemberController@showAllEmeriti');
 	$app->get('/faculty/lecturer', 'MemberController@showAllLecturers');
+
+	//Post routes
+	$app->post('/create',['middleware' => 'create', 'uses' => 'PersonController@addAffiliate']);
+	$app->post('/delete',['middleware' => 'create', 'uses' => 'PersonController@removeAffiliate']);
 });

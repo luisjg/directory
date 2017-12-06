@@ -10,4 +10,10 @@ class Registry extends Model {
 	 */
 	protected $table = 'bedrock.registry';
 
+    /**
+     * Set the primary key
+     * @var string
+     */
+	protected $primaryKey = 'registry_id';
+
 }

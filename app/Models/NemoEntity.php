@@ -2,22 +2,23 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Individual extends Model {
+class NemoEntity extends Model {
 
 	/**
 	 * The name of the table in the database
 	 * @var string
 	 */
-	protected $table = 'nemo.individuals';
+	protected $table = 'nemo.entities';
+
 
     /**
-     * Change the primary key
+     * Set the primary key
      * @var string
      */
-	protected $primaryKey = 'individuals_id';
+	protected $primaryKey = 'entities_id';
 
     /**
-     * Turn off the auto-incrementing feature
+     * Turn the auto-incrementing
      * @var bool
      */
 	public $incrementing = false;

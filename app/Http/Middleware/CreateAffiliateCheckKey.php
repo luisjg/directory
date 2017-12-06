@@ -16,9 +16,10 @@ class CreateAffiliateCheckKey
      */
     public function handle($request, Closure $next)
     {
-        if(env('APP_MIDDLEWARE_KEY')!= $request->token)
-        {
-            throw new AccessDeniedException();
+        if (env('APP_MIDDLEWARE_KEY') != $request->token) {
+            return [
+                'message' => 'Please check your API key'
+            ];
         }
         return $next($request);
     }
