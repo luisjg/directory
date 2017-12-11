@@ -99,6 +99,8 @@ class PersonController extends Controller {
                     .strtolower(substr($last_name,0,1))
                     .trim($user_id, $this->idPrependString)
                     .'a';
+        $posix_uid = env('UID_PREFIX').$posix_uid;
+
         return $posix_uid;
     }
 
