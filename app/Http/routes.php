@@ -12,6 +12,7 @@
 */
 
 $app->get('/', 'WelcomeController@index');
+$app->get('/about/version-history', 'WelcomeController@about');
 
 
 
