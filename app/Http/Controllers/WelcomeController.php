@@ -15,4 +15,9 @@ class WelcomeController extends Controller {
 		return view("pages.landing", compact('email'));
 	}
 
+	public function about()
+    {
+        return view('pages.about.version-history');
+    }
+
 }
