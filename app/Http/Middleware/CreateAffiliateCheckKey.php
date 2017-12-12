@@ -16,9 +16,11 @@ class CreateAffiliateCheckKey
      */
     public function handle($request, Closure $next)
     {
-        if (env('APP_SECRET') != $request->token) {
+        if (env('APP_SECRET') != $request->input('token')) {
             return [
-                'message' => 'Please check your API key'
+                'status' => '400',
+                'success' => 'false',
+                'message' => 'Please check your API key',
             ];
         }
         return $next($request);
