@@ -17,14 +17,14 @@ $app->get('/about/version-history', 'WelcomeController@about');
 
 
 //Route for Centers
-$app->group(['prefix' => 'api/centers', 'namespace' => 'App\Http\Controllers'], function($app) {
+$app->group(['prefix' => 'api/centers'], function($app) {
 	$app->get('/', 'CenterController@showAllCenters');
 	$app->get('/{center_id}', 'CenterController@showSpecificCenter');
 	$app->get('/{center_id}/members', 'CenterController@showMembers');
 });
 
 //Routes for Colleges
-$app->group(['prefix' => 'api/colleges', 'namespace' => 'App\Http\Controllers'], function ($app) {
+$app->group(['prefix' => 'api/colleges'], function ($app) {
 	$app->get('/', 'AcademicGroupController@showAllAcademicGroups');
 	$app->get('/chairs', 'AcademicGroupController@showAllAcademicGroupChairs');
 	$app->get('/{college_id}', 'AcademicGroupController@showDepartmentsInAcademicGroup');
@@ -32,14 +32,14 @@ $app->group(['prefix' => 'api/colleges', 'namespace' => 'App\Http\Controllers'],
 });
 
 //Routes for Committees
-$app->group(['prefix' => 'api/committees', 'namespace' => 'App\Http\Controllers'], function($app) {
+$app->group(['prefix' => 'api/committees'], function($app) {
 	$app->get('/', 'CommitteeController@showCommittees');
 	$app->get('/{committee_id}/members', 'CommitteeController@showMembers');
 	$app->get('/{committee_id}', 'CommitteeController@showCommittee');
 });
 
 //Routes for Departments
-$app->group(['prefix' => 'api/departments', 'namespace' => 'App\Http\Controllers'], function($app) {
+$app->group(['prefix' => 'api/departments'], function($app) {
 	$app->get('/', 'DepartmentController@showAllDepartments');
 	$app->get('/administrative', 'DepartmentController@showAllAdministrativeDepartments');
 	$app->get('/{dept_id}', 'DepartmentController@showSpecificDepartment');
@@ -49,14 +49,14 @@ $app->group(['prefix' => 'api/departments', 'namespace' => 'App\Http\Controllers
 });
 
 //Route for Institutes
-$app->group(['prefix' => 'api/institutes', 'namespace' => 'App\Http\Controllers'], function($app) {
+$app->group(['prefix' => 'api/institutes'], function($app) {
 	$app->get('/', 'InstituteController@showAllInstitutes');
 	$app->get('/{institute_id}', 'InstituteController@showSpecificInstitute');
 	$app->get('/{institute_id}/members', 'InstituteController@showMembers');
 });
 
 // Routes for Members
-$app->group(['prefix' => 'api/members', 'namespace' => 'App\Http\Controllers'], function($app) {
+$app->group(['prefix' => 'api/members'], function($app) {
 	// These are temporary
 	$app->get('/email/{email}', 'MemberController@showMemberByEmail');
 	$app->get('/email/{email}/degrees', 'MemberController@showMemberByEmailWithDegrees');
