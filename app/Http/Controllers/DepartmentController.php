@@ -66,21 +66,59 @@ class DepartmentController extends Controller {
 	}
 
 	/**
-	 * Display a listing of the faculty members in the given department.
+	 * Display a full or partial listing of the faculty members in the given department.
 	 *
-	 * @param integer $dept_id The ID of the academic department
+	 * @param integer $dept_id The ID of the academic department, optional $type for type of faculty
 	 * @return JSON Response
 	 */
-	public function showFacultyInDepartment($dept_id) {
+	public function showFacultyInDepartment($dept_id, $type=null) {
 
-		$people = Person::where('confidential', 0)
-					->whereHas('departmentUser', function($q) use ($dept_id) {
-						$q->where('department_id', 'academic_departments:'.$dept_id)
-							->whereIn('role_name', ['faculty', 'librarian', 'counselor', 'coach']);
-					})
-					->orderBy('last_name')
-					->orderBy('first_name')
-					->get();
+        if ($type == null || $type == 'all') {
+            //All faculty or nothing specific requested
+            $people = Person::where('confidential', 0)
+                ->whereHas('departmentUser', function ($q) use ($dept_id) {
+                    $q->where('department_id', 'academic_departments:' . $dept_id)
+                        ->whereIn('role_name', ['faculty', 'librarian', 'counselor', 'coach']);
+                })
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == 'tenure-track') {
+            // Active tenured/tenure-track faculty requested
+            $people = Person::where('confidential', 0)
+                ->whereHas('departmentUser', function ($q) use ($dept_id) {
+                    $q->where('department_id', 'academic_departments:' . $dept_id)
+                        ->whereIn('role_name', ['faculty', 'librarian', 'counselor', 'coach'])
+                        ->whereNotIn('rank', ['Lecturer']);
+                })
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == 'emeriti') {
+            // Emeriti requested
+            $people = Person::where('confidential', 0)
+                ->whereHas('departmentUser', function ($q) use ($dept_id) {
+                    $q->where('department_id', 'academic_departments:' . $dept_id)
+                        ->whereIn('role_name', ['emeritus']);
+                })
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == 'lecturer') {
+            // Lecturers requested
+            $people = Person::where('confidential', 0)
+                ->whereHas('departmentUser', function ($q) use ($dept_id) {
+                    $q->where('department_id', 'academic_departments:' . $dept_id)
+                        ->whereIn('role_name', ['faculty', 'librarian', 'counselor', 'coach'])
+                        ->whereIn('rank', ['Lecturer']);
+                })
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else {
+            //Invalid subset requested
+            $people = collect();
+        }
 
 		// convert the collection to an array for use in returning the
 		// desired response as JSON
@@ -89,6 +127,12 @@ class DepartmentController extends Controller {
 		return $this->sendResponse($data, "people");
 	}
 
+    /**
+     * Display a full or partial listing of the faculty members in the given department with degree information
+     *
+     * @param integer $dept_id The ID of the academic department, optional $type for type of faculty
+     * @return JSON Response
+     */
     public function showFacultyInDepartmentWithDegrees($dept_id, $type) {
 
         if ($type == 'all') {
