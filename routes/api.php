@@ -49,6 +49,7 @@ $router->group(['prefix' => 'members'], function($router) {
     // In the future this will be the only route here
     $router->get('/', 'MemberController@showMember');
     $router->get('/faculty/{type}[/{letter}]', 'MemberController@showAllFaculty');
+    $router->get('/faculty/{type}/degrees[/{letter}]', 'MemberController@showAllFacultyWithDegrees');
 
     //Post routes
     $router->group(['middleware' => 'create'], function($router) {
