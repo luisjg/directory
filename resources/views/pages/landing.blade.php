@@ -57,6 +57,7 @@
 				<li class="list__item"><a href="{{ url('api/departments/10132') }}">{!! url('api/departments/10132') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/189/members') }}">{!! url('api/departments/189/members') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/189/faculty') }}">{!! url('api/departments/189/faculty') !!}</a></li>
+				<li class="list__item"><a href="{{ url('api/departments/189/faculty/all/degrees') }}">{!! url('api/departments/189/faculty/all/degrees') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/189/coordinator') }}">{!! url('api/departments/189/coordinator') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/10132/members') }}"> {!! url('api/departments/10132/members') !!}</a></li>
 			</ul>

@@ -72,17 +72,37 @@ class MemberController extends Controller {
 	}
 
 	/**
-	 * Handles the showing of all CSUN Faculty
-	 * @param  Request the HTTP POST request
+	 * Handles the showing of CSUN Faculty of specific type (all Faculty if type is not specified)
+	 * @param  Request the HTTP POST request, type of faculty requested (if any)
 	 * @return JSON the JSON response
 	 */
-	public function showAllFaculty(Request $request)
+	public function showAllFaculty(Request $request, $type=null)
 	{
-		$people = Person::where('affiliation','faculty')
-			->whereNotIn('rank', ['Chancellor'])
-			->orderBy('last_name')
-			->orderBy('first_name')
-			->get();
+	    if ($type == null) {
+            $people = Person::where('affiliation', 'faculty')
+                ->whereNotIn('rank', ['Chancellor'])
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == "tenure-track") {
+            $people = Person::where('affiliation','faculty')
+                ->whereNotIn('rank', ['Lecturer', 'Chancellor'])
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == "emeriti") {
+            $people = Person::where('affiliation','emeritus')
+                ->whereNotIn('rank', ['Lecturer', 'Chancellor'])
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == 'lecturer') {
+            $people = Person::where('affiliation','faculty')
+                ->whereIn('rank', ['Lecturer'])
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        }
 
 		return $this->sendResponse($people);
 	}

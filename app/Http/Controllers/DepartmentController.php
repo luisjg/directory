@@ -89,6 +89,62 @@ class DepartmentController extends Controller {
 		return $this->sendResponse($data, "people");
 	}
 
+    public function showFacultyInDepartmentWithDegrees($dept_id, $type) {
+
+        if ($type == 'all') {
+	        // All faculty requested
+            $people = Person::where('confidential', 0)
+                ->whereHas('departmentUser', function($q) use ($dept_id) {
+                    $q->where('department_id', 'academic_departments:'.$dept_id)
+                        ->whereIn('role_name', ['faculty', 'librarian', 'counselor', 'coach']);
+                })
+                ->with('degrees')
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == 'tenure-track') {
+            // Active tenured/tenure-track faculty requested
+            $people = Person::where('confidential', 0)
+                ->whereHas('departmentUser', function ($q) use ($dept_id) {
+                    $q->where('department_id', 'academic_departments:' . $dept_id)
+                        ->whereIn('role_name', ['faculty', 'librarian', 'counselor', 'coach'])
+                        ->whereNotIn('rank', ['Lecturer']);
+                })
+                ->with('degrees')
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == 'emeriti') {
+            // Emeriti requested
+            $people = Person::where('confidential', 0)
+                ->whereHas('departmentUser', function ($q) use ($dept_id) {
+                    $q->where('department_id', 'academic_departments:' . $dept_id)
+                        ->whereIn('role_name', ['emeritus']);
+                })
+                ->with('degrees')
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == 'lecturer') {
+            // Lecturers requested
+            $people = Person::where('confidential', 0)
+                ->whereHas('departmentUser', function ($q) use ($dept_id) {
+                    $q->where('department_id', 'academic_departments:' . $dept_id)
+                        ->whereIn('role_name', ['faculty', 'librarian', 'counselor', 'coach'])
+                        ->whereIn('rank', ['Lecturer']);
+                })
+                ->with('degrees')
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        }
+        // convert the collection to an array for use in returning the
+        // desired response as JSON
+        $data = $people->toArray();
+        // send the response
+        return $this->sendResponse($data, "people");
+    }
+
 	/**
 	 * Returns all academic departmentUser
 	 * @return JSON Response

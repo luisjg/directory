@@ -17,6 +17,8 @@ class Person extends Model {
 	protected $primaryKey = 'individuals_id';
 	protected $fillable = [];
 
+	public $incrementing = false;
+
 	protected $appends = [
 	    'profile_image'
     ];
