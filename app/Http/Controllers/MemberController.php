@@ -79,7 +79,7 @@ class MemberController extends Controller {
 	public function showAllFaculty(Request $request, $type, $letter=null)
 	{
         if ($type == 'all') {
-            //All faculty or nothing specific requested
+            //All faculty requested
             $people = Person::when($letter, function($query) use ($letter) {
                     $query->where('last_name', 'LIKE', $letter.'%');
                 })
