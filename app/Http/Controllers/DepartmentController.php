@@ -137,7 +137,11 @@ class DepartmentController extends Controller {
                 ->orderBy('last_name')
                 ->orderBy('first_name')
                 ->get();
+        } else {
+            //Invalid subset requested
+            $people = collect();
         }
+
         // convert the collection to an array for use in returning the
         // desired response as JSON
         $data = $people->toArray();

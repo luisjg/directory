@@ -78,30 +78,37 @@ class MemberController extends Controller {
 	 */
 	public function showAllFaculty(Request $request, $type=null)
 	{
-	    if ($type == null) {
+	    if ($type == null && $type == 'all') {
+	        //All faculty or nothing specific requested
             $people = Person::where('affiliation', 'faculty')
                 ->whereNotIn('rank', ['Chancellor'])
                 ->orderBy('last_name')
                 ->orderBy('first_name')
                 ->get();
         } else if ($type == "tenure-track") {
+	        //Active tenured/tenure-track faculty requested
             $people = Person::where('affiliation','faculty')
                 ->whereNotIn('rank', ['Lecturer', 'Chancellor'])
                 ->orderBy('last_name')
                 ->orderBy('first_name')
                 ->get();
         } else if ($type == "emeriti") {
+	        //Emeriti requested
             $people = Person::where('affiliation','emeritus')
                 ->whereNotIn('rank', ['Lecturer', 'Chancellor'])
                 ->orderBy('last_name')
                 ->orderBy('first_name')
                 ->get();
         } else if ($type == 'lecturer') {
+	        //Lecturers requested
             $people = Person::where('affiliation','faculty')
                 ->whereIn('rank', ['Lecturer'])
                 ->orderBy('last_name')
                 ->orderBy('first_name')
                 ->get();
+        } else {
+	        //Invalid subset requested
+            $people = collect();
         }
 
 		return $this->sendResponse($people);
