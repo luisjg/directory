@@ -56,7 +56,7 @@
 				<li class="list__item"><a href="{{ url('api/departments/189') }}">{!! url('api/departments/189') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/10132') }}">{!! url('api/departments/10132') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/189/members') }}">{!! url('api/departments/189/members') !!}</a></li>
-				<li class="list__item"><a href="{{ url('api/departments/189/faculty') }}">{!! url('api/departments/189/faculty') !!}</a></li>
+				<li class="list__item"><a href="{{ url('api/departments/189/faculty/all') }}">{!! url('api/departments/189/faculty/all') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/189/faculty/all/degrees') }}">{!! url('api/departments/189/faculty/all/degrees') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/189/coordinator') }}">{!! url('api/departments/189/coordinator') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/departments/10132/members') }}"> {!! url('api/departments/10132/members') !!}</a></li>
@@ -88,9 +88,11 @@
 			</ul>
 			<strong>Retrieves Faculty Listings</strong>
 			<ul class="list--unstyled">
-				<li class="list__item"><a href="{{ url('api/members/faculty') }}">{!! url('api/members/faculty') !!}</a></li>
+				<li class="list__item"><a href="{{ url('api/members/faculty/all') }}">{!! url('api/members/faculty/all') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/members/faculty/tenure-track') }}">{!! url('api/members/faculty/tenure-track') !!}</a></li>
+				<li class="list__item"><a href="{{ url('api/members/faculty/tenure-track/a') }}">{!! url('api/members/faculty/tenure-track/a') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/members/faculty/emeriti') }}">{!! url('api/members/faculty/emeriti') !!}</a></li>
+				<li class="list__item"><a href="{{ url('api/members/faculty/emeriti/degrees/m') }}">{!! url('api/members/faculty/emeriti/degrees/m') !!}</a></li>
 				<li class="list__item"><a href="{{ url('api/members/faculty/lecturer') }}">{!! url('api/members/faculty/lecturer') !!}</a></li>
 			</ul>
 	      	<h2 id="subcollections" class="type--header type--thin">Subcollections</h2>
