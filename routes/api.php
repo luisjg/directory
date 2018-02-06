@@ -28,7 +28,8 @@ $router->group(['prefix' => 'departments'], function($router) {
     $router->get('/administrative', 'DepartmentController@showAllAdministrativeDepartments');
     $router->get('/{dept_id}', 'DepartmentController@showSpecificDepartment');
     $router->get('/{dept_id}/members', 'DepartmentController@showAllMembersInDepartment');
-    $router->get('/{dept_id}/faculty', 'DepartmentController@showFacultyInDepartment');
+    $router->get('/{dept_id}/faculty[/{type}]', 'DepartmentController@showFacultyInDepartment');
+    $router->get('/{dept_id}/faculty/{type}/degrees', 'DepartmentController@showFacultyInDepartmentWithDegrees');
     $router->get('/{dept_id}/coordinator', 'DepartmentController@showGradCoordinatorInDepartment');
 });
 
@@ -47,10 +48,8 @@ $router->group(['prefix' => 'members'], function($router) {
     // $app->get('/id/{individuals_id}', 'MemberController@showMemberById');
     // In the future this will be the only route here
     $router->get('/', 'MemberController@showMember');
-    $router->get('/faculty', 'MemberController@showAllFaculty');
-    $router->get('/faculty/tenure-track', 'MemberController@showAllTenureTracks');
-    $router->get('/faculty/emeriti', 'MemberController@showAllEmeriti');
-    $router->get('/faculty/lecturer', 'MemberController@showAllLecturers');
+    $router->get('/faculty/{type}[/{letter}]', 'MemberController@showAllFaculty');
+    $router->get('/faculty/{type}/degrees[/{letter}]', 'MemberController@showAllFacultyWithDegrees');
 
     //Post routes
     $router->group(['middleware' => 'create'], function($router) {

@@ -72,68 +72,115 @@ class MemberController extends Controller {
 	}
 
 	/**
-	 * Handles the showing of all CSUN Faculty
-	 * @param  Request the HTTP POST request
+	 * Handles the showing of CSUN faculty by type with given first letter of last name
+	 * @param  Request the HTTP POST request, type of faculty requested (if any), first letter(s) of last name (if any)
 	 * @return JSON the JSON response
 	 */
-	public function showAllFaculty(Request $request)
+	public function showAllFaculty(Request $request, $type, $letter=null)
 	{
-		$people = Person::where('affiliation','faculty')
-			->whereNotIn('rank', ['Chancellor'])
-			->orderBy('last_name')
-			->orderBy('first_name')
-			->get();
-
+        if ($type == 'all') {
+            //All faculty requested
+            $people = Person::when($letter, function($query) use ($letter) {
+                    $query->where('last_name', 'LIKE', $letter.'%');
+                })
+                ->where('affiliation', 'faculty')
+                ->whereNotIn('rank', ['Chancellor'])
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == "tenure-track") {
+            //Active tenured/tenure-track faculty requested
+            $people = Person::when($letter, function($query) use ($letter) {
+                    $query->where('last_name', 'LIKE', $letter.'%');
+                })
+                ->where('affiliation', 'faculty')
+                ->whereNotIn('rank', ['Lecturer', 'Chancellor'])
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == "emeriti") {
+            //Emeriti requested
+            $people = Person::when($letter, function($query) use ($letter) {
+                    $query->where('last_name', 'LIKE', $letter.'%');
+                })
+                ->where('affiliation', 'emeritus')
+                ->whereNotIn('rank', ['Lecturer', 'Chancellor'])
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == 'lecturer') {
+            //Lecturers requested
+            $people = Person::when($letter, function($query) use ($letter) {
+                    $query->where('last_name', 'LIKE', $letter.'%');
+                })
+                ->where('affiliation', 'faculty')
+                ->whereIn('rank', ['Lecturer'])
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else {
+            //Invalid subset requested
+            $people = collect();
+        }
 		return $this->sendResponse($people);
 	}
 
-	/**
-	 * Handles the showing of all CSUN Tenure-Track Faculty (non-lecturer, non-emeriti)
-	 * @param  Request the HTTP POST request
-	 * @return JSON the JSON response
-	 */
-	public function showAllTenureTracks(Request $request)
-	{
-		$people = Person::where('affiliation','faculty')
-			->whereNotIn('rank', ['Lecturer', 'Chancellor'])
-			->orderBy('last_name')
-			->orderBy('first_name')
-			->get();
-
-		return $this->sendResponse($people);
-	}
-
-	/**
-	 * Handles the showing of all CSUN Faculty Emeriti (non-lecturer)
-	 * @param  Request the HTTP POST request
-	 * @return JSON the JSON response
-	 */
-	public function showAllEmeriti(Request $request)
-	{
-		$people = Person::where('affiliation','emeritus')
-			->whereNotIn('rank', ['Lecturer', 'Chancellor'])
-			->orderBy('last_name')
-			->orderBy('first_name')
-			->get();
-
-		return $this->sendResponse($people);
-	}
-
-	/**
-	 * Handles the showing of all CSUN Lecturers
-	 * @param  Request the HTTP POST request
-	 * @return JSON the JSON response
-	 */
-	public function showAllLecturers(Request $request)
-	{
-		$people = Person::where('affiliation','faculty')
-			->whereIn('rank', ['Lecturer'])
-			->orderBy('last_name')
-			->orderBy('first_name')
-			->get();
-
-		return $this->sendResponse($people);
-
-	}
+    /**
+     * Handles the showing of CSUN faculty by type with degree information with given first letter of last name
+     * @param  Request the HTTP POST request, type of faculty requested (if any), first letter(s) of last name (if any)
+     * @return JSON the JSON response
+     */
+    public function showAllFacultyWithDegrees(Request $request, $type, $letter=null)
+    {
+        if ($type == 'all') {
+            //All faculty requested
+            $people = Person::when($letter, function($query) use ($letter) {
+                $query->where('last_name', 'LIKE', $letter.'%');
+            })
+                ->where('affiliation', 'faculty')
+                ->whereNotIn('rank', ['Chancellor'])
+                ->with('degrees')
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == "tenure-track") {
+            //Active tenured/tenure-track faculty requested
+            $people = Person::when($letter, function($query) use ($letter) {
+                $query->where('last_name', 'LIKE', $letter.'%');
+            })
+                ->where('affiliation', 'faculty')
+                ->whereNotIn('rank', ['Lecturer', 'Chancellor'])
+                ->with('degrees')
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == "emeriti") {
+            //Emeriti requested
+            $people = Person::when($letter, function($query) use ($letter) {
+                $query->where('last_name', 'LIKE', $letter.'%');
+            })
+                ->where('affiliation', 'emeritus')
+                ->whereNotIn('rank', ['Lecturer', 'Chancellor'])
+                ->with('degrees')
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else if ($type == 'lecturer') {
+            //Lecturers requested
+            $people = Person::when($letter, function($query) use ($letter) {
+                $query->where('last_name', 'LIKE', $letter.'%');
+            })
+                ->where('affiliation', 'faculty')
+                ->whereIn('rank', ['Lecturer'])
+                ->with('degrees')
+                ->orderBy('last_name')
+                ->orderBy('first_name')
+                ->get();
+        } else {
+            //Invalid subset requested
+            $people = collect();
+        }
+        return $this->sendResponse($people);
+    }
 
 }
