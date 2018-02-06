@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-		{{-- @include('partials.csun-footer') --}}
+		 @include('partials.csun-footer')
 		@include('partials.metalab-footer')
 		<script type="text/javascript" src="{!! url('js/metaphor.js') !!}"></script>
 		<script type="text/javascript" src="{!! url('js/run_prettify.js') !!}"></script>
