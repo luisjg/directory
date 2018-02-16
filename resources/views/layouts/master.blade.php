@@ -3,8 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Directory Web Service</title>
-	<link rel="icon" type="image/png" href="favicon.png">
-	<link rel="icon" type="image/x-icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" type="image/x-icon" href="//www.csun.edu/sites/default/themes/csun/favicon.ico" type="image/x-icon">
 	<!-- FONT LIBS -->
 	<script type="text/javascript" src="//use.typekit.net/gfb2mjm.js"></script>
 	<script>try{Typekit.load();}catch(e){}</script>
