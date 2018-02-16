@@ -255,4 +255,48 @@ class PersonController extends Controller {
             'message' => 'User with email '.$email.' has been deleted from the database.'
         ];
     }
+
+    /**
+     * Updates a person's display name so long as a valid
+     * email & api key is passed in.
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function updateDisplayName(Request $request)
+    {
+        $this->validate($request, ['email' => 'required']);
+        $email = $request->input('email');
+        $user = Individual::whereEmail($email)->first();
+        if (!(is_null($user))) {
+            // at this point we know who you are and you exist
+            // so we'll just update your display_name
+            $displayName = NemoEntity::find($user->id);
+            try {
+                DB::transaction(function () use ($displayName, $request) {
+                    $displayName->display_name = $request->input('display_name');
+                    $displayName->touch();
+                    $displayName->save();
+                });
+            } catch (\PDOException $e) {
+                return [
+                    'status' => '500',
+                    'success' => 'false',
+                    'message' => 'Oops, something went wrong.'
+                ];
+            }
+            return [
+                'status' => '200',
+                'success' => 'true',
+                'message' => 'The name for '.$email.' has been updated successfully.'
+            ];
+        } else {
+            return [
+                'status' => '500',
+                'success' => 'false',
+                'message' => 'Oops, something went wrong.'
+            ];
+        }
+
+    }
 }
