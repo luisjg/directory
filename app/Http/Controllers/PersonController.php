@@ -267,16 +267,16 @@ class PersonController extends Controller {
     {
         $this->validate($request, ['email' => 'required']);
         $email = $request->input('email');
-        $user = Individual::whereEmail($email)->first();
+        $user = Person::whereEmail($email)->first();
         if (!(is_null($user))) {
             // at this point we know who you are and you exist
             // so we'll just update your display_name
-            $displayName = NemoEntity::find($user->id);
+            $entity = NemoEntity::find($user->individuals_id);
             try {
-                DB::transaction(function () use ($displayName, $request) {
-                    $displayName->display_name = $request->input('display_name');
-                    $displayName->touch();
-                    $displayName->save();
+                DB::transaction(function () use ($entity, $request) {
+                    $entity->display_name = $request->input('display_name');
+                    $entity->touch();
+                    $entity->save();
                 });
             } catch (\PDOException $e) {
                 return [
@@ -288,13 +288,13 @@ class PersonController extends Controller {
             return [
                 'status' => '200',
                 'success' => 'true',
-                'message' => 'The name for '.$email.' has been updated successfully.'
+                'message' => 'The name for '.$user->email.' has been updated successfully.'
             ];
         } else {
             return [
                 'status' => '500',
                 'success' => 'false',
-                'message' => 'Oops, something went wrong.'
+                'message' => 'Resource not found.'
             ];
         }
 
