@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')
-	<h2 id="introduction" class="type--header type--thin">Version History</h2>
+	<h2 class="type--header type--thin">Version History</h2>
 	<h2>Directory 1.0.0 <small>Release Date: 02/06/18</small></h2>
 	<p>
 		<strong>New Features:</strong>
