@@ -270,11 +270,13 @@ class PersonController extends Controller {
         $user = Person::whereEmail($email)->first();
         if (!(is_null($user))) {
             // at this point we know who you are and you exist
-            // so we'll just update your display_name
+            // so we'll just update your display_name & biography.
             $entity = NemoEntity::find($user->individuals_id);
             try {
                 DB::transaction(function () use ($entity, $request) {
                     $entity->display_name = $request->input('display_name');
+                    if ($request->filled('biography'))
+                        $entity->biography = $request->input('biography');
                     $entity->touch();
                     $entity->save();
                 });
