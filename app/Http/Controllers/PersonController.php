@@ -24,6 +24,7 @@ class PersonController extends Controller {
     public function __construct() {
         $this->idPrependString = env('USER_ID_PREFIX');
     }
+
 	/**
 	 * [showPersonByMemberID description]
 	 * @param  [Integer] $individuals_id [individuals_id to be looked up into the database. Person model.]
@@ -72,12 +73,11 @@ class PersonController extends Controller {
      */
     private function generateNextAffiliateId() {
         $latestId = Individual::where('individuals_id','LIKE', $this->idPrependString.'%')
-                                ->where('individuals_id', 'NOT LIKE', '%csuchancellor')
                                 ->orderBy('individuals_id','DESC')->first();
         if (is_null($latestId)) {
             $nextId = $this->idPrependString.'1';
         } else {
-            $latestId = $latestId['individuals_id'];
+            $latestId = $latestId->individuals_id;
             $latestId = str_replace($this->idPrependString, '', $latestId);
             $nextId = $latestId + 1;
             $nextId = $this->idPrependString.$nextId;
@@ -111,12 +111,12 @@ class PersonController extends Controller {
      * @return [boolean]
      */
     private function writeToIndividual($values) {
-        $affiliate                  = new Individual();
-        $affiliate->individuals_id  = $values['user_id'];
-        $affiliate->first_name      = $values['first_name'];
-        $affiliate->last_name       = $values['last_name'];
-        $affiliate->common_name     = $values['common_name'];
-        $affiliate->affiliation     = $values['affiliation'];
+        $affiliate = new Individual();
+        $affiliate->individuals_id = $values['user_id'];
+        $affiliate->first_name = $values['first_name'];
+        $affiliate->last_name = $values['last_name'];
+        $affiliate->common_name = $values['common_name'];
+        $affiliate->affiliation = $values['affiliation'];
         $affiliate->save();
     }
 
@@ -127,11 +127,11 @@ class PersonController extends Controller {
      * @return [boolean]
      */
     private function writeToRegistry($values) {
-        $affiliate              = new Registry();
-        $affiliate->uuid        = $values['uuid'];
+        $affiliate = new Registry();
+        $affiliate->uuid = $values['uuid'];
         $affiliate->entities_id = $values['user_id'];
-        $affiliate->posix_uid   = $values['posix_uid'];
-        $affiliate->email       = $values['email'];
+        $affiliate->posix_uid = $values['posix_uid'];
+        $affiliate->email = $values['email'];
         $affiliate->save();
     }
 
@@ -142,8 +142,8 @@ class PersonController extends Controller {
      * @return [boolean]
      */
     private function writeToEntity($values) {
-        $affiliate               = new NemoEntity();
-        $affiliate->entities_id  = $values['user_id'];
+        $affiliate = new NemoEntity();
+        $affiliate->entities_id = $values['user_id'];
         $affiliate->display_name = $values['common_name'];
         $affiliate->save();
     }
@@ -157,35 +157,35 @@ class PersonController extends Controller {
     public function addAffiliate(Request $request) {
         $this->validate($request, [
             'first_name' => 'required',
-            'last_name'  => 'required',
-            'email'      => 'required'
+            'last_name' => 'required',
+            'email' => 'required'
         ]);
         $email = $request->input('email');
         $count = $this->checkUserInRegistry($email);
         if ($count) {
-            return [
-                'status'  => '404',
+            return response()->json([
+                'status' => '404',
                 'success' => 'false',
                 'message' => 'User with email '.$email.' already exists.'
-            ];
+            ]);
         }
    
-        $last_name   = $request->input('last_name');
-        $first_name  = $request->input('first_name');
+        $last_name = $request->input('last_name');
+        $first_name = $request->input('first_name');
         $common_name = $first_name.' '.$last_name;
-        $user_id     = $this->generateNextAffiliateId();
-        $posix_uid   = $this->generatePosixUid($first_name, $last_name, $user_id);
-        $uuid        = DB::raw('UUID()');
+        $user_id = $this->generateNextAffiliateId();
+        $posix_uid = $this->generatePosixUid($first_name, $last_name, $user_id);
+        $uuid = DB::raw('UUID()');
 
         $values = [
             'affiliation' => 'affiliate',
             'common_name' => $common_name,
-            'email'       => $email,
-            'first_name'  => $first_name,
-            'last_name'   => $last_name,
-            'posix_uid'   => $posix_uid,
-            'user_id'     => $user_id,
-            'uuid'        => $uuid
+            'email' => $email,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'posix_uid' => $posix_uid,
+            'user_id' => $user_id,
+            'uuid' => $uuid
         ];
 
         try {
@@ -195,22 +195,22 @@ class PersonController extends Controller {
                 $this->writeToRegistry($values);
             });
         } catch (\PDOException $e) {
-            return [
-                'status'  => '500',
+            return response()->json([
+                'status' => '500',
                 'success' => 'false',
                 'message' => 'Oops, something went wrong.'
-            ];
+            ]);
         }
 
-        return [
-            'status'  => '200',
+        return response()->json([
+            'status' => '200',
             'success' => 'true',
             'user' => [
-                'id'        => $values['user_id'],
+                'id' => $values['user_id'],
                 'posix_uid' => $values['posix_uid'],
-                'email'     => $values['email']
+                'email' => $values['email']
             ]
-        ];
+        ]);
     }
 
     /**
@@ -226,11 +226,11 @@ class PersonController extends Controller {
         $email = $request->input('email');
         $count = $this->checkUserInRegistry($email);
         if (!$count) {
-            return [
-                'status'  => '404',
+            return response()->json([
+                'status' => '404',
                 'success' => 'false',
                 'message' => 'User with email '.$email.' does not exist.'
-            ];
+            ]);
         }
 
         try {
@@ -242,62 +242,72 @@ class PersonController extends Controller {
                 NemoEntity::find($user_id)->delete();
             });
         } catch (\PDOException $e) {
-            return [
-                'status'  => '500',
+            return response()->json([
+                'status' => '500',
                 'success' => 'false',
                 'message' => 'Oops, something went wrong.'
-            ];
+            ]);
         }
 
-        return [
-            'status'  => '200',
+        return response()->json([
+            'status' => '200',
             'success' => 'true',
             'message' => 'User with email '.$email.' has been deleted from the database.'
-        ];
+        ]);
     }
 
     /**
-     * Updates a person's display name so long as a valid
+     * Updates a person's display name and biography so long as a valid
      * email & api key is passed in.
      *
      * @param Request $request
      * @return array
      */
-    public function updateDisplayName(Request $request)
+    public function updateInfo(Request $request)
     {
-        $this->validate($request, ['email' => 'required']);
-        $email = $request->input('email');
+        $this->validate($request, [
+            'email' => 'required|email',
+            'biography' => 'required|string',
+            'confidential' => 'required|boolean',
+            'display_name' => 'required|string',
+            'nick_name' => 'sometimes|nullable',
+        ]);
+        $email = $request->email;
         $user = Person::whereEmail($email)->first();
         if (!(is_null($user))) {
             // at this point we know who you are and you exist
             // so we'll just update your display_name & biography.
             $entity = NemoEntity::find($user->individuals_id);
+            $individual = Individual::find($entity->entities_id);
             try {
-                DB::transaction(function () use ($entity, $request) {
-                    $entity->display_name = $request->input('display_name');
-                    if ($request->filled('biography'))
-                        $entity->biography = $request->input('biography');
+                DB::transaction(function () use ($entity, $individual, $request) {
+                    $entity->display_name = $request->display_name;
+                    if (!empty($request->biography))
+                        $individual->biography = $request->biography;
+                    $individual->confidential = $request->confidential;
+                    $individual->touch();
+                    $individual->save();
                     $entity->touch();
                     $entity->save();
                 });
             } catch (\PDOException $e) {
-                return [
+                return response()->json([
                     'status' => '500',
                     'success' => 'false',
                     'message' => 'Oops, something went wrong.'
-                ];
+                ]);
             }
-            return [
+            return response()->json([
                 'status' => '200',
                 'success' => 'true',
                 'message' => 'The name for '.$user->email.' has been updated successfully.'
-            ];
+            ]);
         } else {
-            return [
+            return response()->json([
                 'status' => '500',
                 'success' => 'false',
                 'message' => 'Resource not found.'
-            ];
+            ]);
         }
 
     }

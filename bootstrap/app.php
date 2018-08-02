@@ -68,7 +68,7 @@ $app->singleton(
 // ]);
 
      $app->routeMiddleware([
-          'create' => App\Http\Middleware\CreateAffiliateCheckKey::class,
+          'modify-data' => App\Http\Middleware\CheckApiKey::class,
      ]);
 
 /*
@@ -84,6 +84,8 @@ $app->singleton(
 
 $app->configure('proxypass');
 $app->register(CSUNMetaLab\LumenProxyPass\Providers\ProxyPassServiceProvider::class);
+
+$app->configure('app');
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);

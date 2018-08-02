@@ -52,9 +52,9 @@ $router->group(['prefix' => 'members'], function($router) {
     $router->get('/faculty/{type}/degrees[/{letter}]', 'MemberController@showAllFacultyWithDegrees');
 
     //Post routes
-    $router->group(['middleware' => 'create'], function($router) {
+    $router->group(['middleware' => 'modify-data'], function($router) {
         $router->post('/delete', 'PersonController@removeAffiliate');
         $router->post('/create', 'PersonController@addAffiliate');
-        $router->post('/update-display-name', 'PersonController@updateDisplayName');
+        $router->post('/update-info', 'PersonController@updateInfo');
     });
 });
