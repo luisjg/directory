@@ -55,6 +55,6 @@ $router->group(['prefix' => 'members'], function($router) {
     $router->group(['middleware' => 'modify-data'], function($router) {
         $router->post('/delete', 'PersonController@removeAffiliate');
         $router->post('/create', 'PersonController@addAffiliate');
-        $router->post('/update-info', 'PersonController@updateInfo');
+        $router->put('/update-info', 'PersonController@updateInfo');
     });
 });
