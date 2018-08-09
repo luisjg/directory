@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 
-class CreateAffiliateCheckKey
+class CheckApiKey
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,8 @@ class CreateAffiliateCheckKey
      */
     public function handle($request, Closure $next)
     {
-        if (env('APP_SECRET') != $request->input('token')) {
+        if (config('app.app_secret') !== $request->get('secret') &&
+            config('app.app_secret') !== $request->headers->get('X-API-Key')) {
             return [
                 'status' => '400',
                 'success' => 'false',
