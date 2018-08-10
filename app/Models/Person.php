@@ -112,7 +112,7 @@ class Person extends Model {
         $image = Image::where('imageable_id', $this->individuals_id)->first();
         if(!empty($image))
         {
-            return env('IMAGE_VIEW_LOCATION').$this->getEmailURIAttribute().'/'.$image->src;
+            return env('IMAGE_VIEW_LOCATION').$this->getEmailURIAttribute().'/'.strtok($image->src, '.');
         }
     }
 }
