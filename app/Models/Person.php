@@ -113,7 +113,7 @@ class Person extends Model {
         //$image = Image::where('imageable_id', $this->individuals_id)->first();
         if($this->affiliation !== 'student' || $this->affiliation !== 'staff')
         {
-            return env('IMAGE_VIEW_LOCATION').$this->getEmailURIAttribute().'/avatar');
+            return env('IMAGE_VIEW_LOCATION').$this->getEmailURIAttribute().'/avatar';
         }
     }
 }
