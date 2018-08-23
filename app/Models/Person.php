@@ -109,10 +109,11 @@ class Person extends Model {
      */
 	public function getProfileImageAttribute()
     {
-        $image = Image::where('imageable_id', $this->individuals_id)->first();
-        if(!empty($image))
+        // we'll just use media now
+        //$image = Image::where('imageable_id', $this->individuals_id)->first();
+        if($this->affiliation !== 'student' || $this->affiliation !== 'staff')
         {
-            return env('IMAGE_VIEW_LOCATION').$this->getEmailURIAttribute().'/'.strtok($image->src, '.');
+            return env('IMAGE_VIEW_LOCATION').$this->getEmailURIAttribute().'/avatar');
         }
     }
 }
