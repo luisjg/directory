@@ -59,17 +59,10 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
-//     // Illuminate\Cookie\Middleware\EncryptCookies::class,
-//     // Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-//     // Illuminate\Session\Middleware\StartSession::class,
-//     // Illuminate\View\Middleware\ShareErrorsFromSession::class,
-//     // Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
-// ]);
-
-     $app->routeMiddleware([
-          'modify-data' => App\Http\Middleware\CheckApiKey::class,
-     ]);
+ $app->routeMiddleware([
+     'modify-data' => App\Http\Middleware\CheckApiKey::class,
+     'cors' => \Barryvdh\Cors\HandleCors::class,
+ ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -87,8 +80,8 @@ $app->register(CSUNMetaLab\LumenProxyPass\Providers\ProxyPassServiceProvider::cl
 
 $app->configure('app');
 
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+$app->configure('cors');
+$app->register(Barryvdh\Cors\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
