@@ -110,9 +110,8 @@ class Person extends Model {
 	public function getProfileImageAttribute()
     {
         // we'll just use media now
-        //$image = Image::where('imageable_id', $this->individuals_id)->first();
-        if($this->affiliation !== 'student' || $this->affiliation !== 'staff')
-        {
+        // $image = Image::where('imageable_id', $this->individuals_id)->first();
+        if (!is_null($this->rank)) {
             return env('IMAGE_VIEW_LOCATION').$this->getEmailURIAttribute().'/avatar';
         }
     }
