@@ -111,7 +111,7 @@ class Person extends Model {
     {
         // we'll just use media now
         // $image = Image::where('imageable_id', $this->individuals_id)->first();
-        if (!is_null($this->rank) && $this->affiliation !=== 'student') {
+        if (!is_null($this->rank) && $this->affiliation !== 'student') {
             return env('IMAGE_VIEW_LOCATION').$this->getEmailURIAttribute().'/avatar';
         }
     }
