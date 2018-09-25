@@ -72,9 +72,10 @@ class PersonController extends Controller {
      * @return string
      */
     private function generateNextAffiliateId() {
-        $latestId = Individual::where('individuals_id','LIKE', $this->idPrependString.'%')->get();
-        if (count($latestId) !== 0) {
-            $latestId = count($latestId);
+        $latestId = Registry::where('entities_id','LIKE', env('USER_ID_PREFIX').'%')
+            ->orderBy('registry_id', 'DESC')->first();
+        if (!empty($latestId)) {
+            $latestId = str_replace($this->idPrependString,'', $latestId->entities_id);
             $nextId = $latestId + 1;
             return $this->idPrependString . $nextId;
         }
