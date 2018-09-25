@@ -16,7 +16,7 @@ class CheckApiKey
      */
     public function handle($request, Closure $next)
     {
-        if (config('app.app_secret') !== $request->get('secret') &&
+        if (config('app.app_secret') !== $request->get('secret') ||
             config('app.app_secret') !== $request->headers->get('X-API-Key')) {
             return [
                 'status' => '400',
