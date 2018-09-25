@@ -69,21 +69,16 @@ class PersonController extends Controller {
     /**
      * Generates the next affiliate id
      *
-     * @return [int]
+     * @return string
      */
     private function generateNextAffiliateId() {
-        $latestId = Individual::where('individuals_id','LIKE', $this->idPrependString.'%')
-                                ->orderBy('individuals_id','DESC')->first();
-        if (is_null($latestId)) {
-            $nextId = $this->idPrependString.'1';
-        } else {
-            $latestId = $latestId->individuals_id;
-            $latestId = str_replace($this->idPrependString, '', $latestId);
+        $latestId = Individual::where('individuals_id','LIKE', $this->idPrependString.'%')->get();
+        if (count($latestId) !== 0) {
+            $latestId = count($latestId);
             $nextId = $latestId + 1;
-            $nextId = $this->idPrependString.$nextId;
+            return $this->idPrependString . $nextId;
         }
-
-        return ($nextId);
+        return $this->idPrependString . '1';
     }
 
     /**
