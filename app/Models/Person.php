@@ -20,7 +20,8 @@ class Person extends Model {
 	public $incrementing = false;
 
 	protected $appends = [
-	    'profile_image'
+	    'profile_image',
+        'email_u_r_i'
     ];
 
 	/**
@@ -116,6 +117,6 @@ class Person extends Model {
                 return null;
             }
         }
-        return env('IMAGE_VIEW_LOCATION').$this->getEmailURIAttribute().'/avatar';
+        return env('IMAGE_VIEW_LOCATION').$this->affiliation.'/media/'.$this->getEmailURIAttribute().'/avatar';
     }
 }

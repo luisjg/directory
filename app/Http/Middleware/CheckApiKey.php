@@ -16,13 +16,16 @@ class CheckApiKey
      */
     public function handle($request, Closure $next)
     {
-        if (config('app.app_secret') !== $request->get('secret')) {
+        if (!empty($request->get('secret')) && ($request->get('secret') === config('app.app_secret'))) {
+            return $next($request);
+        } else if (config('app.app_secret') === $request->header('X-API-Key')) {
+            return $next($request);
+        } else {
             return [
                 'status' => '400',
                 'success' => 'false',
                 'message' => 'Please check your API key',
             ];
         }
-        return $next($request);
     }
 }
