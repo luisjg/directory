@@ -20,7 +20,8 @@ class Person extends Model {
 	public $incrementing = false;
 
 	protected $appends = [
-	    'profile_image'
+	    'profile_image',
+        'email_u_r_i'
     ];
 
 	/**
