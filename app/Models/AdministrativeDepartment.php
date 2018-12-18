@@ -17,6 +17,13 @@ class AdministrativeDepartment extends Model
 	 * @var string
 	 */
 	protected $primaryKey = 'entities_id';
+
+    /**
+     * Turn off auto-incrementing feature
+     *
+     * @var bool
+     */
+	public $incrementing = false;
 	
 	/**
 	 * The hidden attributes we do not want to see

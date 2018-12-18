@@ -7,4 +7,14 @@ class Center extends Model {
 	 * @var string
 	 */
 	protected $table = 'faculty.connectable';
+
+    /**
+     * Hidden attributes
+     *
+     * @var array
+     */
+	protected $hidden = [
+	    'created_at',
+        'updated_at'
+    ];
 }

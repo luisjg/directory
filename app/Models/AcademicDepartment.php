@@ -19,6 +19,13 @@ class AcademicDepartment extends Model
 	 */
 	protected $primaryKey = 'department_id';
 
+    /**
+     * Turn off the auto-incrementing feature
+     *
+     * @var bool
+     */
+	public $incrementing = false;
+
 	/**
 	 * The hidden attributes we do not want to see
 	 * @var array

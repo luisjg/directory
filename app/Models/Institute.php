@@ -7,4 +7,14 @@ class Institute extends Model {
 	 * @var string
 	 */
 	protected $table = 'faculty.connectable';
+
+    /**
+     * The hidden attributes on this model
+     *
+     * @var array
+     */
+	protected $hidden = [
+	    'created_at',
+        'updated_at'
+    ];
 }

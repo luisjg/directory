@@ -14,6 +14,21 @@ class Committee extends Model {
 	 * @var string
 	 */
 	protected $primaryKey = 'parent_entities_id';
-	protected $fillable = [];
 
+    /**
+     * Turn off the auto-incrementing feature
+     *
+     * @var bool
+     */
+	public $incrementing = false;
+
+    /**
+     * The hidden attributes on this model
+     *
+     * @var array
+     */
+	protected $hidden = [
+	    'created_at',
+        'updated_at'
+    ];
 }
