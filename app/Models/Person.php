@@ -15,10 +15,19 @@ class Person extends Model {
 	 * @var string
 	 */
 	protected $primaryKey = 'individuals_id';
-	protected $fillable = [];
 
+    /**
+     * Turn off auto-incrementing
+     *
+     * @var bool
+     */
 	public $incrementing = false;
 
+    /**
+     * The appended attributes
+     *
+     * @var array
+     */
 	protected $appends = [
 	    'profile_image',
         'email_u_r_i'
@@ -117,6 +126,6 @@ class Person extends Model {
                 return null;
             }
         }
-        return env('IMAGE_VIEW_LOCATION').$this->affiliation.'/media/'.$this->getEmailURIAttribute().'/avatar';
+        return env('IMAGE_VIEW_LOCATION').$this->email_u_r_i.'/avatar';
     }
 }
