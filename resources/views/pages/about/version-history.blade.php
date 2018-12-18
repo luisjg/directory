@@ -11,6 +11,11 @@
 @section('content')
     <div class="version-history">
         <h2>Version History</h2>
+        <h3>{{ env('APP_NAME') }} 1.0.2 <small>Release Date: 12/18/18 </small></h3>
+        <strong>Bug Fixes:</strong>
+        <ol>
+            <li>Missing JSON information for Centers, Committees, Departments and Institutes should now be correctly displayed.</li>
+        </ol>
         <h3>{{ env('APP_NAME') }} 1.0.1 <small>Release Date: 10/23/18 </small></h3>
         <strong>Improvements:</strong>
         <ol>
