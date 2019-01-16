@@ -126,6 +126,6 @@ class Person extends Model {
                 return null;
             }
         }
-        return env('IMAGE_VIEW_LOCATION').$this->email_u_r_i.'/avatar';
+        return env('IMAGE_VIEW_LOCATION').$this->affiliation.'/media/'.$this->email_u_r_i.'/avatar?source';
     }
 }
