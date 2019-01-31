@@ -41,7 +41,7 @@ $router->group(['prefix' => 'institutes', 'middleware' => 'cors'], function($rou
 });
 
 // Routes for Members
-$router->group(['prefix' => 'members', 'middleware' => 'cors'], function($router) {
+$router->group(['prefix' => 'members'], function($router) {
     // These are temporary
     $router->get('/email/{email}', 'MemberController@showMemberByEmail');
     $router->get('/email/{email}/degrees', 'MemberController@showMemberByEmailWithDegrees');
