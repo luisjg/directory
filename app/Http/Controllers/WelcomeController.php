@@ -10,7 +10,7 @@ class WelcomeController extends Controller {
 	public function index()
 	{
 	    $email = 'steven.fitzgerald@csun.edu';
-	    if(env('APP_ENV') === 'local')
+	    if(env('APP_ENV') !== 'production')
 	        $email = 'nr_'.$email;
 		return view("pages.landing", compact('email'));
 	}

@@ -1,33 +1,50 @@
 <?php namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Contact;
 use App\Models\Person;
-use App\Models\Degree;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller {
-	/**
-	 * [showMemberById description]
-	 * @param  [Integer] $individuals_id [individuals_id to be looked up into the database. Person model.]
-	 * @return [JSON] 
-	 * individuals_id is the primary key on the faculty.person table
-	 * contact_id is the primary key on the faculty.contacts table
-	 * entities_id is the foreign key on the faculty.contacts table 
-	 * Only returns attributes: first_name, last_name, telephone, website, location, email
-	 */
-	private function showMemberById($individuals_id) {
-		$person = Person::where('confidential', 0)->where('individuals_id', 'members:'.$individuals_id)->with('contacts', 'image')->firstOrFail();
+
+    /**
+     * [showMemberById description]
+     * @param Request $request
+     * @param  [Integer] $individuals_id [individuals_id to be looked up into the database. Person model.]
+     * @return Response [JSON]
+     * individuals_id is the primary key on the faculty.person table
+     * contact_id is the primary key on the faculty.contacts table
+     * entities_id is the foreign key on the faculty.contacts table
+     * Only returns attributes: first_name, last_name, telephone, website, location, email
+     */
+	private function showMemberById(Request $request, $individuals_id) {
+	    $whereConstraints = [
+	        'individuals_id' => 'members:'.$individuals_id
+        ];
+        // we check to see if we have to honor the FERPA flag
+        // if no secret key exists then we do honor FERPA flag
+        if (!($request->has('secret') && $request->get('secret') === config('app.app_secret'))) {
+            $whereConstraints['confidential'] = 0;
+        }
+        $person = $this->personRetriever($whereConstraints, 'contacts');
 		return $this->sendResponse($person);
 	}
-	
-	/**
-	 * Query the members by email
-	 * @param Request the HTTP POST request
-	 * @return JSON the JSON response        
-	 */
-	public function showMemberByEmail($email) {
-        $person = Person::where('confidential', 0)->where('email', $email)->with('contacts')->firstOrFail();
+
+    /**
+     * Query the members by email
+     * @param Request $request
+     * @param Request the HTTP POST request
+     * @return Response the JSON response
+     */
+	public function showMemberByEmail(Request $request, $email) {
+
+	    $whereConstraints = [
+	        'email' => $email
+        ];
+	    // we check to see if we have to honor the FERPA flag
+        // if no secret key exists then we do honor FERPA flag
+        if (!($request->has('secret') && $request->get('secret') === config('app.app_secret'))) {
+            $whereConstraints['confidential'] = 0;
+        }
+        $person = $this->personRetriever($whereConstraints, 'contacts');
 		return $this->sendResponse($person);
 	}
 
@@ -37,19 +54,35 @@ class MemberController extends Controller {
 	 * @return JSON the JSON response        
 	 */
 	public function showMemberByEmailWithDegrees($email) {
-        $person = Person::where('confidential', 0)->where('email', $email)->with('contacts', 'degrees')->firstOrFail();
+	    $whereConstraints = [
+	        'email' => $email,
+            'confidential' => 0
+        ];
+	    $withConstraints = [
+	        'contacts',
+            'degrees'
+        ];
+	    $person = $this->personRetriever($whereConstraints, $withConstraints);
 		return $this->sendResponse($person);
 	}
 
 	/**
 	 * Handles the showing of members
 	 * @param  Request the HTTP POST request
-	 * @return JSON the JSON response
+	 * @return Response
 	 */
 	public function showMember(Request $request)
 	{
 		if($request->has('email')) {
-            $person = Person::where('confidential', 0)->where('email', $request['email'])->with('contacts')->firstOrFail();
+            $whereConstraints = [
+                'email' => $request->get('email')
+            ];
+            // we check to see if we have to honor the FERPA flag
+            // if no secret key exists then we do honor FERPA flag
+            if (!($request->has('secret') && $request->get('secret') === config('app.app_secret'))) {
+                $whereConstraints['confidential'] = 0;
+            }
+            $person = $this->personRetriever($whereConstraints, 'contacts');
             return $this->sendResponse($person);
 		} else if ($request->has('members_id')) {
 			return $this->showMemberById($request['members_id']);
@@ -57,6 +90,17 @@ class MemberController extends Controller {
 			return $this->sendResponse('error');
 		}
 	}
+
+    /**
+     * Performs the retrieval from the database
+     * @param $whereConstraints
+     * @param $withConstraints
+     * @return mixed
+     */
+	private function personRetriever($whereConstraints, $withConstraints)
+    {
+        return Person::where($whereConstraints)->with($withConstraints)->firstOrFail();
+    }
 
 	/**
 	 * Handles the showing of CSUN faculty by type with given first letter of last name
