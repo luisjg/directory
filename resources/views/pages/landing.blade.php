@@ -115,9 +115,6 @@
 		<li>
 			<a href="{{ url('api/members?email='.$email) }}">{!! url('api/members?email='.$email) !!}</a>
 		</li>
-		<li>
-			<a href="{{ url('api/members?members_id=103166750') }}">{!! url('api/members?members_id=103166750') !!}</a>
-		</li>
 	</ul>
 	<h2 id="code-samples">Usage Example</h2>
 	<div class="accordion">
