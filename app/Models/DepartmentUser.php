@@ -16,6 +16,10 @@ class DepartmentUser extends Model {
 	 */
 	protected $primaryKey = 'user_id';
 
+	protected $hidden = [
+	    'user_id'
+    ];
+
 	/**
 	 * The person relationship that department user has
 	 * .
