@@ -16,4 +16,9 @@ class Registry extends Model {
      */
 	protected $primaryKey = 'registry_id';
 
+	protected $hidden = [
+	    'entities_id',
+        'posix_uid'
+    ];
+
 }

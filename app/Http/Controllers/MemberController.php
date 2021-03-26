@@ -51,7 +51,7 @@ class MemberController extends Controller {
 	/**
 	 * Query the members by email with degree information
 	 * @param Request the HTTP POST request
-	 * @return JSON the JSON response        
+	 * @return JSON the JSON response
 	 */
 	public function showMemberByEmailWithDegrees($email) {
 	    $whereConstraints = [
@@ -74,8 +74,9 @@ class MemberController extends Controller {
 	public function showMember(Request $request)
 	{
 		if($request->has('email')) {
+		    $email = $request->get('email');
             $whereConstraints = [
-                'email' => $request->get('email')
+                'email' => $email
             ];
             // we check to see if we have to honor the FERPA flag
             // if no secret key exists then we do honor FERPA flag
@@ -83,7 +84,11 @@ class MemberController extends Controller {
                 $whereConstraints['confidential'] = 0;
             }
             $person = $this->personRetriever($whereConstraints, 'contacts');
-            return $this->sendResponse($person);
+
+            if ($person->affiliation !== 'affiliate' && $person->affiliation !== 'student') {
+                return $this->sendResponse($person);
+            }
+            return $this->sendResponse('error');
 		} else if ($request->has('members_id')) {
 			return $this->showMemberById($request['members_id']);
 		} else {
