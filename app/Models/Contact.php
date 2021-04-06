@@ -18,7 +18,7 @@ class Contact extends Model {
      * The hidden attributes we do not want to see
      * @var array
      */
-    protected $hidden = array('created_at', 'updated_at');
+    protected $hidden = array('contact_id', 'entities_id', 'parent_entities_id', 'created_at', 'updated_at');
 
 
     /**

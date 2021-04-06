@@ -22,4 +22,8 @@ class Individual extends Model {
      */
 	public $incrementing = false;
 
+	protected $hidden = [
+	    'individuals_id'
+    ];
+
 }

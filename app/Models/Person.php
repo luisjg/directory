@@ -9,7 +9,7 @@ class Person extends Model {
 	 * @var string
 	 */
 	protected $table = 'fresco.people';
-	
+
 	/**
 	 * The primary key in the table
 	 * @var string
@@ -31,6 +31,11 @@ class Person extends Model {
 	protected $appends = [
 	    'profile_image',
         'email_u_r_i'
+    ];
+
+	protected $hidden = [
+	    'individuals_id',
+        'parent_entities_id'
     ];
 
 	/**
@@ -102,7 +107,7 @@ class Person extends Model {
 			$q->where('department_id', 'academic_departments:'.$dept_id);
 		});
 	}
-	
+
 	/**
 	 * Retrieves the departments this person is associated with
 	 * @return Builder|Model
