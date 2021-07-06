@@ -48,7 +48,6 @@
 			</div>
 		</div>
 	</div>
-	@include('layouts.partials.metalab-footer')
 	<script src="{!! url('js/manifest.js') !!}"></script>
 	<script src="{!! url('js/vendor.js') !!}"></script>
 	<script src="{!! url('js/app.js') !!}"></script>
