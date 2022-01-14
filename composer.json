@@ -6,9 +6,9 @@
     "type": "project",
     "require": {
         "php": ">=7.1.3",
-        "laravel/lumen-framework": "6.0.*",
         "csun-metalab/lumen-proxypass": "^1.0",
-        "barryvdh/laravel-cors": "^0.11.0"
+        "fruitcake/laravel-cors": "^2.0",
+        "laravel/lumen-framework": "6.0.*"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",

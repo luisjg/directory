@@ -57,9 +57,12 @@ $app->singleton(
 |
 */
 
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class,
+]);
+
  $app->routeMiddleware([
      'modify-data' => App\Http\Middleware\CheckApiKey::class,
-     'cors' => \Barryvdh\Cors\HandleCors::class,
  ]);
 
 /*
@@ -79,7 +82,7 @@ $app->register(CSUNMetaLab\LumenProxyPass\Providers\ProxyPassServiceProvider::cl
 $app->configure('app');
 
 $app->configure('cors');
-$app->register(Barryvdh\Cors\ServiceProvider::class);
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
