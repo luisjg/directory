@@ -22,7 +22,7 @@ class PersonController extends Controller {
      * Class Constructor to initialize any values we need.
      */
     public function __construct() {
-        $this->idPrependString = env('USER_ID_PREFIX');
+        $this->idPrependString = config('app.user_id_prefix');
     }
 
 	/**
@@ -42,7 +42,7 @@ class PersonController extends Controller {
 				//Must specificy contact_id and entities_id
 				$q->select('contact_id','entities_id','telephone', 'website', 'location', 'email')->first();
 			}])
-			->first();
+			->firstOrFail();
 		return $this->sendResponse($person);
 	}
 
@@ -52,7 +52,7 @@ class PersonController extends Controller {
 	 * @return [JSON]
 	 */
 	public function showPersonByEmail($email) {
-		$person = Person::whereEmail($email)->with('contacts')->first();
+		$person = Person::whereEmail($email)->with('contacts')->firstOrFail();
 		return $person;
     }
     
@@ -72,7 +72,7 @@ class PersonController extends Controller {
      * @return string
      */
     private function generateNextAffiliateId() {
-        $latestId = Registry::where('entities_id','LIKE', env('USER_ID_PREFIX').'%')
+        $latestId = Registry::where('entities_id','LIKE', config('app.user_id_prefix').'%')
             ->orderBy('registry_id', 'DESC')->first();
         if (!empty($latestId)) {
             $latestId = str_replace($this->idPrependString,'', $latestId->entities_id);
@@ -95,7 +95,7 @@ class PersonController extends Controller {
                     .strtolower(substr($last_name,0,1))
                     .trim($user_id, $this->idPrependString)
                     .'a';
-        $posix_uid = env('UID_PREFIX').$posix_uid;
+        $posix_uid = config('app.uid_prefix').posix_uid;
 
         return $posix_uid;
     }

@@ -1,9 +1,9 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Handlers\HandlerUtilities;
-
 use App\Http\Controllers\Controller;
-
 use App\Models\AdministrativeDepartment;
 use App\Models\Contact;
 use App\Models\Person;
