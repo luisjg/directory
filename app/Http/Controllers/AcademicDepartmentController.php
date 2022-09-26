@@ -1,7 +1,8 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Handlers\HandlerUtilities;
-
 use App\Http\Controllers\Controller;
 use Request;
 use App\Models\Department;

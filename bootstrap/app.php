@@ -20,11 +20,10 @@ date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 */
 
 $app = new Laravel\Lumen\Application(
-    realpath(__DIR__.'/../')
+    dirname(__DIR__)
 );
 
 $app->withFacades();
-
 $app->withEloquent();
 
 /*
@@ -47,6 +46,20 @@ $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
     App\Console\Kernel::class
 );
+
+/*
+|--------------------------------------------------------------------------
+| Register Config Files
+|--------------------------------------------------------------------------
+|
+| Now we will register the "app" configuration file. If the file exists in
+| your configuration directory it will be loaded; otherwise, we'll load
+| the default version. You may register other files below as needed.
+|
+*/
+
+$app->configure('app');
+$app->configure('cors');
 
 /*
 |--------------------------------------------------------------------------
@@ -78,13 +91,9 @@ $app->middleware([
 |
 */
 
-$app->configure('proxypass');
-$app->register(CSUNMetaLab\LumenProxyPass\Providers\ProxyPassServiceProvider::class);
-
-$app->configure('app');
-
-$app->configure('cors');
 $app->register(Fruitcake\Cors\CorsServiceProvider::class);
+// $app->register(App\Providers\AuthServiceProvider::class);
+// $app->register(App\Providers\EventServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -98,7 +107,7 @@ $app->register(Fruitcake\Cors\CorsServiceProvider::class);
 */
 
 $app->router->group([
-    'namespace' => 'App\Http\Controllers'
+    'namespace' => 'App\Http\Controllers',
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });

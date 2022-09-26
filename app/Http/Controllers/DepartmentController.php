@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Handlers\HandlerUtilities;
 use App\Http\Controllers\Controller;
@@ -56,7 +58,7 @@ class DepartmentController extends Controller {
 						$q->where('department_id', 'academic_departments:'.$dept_id)
 							->where('role_name', 'grad_coordinator');
 					})
-					->first();
+					->firstOrFail();
 
 		// convert the collection to an array for use in returning the
 		// desired response as JSON

@@ -5,12 +5,12 @@
 @endsection
 
 @section('description')
-	{{ env('APP_NAME') }} Web Service Documentation
+	{{ config('app.name') }} Web Service Documentation
 @endsection
 
 @section('content')
 	<h2 id="introduction">Introduction</h2>
-	<p>The {{ env('APP_NAME') }} web service provides contact information about CSUN entities. The web service provides a
+	<p>The {{ config('app.name') }} web service provides contact information about CSUN entities. The web service provides a
 	gateway to access the information via a REST-ful API. The information is retrieved by creating a specific URI and
 	giving values to filter the data. The data is provided by CSUN Central IT. The information that is returned is a
 	JSON object that contains contact information about a particular person, center, college, department, etc; the
