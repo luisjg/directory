@@ -1,14 +1,14 @@
 <?php
 
 //Route for Centers
-$router->group(['prefix' => 'centers', 'middleware' => 'cors'], function($router) {
+$router->group(['prefix' => 'centers'], function($router) {
     $router->get('/', 'CenterController@showAllCenters');
     $router->get('/{center_id}', 'CenterController@showSpecificCenter');
     $router->get('/{center_id}/members', 'CenterController@showMembers');
 });
 
 //Routes for Colleges
-$router->group(['prefix' => 'colleges', 'middleware' => 'cors'], function ($router) {
+$router->group(['prefix' => 'colleges'], function ($router) {
     $router->get('/', 'AcademicGroupController@showAllAcademicGroups');
     $router->get('/chairs', 'AcademicGroupController@showAllAcademicGroupChairs');
     $router->get('/{college_id}', 'AcademicGroupController@showDepartmentsInAcademicGroup');
@@ -16,14 +16,14 @@ $router->group(['prefix' => 'colleges', 'middleware' => 'cors'], function ($rout
 });
 
 //Routes for Committees
-$router->group(['prefix' => 'committees', 'middleware' => 'cors'], function($router) {
+$router->group(['prefix' => 'committees'], function($router) {
     $router->get('/', 'CommitteeController@showCommittees');
     $router->get('/{committee_id}/members', 'CommitteeController@showMembers');
     $router->get('/{committee_id}', 'CommitteeController@showCommittee');
 });
 
 //Routes for Departments
-$router->group(['prefix' => 'departments', 'middleware' => 'cors'], function($router) {
+$router->group(['prefix' => 'departments'], function($router) {
     $router->get('/', 'DepartmentController@showAllDepartments');
     $router->get('/administrative', 'DepartmentController@showAllAdministrativeDepartments');
     $router->get('/{dept_id}', 'DepartmentController@showSpecificDepartment');
@@ -34,7 +34,7 @@ $router->group(['prefix' => 'departments', 'middleware' => 'cors'], function($ro
 });
 
 //Route for Institutes
-$router->group(['prefix' => 'institutes', 'middleware' => 'cors'], function($router) {
+$router->group(['prefix' => 'institutes'], function($router) {
     $router->get('/', 'InstituteController@showAllInstitutes');
     $router->get('/{institute_id}', 'InstituteController@showSpecificInstitute');
     $router->get('/{institute_id}/members', 'InstituteController@showMembers');
